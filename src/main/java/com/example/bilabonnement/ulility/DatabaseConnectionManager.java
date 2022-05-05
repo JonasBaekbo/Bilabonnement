@@ -1,3 +1,4 @@
+/*
 package com.example.bilabonnement.ulility;
 
 import java.sql.Connection;
@@ -32,3 +33,4 @@ public class DatabaseConnectionManager {
     }
 
 
+*/

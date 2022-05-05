@@ -18,5 +18,10 @@ public class MainController {
         model.addAttribute("title", "Forside");
         return "index";
     }
+    @GetMapping("/admin")
+    public String admin_dashboard(Model model) {
+        model.addAttribute("title", "Forside");
+        return "admin/dashboard";
+    }
 }
 
