@@ -1,34 +1,48 @@
 package com.example.bilabonnement.functions;
 
-import com.example.bilabonnement.servises.FuelType;
-
 import java.util.Date;
 
 public class Bil {
-
+    private int bilID;
+    private int stelnummer;
+    private String nummerplade;
     private String modelnavn;
     private Enum brændstoftype;
-    private String udlejet;
-    private int registreringsafgift;
-    private Date udlejningsperiode;
-    private String skader;
-    private String nummerplade;
-    private int stelnummer;
     private String farve;
     private String geartype;
+    private String status;
+    private int registreringsafgift;
+    private Date udlejetFra;
+    private Date udlejetTil;
+    private String skader;
 
-
-    public Bil(String modelnavn, Enum brændstoftype, String udlejet, int registreringsafgift, Date udlejningsperiode, String skader, String nummerplade, int stelnummer, String farve, String geartype) {
+    public Bil(int bilID, int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
+        this.bilID = bilID;
+        this.stelnummer = stelnummer;
+        this.nummerplade = nummerplade;
         this.modelnavn = modelnavn;
         this.brændstoftype = brændstoftype;
-        this.udlejet = udlejet;
-        this.registreringsafgift = registreringsafgift;
-        this.udlejningsperiode = udlejningsperiode;
-        this.skader = skader;
-        this.nummerplade = nummerplade;
-        this.stelnummer = stelnummer;
         this.farve = farve;
         this.geartype = geartype;
+        this.status = status;
+        this.registreringsafgift = registreringsafgift;
+        this.udlejetFra = udlejetFra;
+        this.udlejetTil = udlejetTil;
+        this.skader = skader;
+    }
+
+    public Bil(int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
+        this.stelnummer = stelnummer;
+        this.nummerplade = nummerplade;
+        this.modelnavn = modelnavn;
+        this.brændstoftype = brændstoftype;
+        this.farve = farve;
+        this.geartype = geartype;
+        this.status = status;
+        this.registreringsafgift = registreringsafgift;
+        this.udlejetFra = udlejetFra;
+        this.udlejetTil = udlejetTil;
+        this.skader = skader;
     }
 
     public String getModelnavn() {
@@ -39,21 +53,10 @@ public class Bil {
         this.modelnavn = modelnavn;
     }
 
-    public Enum<FuelType> getBrændstoftype() {
+    public Enum getBrændstoftype() {
         return brændstoftype;
     }
 
-    public void setBrændstoftype(Enum<FuelType> brændstoftype) {
-        this.brændstoftype = brændstoftype;
-    }
-
-    public String getUdlejet() {
-        return udlejet;
-    }
-
-    public void setUdlejet(String udlejet) {
-        this.udlejet = udlejet;
-    }
 
     public int getRegistreringsafgift() {
         return registreringsafgift;
@@ -63,13 +66,6 @@ public class Bil {
         this.registreringsafgift = registreringsafgift;
     }
 
-    public Date getUdlejningsperiode() {
-        return udlejningsperiode;
-    }
-
-    public void setUdlejningsperiode(Date udlejningsperiode) {
-        this.udlejningsperiode = udlejningsperiode;
-    }
 
     public String getSkader() {
         return skader;
@@ -111,5 +107,38 @@ public class Bil {
         this.geartype = geartype;
     }
 
+    public int getBilID() {
+        return bilID;
+    }
 
+    public void setBilID(int bilID) {
+        this.bilID = bilID;
+    }
+
+    public void setBrændstoftype(Enum brændstoftype) {
+        this.brændstoftype = brændstoftype;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public Date getUdlejetFra() {
+        return udlejetFra;
+    }
+
+    public void setUdlejetFra(Date udlejetFra) {
+        this.udlejetFra = udlejetFra;
+    }
+
+    public Date getUdlejetTil() {
+        return udlejetTil;
+    }
+
+    public void setUdlejetTil(Date udlejetTil) {
+        this.udlejetTil = udlejetTil;
+    }
 }
