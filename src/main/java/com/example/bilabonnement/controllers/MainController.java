@@ -1,6 +1,5 @@
 package com.example.bilabonnement.controllers;
 
-import com.example.bilabonnement.functions.Wish;
 import com.example.bilabonnement.db.DB;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

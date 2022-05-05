@@ -1,36 +1,21 @@
 package com.example.bilabonnement.db;
 
-import com.example.bilabonnement.functions.Wish;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
+
 public class DB {
-    private static Connection con;
+    private static Connection conn;
 
-    public DB() {
-        connectDB();
-    }
-
-    public static Connection connectDB() {
-
-        try {
-            String url = "jdbc:mysql://whateveryouwishdb.mysql.database.azure.com:3306/whateveryouwishdb";
-            con = DriverManager.getConnection(url, "Themasterofall@whateveryouwishdb", "77tgbv77.");
-            return con;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return con;
-    }
 
     public int getUserIdFromName(String userName) {
-        connectDB();
+        getConnection();
         try {
             String searchForUser = "SELECT user_id FROM whateveryouwishdb.users WHERE `username` = ?";
-            PreparedStatement stmt = con.prepareStatement(searchForUser);
+            PreparedStatement stmt = conn.prepareStatement(searchForUser);
             stmt.setString(1, userName);
             stmt.execute();
 
@@ -45,14 +30,14 @@ public class DB {
     }
 
     public void addUserToDB(String username, String password) {
-        connectDB();
+        getConnection();
         System.out.println("addUserToDB");
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = password;
         String encodedPassword = encoder.encode(rawPassword);
         try {
             String insert = "INSERT INTO whateveryouwishdb.users (`username`, `password`, `role`, `enabled`) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = con.prepareStatement(insert);
+            PreparedStatement stmt = conn.prepareStatement(insert);
             stmt.setString(1, username);
             stmt.setString(2, encodedPassword);
             stmt.setString(3, "ROLE_USER");
@@ -71,7 +56,7 @@ public class DB {
     public void addWishToDB(Wish wish) {
         try {
             String insert = "INSERT INTO whateveryouwishdb.wish (`user_id`, `name`, `description`, `quantity`) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = con.prepareStatement(insert);
+            PreparedStatement stmt = conn.prepareStatement(insert);
             stmt.setInt(1, wish.getUserId());
             stmt.setString(2, wish.getItemName());
             stmt.setString(3, wish.getDescription());
@@ -83,10 +68,10 @@ public class DB {
     }
 
     public boolean hasUserNameAllReady(String user) {
-        connectDB();
+        getConnection();
         try {
             String searchForUser = "SELECT COUNT(*) FROM whateveryouwishdb.users WHERE `username` = ?";
-            PreparedStatement stmt = con.prepareStatement(searchForUser);
+            PreparedStatement stmt = conn.prepareStatement(searchForUser);
             stmt.setString(1, user);
             stmt.execute();
 
@@ -106,7 +91,7 @@ public class DB {
 
         try {
             String select = "SELECT * FROM whateveryouwishdb.wish, whateveryouwishdb.users WHERE whateveryouwishdb.wish.user_id = whateveryouwishdb.users.user_id AND whateveryouwishdb.wish.user_id = ?";
-            PreparedStatement stmt = con.prepareStatement(select);
+            PreparedStatement stmt = conn.prepareStatement(select);
             stmt.setInt(1, currentUserID);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
@@ -129,7 +114,7 @@ public class DB {
     }
 
     public void removeWish(String wishID) {
-        connectDB();
+        getConnection();
         try {
             String removeWishID = "DELETE FROM whateveryouwishdb.wish WHERE `id_wish` = ?";
             PreparedStatement stmt = con.prepareStatement(removeWishID);
