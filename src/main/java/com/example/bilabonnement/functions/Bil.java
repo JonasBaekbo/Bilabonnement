@@ -6,17 +6,19 @@ import java.util.Date;
 
 public class Bil {
 
-    String modelnavn;
-    Enum<FuelType> biltype;
-    String udlejet;
-    int registreringsafgift;
-    Date udlejningsperiode;
-    String skader;
-    String nummerplade;
-    int stelnummer;
-    String farve;
+    private String modelnavn;
+    private Enum biltype;
+    private String udlejet;
+    private int registreringsafgift;
+    private Date udlejningsperiode;
+    private String skader;
+    private String nummerplade;
+    private int stelnummer;
+    private String farve;
+    private String geartype;
 
-    public Bil(String modelnavn, Enum<FuelType> biltype, String udlejet, int registreringsafgift, Date udlejningsperiode, String skader, String nummerplade, int stelnummer, String farve) {
+
+    public Bil(String modelnavn, Enum biltype, String udlejet, int registreringsafgift, Date udlejningsperiode, String skader, String nummerplade, int stelnummer, String farve, String geartype) {
         this.modelnavn = modelnavn;
         this.biltype = biltype;
         this.udlejet = udlejet;
@@ -26,6 +28,7 @@ public class Bil {
         this.nummerplade = nummerplade;
         this.stelnummer = stelnummer;
         this.farve = farve;
+        this.geartype = geartype;
     }
 
     public String getModelnavn() {
@@ -99,4 +102,14 @@ public class Bil {
     public void setFarve(String farve) {
         this.farve = farve;
     }
+
+    public String getGeartype() {
+        return geartype;
+    }
+
+    public void setGeartype(String geartype) {
+        this.geartype = geartype;
+    }
+
+
 }
