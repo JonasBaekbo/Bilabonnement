@@ -7,7 +7,7 @@ import java.util.Date;
 public class Bil {
 
     private String modelnavn;
-    private Enum biltype;
+    private Enum brændstoftype;
     private String udlejet;
     private int registreringsafgift;
     private Date udlejningsperiode;
@@ -18,9 +18,9 @@ public class Bil {
     private String geartype;
 
 
-    public Bil(String modelnavn, Enum biltype, String udlejet, int registreringsafgift, Date udlejningsperiode, String skader, String nummerplade, int stelnummer, String farve, String geartype) {
+    public Bil(String modelnavn, Enum brændstoftype, String udlejet, int registreringsafgift, Date udlejningsperiode, String skader, String nummerplade, int stelnummer, String farve, String geartype) {
         this.modelnavn = modelnavn;
-        this.biltype = biltype;
+        this.brændstoftype = brændstoftype;
         this.udlejet = udlejet;
         this.registreringsafgift = registreringsafgift;
         this.udlejningsperiode = udlejningsperiode;
@@ -39,12 +39,12 @@ public class Bil {
         this.modelnavn = modelnavn;
     }
 
-    public Enum<FuelType> getBiltype() {
-        return biltype;
+    public Enum<FuelType> getBrændstoftype() {
+        return brændstoftype;
     }
 
-    public void setBiltype(Enum<FuelType> biltype) {
-        this.biltype = biltype;
+    public void setBrændstoftype(Enum<FuelType> brændstoftype) {
+        this.brændstoftype = brændstoftype;
     }
 
     public String getUdlejet() {
