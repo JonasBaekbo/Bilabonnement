@@ -1,11 +1,13 @@
 package com.example.bilabonnement.functions;
 
+import com.example.bilabonnement.servises.FuelType;
+
 import java.util.Date;
 
 public class Bil {
 
     String modelnavn;
-    String biltype;
+    Enum<FuelType> biltype;
     String udlejet;
     int registreringsafgift;
     Date udlejningsperiode;
@@ -14,7 +16,7 @@ public class Bil {
     int stelnummer;
     String farve;
 
-    public Bil(String modelnavn, String biltype, String udlejet, int registreringsafgift, Date udlejningsperiode, String skader, String nummerplade, int stelnummer, String farve) {
+    public Bil(String modelnavn, Enum<FuelType> biltype, String udlejet, int registreringsafgift, Date udlejningsperiode, String skader, String nummerplade, int stelnummer, String farve) {
         this.modelnavn = modelnavn;
         this.biltype = biltype;
         this.udlejet = udlejet;
@@ -34,11 +36,11 @@ public class Bil {
         this.modelnavn = modelnavn;
     }
 
-    public String getBiltype() {
+    public Enum<FuelType> getBiltype() {
         return biltype;
     }
 
-    public void setBiltype(String biltype) {
+    public void setBiltype(Enum<FuelType> biltype) {
         this.biltype = biltype;
     }
 
