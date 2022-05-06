@@ -1,4 +1,4 @@
-package com.example.bilabonnement.functions;
+package com.example.bilabonnement.models;
 
 import java.util.Date;
 
