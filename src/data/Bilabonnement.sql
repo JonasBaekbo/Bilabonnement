@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `Bilabonnement` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `Bilabonnement`;
 -- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
 -- Host: 127.0.0.1    Database: Bilabonnement
@@ -271,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 10:18:57
+-- Dump completed on 2022-05-06 10:26:37
