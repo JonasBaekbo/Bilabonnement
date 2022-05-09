@@ -8,5 +8,6 @@ import java.util.ArrayList;
 //import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class DB {
-    //private static Connection conn;
+
+
 }
