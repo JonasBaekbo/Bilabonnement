@@ -1,3 +1,4 @@
+/*
 package com.example.bilabonnement.servises;
 
 import com.example.demo.models.Department;
@@ -10,9 +11,11 @@ import java.util.List;
 
 public class testingExercises {
     private final IRepository repo;
-    /*public testingExercises(IRepository<Employee> repo ){
+    */
+/*public testingExercises(IRepository<Employee> repo ){
         this.repo = repo;
-    }*/
+    }*//*
+
     public testingExercises(IRepository<Department> repo ){
         this.repo = repo;
     }
@@ -104,3 +107,4 @@ public class testingExercises {
     }
 
 }
+*/
