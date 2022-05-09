@@ -1,14 +1,20 @@
 package com.example.bilabonnement.repository;
 
-    public interface IRepository<T> {
+import java.util.List;
 
-        //Create
+public interface IRepository<T> {
 
-        //Read
+    //Create
+    public boolean create(T entity);
 
-        //Update
+    //Read
+    public T getSingleById(int id);
 
-        //Delete
+    public List<T> getAllEntities();
 
-    }
+    //Update
+
+    //Delete
+}
+
 

@@ -33,16 +33,6 @@ public class DatabaseConnectionManager {
             e.printStackTrace();
         }
 
-        /*url = System.getenv("db.url");
-        username = System.getenv("db.username");
-        password = System.getenv("db.password");
-
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
         return conn;
     }
 }

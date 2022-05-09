@@ -2,7 +2,7 @@ package com.example.bilabonnement.models;
 
 import java.util.Date;
 
-public class Bil {
+public class Car {
     private int bilID;
     private int stelnummer;
     private String nummerplade;
@@ -16,7 +16,7 @@ public class Bil {
     private Date udlejetTil;
     private String skader;
 
-    public Bil(int bilID, int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
+    public Car(int bilID, int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
         this.bilID = bilID;
         this.stelnummer = stelnummer;
         this.nummerplade = nummerplade;
@@ -31,7 +31,7 @@ public class Bil {
         this.skader = skader;
     }
 
-    public Bil(int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
+    public Car(int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
         this.stelnummer = stelnummer;
         this.nummerplade = nummerplade;
         this.modelnavn = modelnavn;
