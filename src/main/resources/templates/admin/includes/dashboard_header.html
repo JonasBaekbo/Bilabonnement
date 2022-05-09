@@ -75,7 +75,10 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                        <li><form name="logoutForm" th:hidden="true" method="post" th:action="@{/logout}">
+                            <input type="submit" value="Logout" />
+                        </form>
+                            <a class="dropdown-item" href="javascript: logoutForm.submit();">Sign Out</a></li>
                     </ul>
                 </div>
             </div>
