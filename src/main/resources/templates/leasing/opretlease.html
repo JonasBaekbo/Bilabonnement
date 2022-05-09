@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+
+<form th:action="@{/opretlease}" method="post">
+    <p>
+        <input type="number" id="customerID" placeholder="Kunde ID" name="customerID" required/>
+    </p>
+    <p>
+        <input type="date" id="startDate" placeholder="Start dato for lease" name="startDate"/>
+    </p>
+    <p>
+        <input type="date" id="endDate" placeholder="Slut dato for lease" name="endDate" required/>
+    </p>
+    <p>
+    <input type="number" id="includedKM" placeholder="Inkluderet antal kilometer" name="includedKM" required/>
+    </p>
+    <p>
+        <input type="number" id="carID" placeholder="Bil ID" name="carID" required/>
+    </p>
+    <p>
+        <input type="submit" value=" Opret lease "/>
+    </p>
+
+
+</form>
+
+</div>
+
+</body>
+</html>
