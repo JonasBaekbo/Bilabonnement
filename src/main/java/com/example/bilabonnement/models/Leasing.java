@@ -4,13 +4,14 @@ import java.util.Date;
 
 public class Leasing {
 
-    private String customerID;
+    private int customerID;
     private Date startDate;
     private Date endDate;
     private int includedKM;
     private int carID;
+    private int leasingId;
 
-    public Leasing(String customerID, Date startDate, Date endDate, int includedKM, int carID) {
+    public Leasing(int customerID, Date startDate, Date endDate, int includedKM, int carID) {
         this.customerID = customerID;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -18,11 +19,20 @@ public class Leasing {
         this.carID = carID;
     }
 
-    public String getCustomerID() {
+    public Leasing(int leasingId, int customerID,  Date startDate, Date endDate, int includedKM, int carID) {
+        this.leasingId=leasingId;
+        this.customerID = customerID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.includedKM = includedKM;
+        this.carID = carID;
+    }
+
+    public int getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(String customerID) {
+    public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
 
@@ -57,6 +67,16 @@ public class Leasing {
     public void setCarID(int carID) {
         this.carID = carID;
     }
+
+    public int getLeasingId() {
+        return leasingId;
+    }
+
+    public void setLeasingId(int leasingId) {
+        this.leasingId = leasingId;
+    }
 }
+
+
 
 

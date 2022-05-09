@@ -16,8 +16,8 @@ public class LeasingRepository implements IRepository<Leasing> {
     public boolean create(Leasing entity) {
         Connection conn = DatabaseConnectionManager.getConnection();
         try {
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO leasings(`customerID`,`carID`, `startDate`, `endDate`, `includedKM`) VALUES (?,?,?,?,?)");
-            pstmt.setString(1, entity.getCustomerID());
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO leasing(`kunde_id`,`id_bil`, `start_dato`, `slut_dato`, `inkluderede_km`) VALUES (?,?,?,?,?)");
+            pstmt.setInt(1, entity.getCustomerID());
             pstmt.setInt(2, entity.getCarID());
             pstmt.setDate(3, (java.sql.Date) entity.getStartDate());
             pstmt.setDate(4, (java.sql.Date) entity.getEndDate());

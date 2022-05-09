@@ -15,6 +15,7 @@ public class Car {
     private Date rentedFrom;
     private Date rentedTo;
     private String damages;
+    private Date registrationDate;
 
     public Car(int carID, int chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {
         this.carID = carID;
@@ -29,6 +30,7 @@ public class Car {
         this.rentedFrom = rentedFrom;
         this.rentedTo = rentedTo;
         this.damages = injuries;
+
     }
 
     public Car(int chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {

@@ -19,7 +19,7 @@ public class LeasingController {
     }
 
     @PostMapping("/leasingaftale")
-    public String createLease(@RequestParam("customerID") String customerID, @RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate,
+    public String createLease(@RequestParam("customerID") int customerID, @RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate,
                               @RequestParam("includedKM") int includedKM, @RequestParam("carID") int carID){
         lr.create(new Leasing(customerID, startDate, endDate, includedKM, carID));
         return "redirect:leasing/opretlease";
