@@ -2,28 +2,28 @@ package com.example.bilabonnement.models;
 
 public class Damage {
 
-    private String skadetype;
-    private int pris;
+    private String damageDescription;
+    private int price;
 
-    public Damage(String skadetype, int pris) {
-        this.skadetype = skadetype;
-        this.pris = pris;
+    public Damage(String damageDescription, int price) {
+        this.damageDescription = damageDescription;
+        this.price = price;
     }
 
-    public String getSkadetype() {
-        return skadetype;
+    public String getDamageDescription() {
+        return damageDescription;
     }
 
-    public void setSkadetype(String skadetype) {
-        this.skadetype = skadetype;
+    public void setDamageDescription(String damageDescription) {
+        this.damageDescription = damageDescription;
     }
 
-    public int getPris() {
-        return pris;
+    public int getPrice() {
+        return price;
     }
 
-    public void setPris(int pris) {
-        this.pris = pris;
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
 

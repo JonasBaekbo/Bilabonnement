@@ -3,142 +3,142 @@ package com.example.bilabonnement.models;
 import java.util.Date;
 
 public class Car {
-    private int bilID;
-    private int stelnummer;
-    private String nummerplade;
-    private String modelnavn;
-    private Enum brændstoftype;
-    private String farve;
-    private String geartype;
-    private String status;
-    private int registreringsafgift;
-    private Date udlejetFra;
-    private Date udlejetTil;
-    private String skader;
+    private int carID;
+    private int chassisNumber;
+    private String registrationNumber;
+    private String modelName;
+    private Enum fuelType;
+    private String colour;
+    private String gearType;
+    private String carStatus;
+    private int registrationFee;
+    private Date rentedFrom;
+    private Date rentedTo;
+    private String damages;
 
-    public Car(int bilID, int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
-        this.bilID = bilID;
-        this.stelnummer = stelnummer;
-        this.nummerplade = nummerplade;
-        this.modelnavn = modelnavn;
-        this.brændstoftype = brændstoftype;
-        this.farve = farve;
-        this.geartype = geartype;
-        this.status = status;
-        this.registreringsafgift = registreringsafgift;
-        this.udlejetFra = udlejetFra;
-        this.udlejetTil = udlejetTil;
-        this.skader = skader;
+    public Car(int carID, int chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {
+        this.carID = carID;
+        this.chassisNumber = chassisNumber;
+        this.registrationNumber = registrationNumber;
+        this.modelName = modelName;
+        this.fuelType = fuelType;
+        this.colour = colour;
+        this.gearType = gearType;
+        this.carStatus = status;
+        this.registrationFee = registrationFee;
+        this.rentedFrom = rentedFrom;
+        this.rentedTo = rentedTo;
+        this.damages = injuries;
     }
 
-    public Car(int stelnummer, String nummerplade, String modelnavn, Enum brændstoftype, String farve, String geartype, String status, int registreringsafgift, Date udlejetFra, Date udlejetTil, String skader) {
-        this.stelnummer = stelnummer;
-        this.nummerplade = nummerplade;
-        this.modelnavn = modelnavn;
-        this.brændstoftype = brændstoftype;
-        this.farve = farve;
-        this.geartype = geartype;
-        this.status = status;
-        this.registreringsafgift = registreringsafgift;
-        this.udlejetFra = udlejetFra;
-        this.udlejetTil = udlejetTil;
-        this.skader = skader;
+    public Car(int chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {
+        this.chassisNumber = chassisNumber;
+        this.registrationNumber = registrationNumber;
+        this.modelName = modelName;
+        this.fuelType = fuelType;
+        this.colour = colour;
+        this.gearType = gearType;
+        this.carStatus = status;
+        this.registrationFee = registrationFee;
+        this.rentedFrom = rentedFrom;
+        this.rentedTo = rentedTo;
+        this.damages = injuries;
     }
 
-    public String getModelnavn() {
-        return modelnavn;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setModelnavn(String modelnavn) {
-        this.modelnavn = modelnavn;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
-    public Enum getBrændstoftype() {
-        return brændstoftype;
-    }
-
-
-    public int getRegistreringsafgift() {
-        return registreringsafgift;
-    }
-
-    public void setRegistreringsafgift(int registreringsafgift) {
-        this.registreringsafgift = registreringsafgift;
+    public Enum getFuelType() {
+        return fuelType;
     }
 
 
-    public String getSkader() {
-        return skader;
+    public int getRegistrationFee() {
+        return registrationFee;
     }
 
-    public void setSkader(String skader) {
-        this.skader = skader;
+    public void setRegistrationFee(int registrationFee) {
+        this.registrationFee = registrationFee;
     }
 
-    public String getNummerplade() {
-        return nummerplade;
+
+    public String getDamages() {
+        return damages;
     }
 
-    public void setNummerplade(String nummerplade) {
-        this.nummerplade = nummerplade;
+    public void setDamages(String damages) {
+        this.damages = damages;
     }
 
-    public int getStelnummer() {
-        return stelnummer;
+    public String getRegistrationNumber() {
+        return registrationNumber;
     }
 
-    public void setStelnummer(int stelnummer) {
-        this.stelnummer = stelnummer;
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
-    public String getFarve() {
-        return farve;
+    public int getChassisNumber() {
+        return chassisNumber;
     }
 
-    public void setFarve(String farve) {
-        this.farve = farve;
+    public void setChassisNumber(int chassisNumber) {
+        this.chassisNumber = chassisNumber;
     }
 
-    public String getGeartype() {
-        return geartype;
+    public String getColour() {
+        return colour;
     }
 
-    public void setGeartype(String geartype) {
-        this.geartype = geartype;
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
-    public int getBilID() {
-        return bilID;
+    public String getGearType() {
+        return gearType;
     }
 
-    public void setBilID(int bilID) {
-        this.bilID = bilID;
+    public void setGearType(String gearType) {
+        this.gearType = gearType;
     }
 
-    public void setBrændstoftype(Enum brændstoftype) {
-        this.brændstoftype = brændstoftype;
+    public int getCarID() {
+        return carID;
     }
 
-    public String getStatus() {
-        return status;
+    public void setCarID(int carID) {
+        this.carID = carID;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public Date getUdlejetFra() {
-        return udlejetFra;
+    public void setFuelType(Enum fuelType) {
+        this.fuelType = fuelType;
     }
 
-    public void setUdlejetFra(Date udlejetFra) {
-        this.udlejetFra = udlejetFra;
+    public String getCarStatus() {
+        return carStatus;
     }
 
-    public Date getUdlejetTil() {
-        return udlejetTil;
+    public void setCarStatus(String carStatus) {
+        this.carStatus = carStatus;
+    }
+    public Date getRentedFrom() {
+        return rentedFrom;
     }
 
-    public void setUdlejetTil(Date udlejetTil) {
-        this.udlejetTil = udlejetTil;
+    public void setRentedFrom(Date rentedFrom) {
+        this.rentedFrom = rentedFrom;
+    }
+
+    public Date getRentedTo() {
+        return rentedTo;
+    }
+
+    public void setRentedTo(Date rentedTo) {
+        this.rentedTo = rentedTo;
     }
 }
