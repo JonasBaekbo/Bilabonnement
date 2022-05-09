@@ -4,58 +4,59 @@ import java.util.Date;
 
 public class Leasing {
 
-    private String kundeid;
-    private Date startdato;
-    private Date slutdato;
-    private int inkluderetkilometer;
-    private int bilID;
+    private String customerID;
+    private Date startDate;
+    private Date endDate;
+    private int includedKM;
+    private int carID;
 
-    public Leasing(String kundeid, Date startdato, Date slutdato, int inkluderetkilometer, int bilID) {
-        this.kundeid = kundeid;
-        this.startdato = startdato;
-        this.slutdato = slutdato;
-        this.inkluderetkilometer = inkluderetkilometer;
-        this.bilID = bilID;
+    public Leasing(String customerID, Date startDate, Date endDate, int includedKM, int carID) {
+        this.customerID = customerID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.includedKM = includedKM;
+        this.carID = carID;
     }
 
-    public String getKundeid() {
-        return kundeid;
+    public String getCustomerID() {
+        return customerID;
     }
 
-    public void setKundeid(String kundeid) {
-        this.kundeid = kundeid;
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
 
-    public Date getStartdato() {
-        return startdato;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartdato(Date startdato) {
-        this.startdato = startdato;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getSlutdato() {
-        return slutdato;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setSlutdato(Date slutdato) {
-        this.slutdato = slutdato;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public int getInkluderetkilometer() {
-        return inkluderetkilometer;
+    public int getIncludedKM() {
+        return includedKM;
     }
 
-    public void setInkluderetkilometer(int inkluderetkilometer) {
-        this.inkluderetkilometer = inkluderetkilometer;
+    public void setIncludedKM(int includedKM) {
+        this.includedKM = includedKM;
     }
 
-    public int getBilID() {
-        return bilID;
+    public int getCarID() {
+        return carID;
     }
 
-    public void setBilID(int bilID) {
-        this.bilID = bilID;
+    public void setCarID(int carID) {
+        this.carID = carID;
     }
-
 }
+
+
