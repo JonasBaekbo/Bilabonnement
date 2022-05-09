@@ -1,4 +1,4 @@
 package com.example.bilabonnement.controllers;
 
-public class lejeController {
+public class LeasingController {
 }

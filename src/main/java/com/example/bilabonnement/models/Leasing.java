@@ -2,7 +2,7 @@ package com.example.bilabonnement.models;
 
 import java.util.Date;
 
-public class Leje {
+public class Leasing {
 
     private String kundeid;
     private Date startdato;
@@ -10,7 +10,7 @@ public class Leje {
     private int inkluderetkilometer;
     private int bilID;
 
-    public Leje(String kundeid, Date startdato, Date slutdato, int inkluderetkilometer, int bilID) {
+    public Leasing(String kundeid, Date startdato, Date slutdato, int inkluderetkilometer, int bilID) {
         this.kundeid = kundeid;
         this.startdato = startdato;
         this.slutdato = slutdato;

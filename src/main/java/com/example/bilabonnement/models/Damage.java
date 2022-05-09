@@ -1,11 +1,11 @@
 package com.example.bilabonnement.models;
 
-public class Skade {
+public class Damage {
 
     private String skadetype;
     private int pris;
 
-    public Skade(String skadetype, int pris) {
+    public Damage(String skadetype, int pris) {
         this.skadetype = skadetype;
         this.pris = pris;
     }
