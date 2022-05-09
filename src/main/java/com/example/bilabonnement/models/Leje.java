@@ -57,5 +57,5 @@ public class Leje {
     public void setBilID(int bilID) {
         this.bilID = bilID;
     }
-    //hej
+
 }
