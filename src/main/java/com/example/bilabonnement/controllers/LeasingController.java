@@ -15,7 +15,7 @@ public class LeasingController {
 
     LeasingRepository lr = new LeasingRepository();
 
-    @RequestMapping("/opretlease")
+    @GetMapping("/opretlease")
     public String leasingaftaleFront(Model model) {
         model.addAttribute("title", "Opret lease");
         return "leasing/opretlease";
