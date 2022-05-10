@@ -12,7 +12,7 @@ import java.util.TreeMap;
 public class MainController {
 
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("title", "Forside");
         return "index";
