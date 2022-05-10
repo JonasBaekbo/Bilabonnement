@@ -9,12 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class LeasingRepository implements IRepository<Leasing> {
 
     @Override
     public boolean create(Leasing entity) {
-        Connection conn = DatabaseConnectionManager.getConnection();
+        Connection conn = getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO leasing(`kunde_id`,`id_bil`, `start_dato`, `slut_dato`, `inkluderede_km`) VALUES (?,?,?,?,?)");
             pstmt.setInt(1, entity.getCustomerID());
@@ -29,6 +30,10 @@ public class LeasingRepository implements IRepository<Leasing> {
             e.printStackTrace();
         }
         return false;
+    }
+    public void makeLease(int customerID,  Date startDate, Date endDate, int includedKM, int carID){
+        Leasing lease = new Leasing(customerID, startDate, endDate, includedKM, carID);
+        create(lease);
     }
 
     @Override
