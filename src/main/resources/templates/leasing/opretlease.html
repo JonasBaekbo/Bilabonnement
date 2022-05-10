@@ -6,32 +6,35 @@
 </head>
 <body>
 
-<div>
 
+<div id="wrap">
+<main id="main">
 <form th:action="@{/opretlease}" method="post">
     <p>
+        <label for="customerID"></label>
         <input type="number" id="customerID" placeholder="Kunde ID" name="customerID" required/>
     </p>
     <p>
+        <label for="startDate"></label>
         <input type="date" id="startDate" placeholder="Start dato for lease" name="startDate"/>
     </p>
     <p>
+        <label for="endDate"></label>
         <input type="date" id="endDate" placeholder="Slut dato for lease" name="endDate" required/>
     </p>
     <p>
-    <input type="number" id="includedKM" placeholder="Inkluderet antal kilometer" name="includedKM" required/>
+        <label for="includedKM"></label>
+        <input type="number" id="includedKM" placeholder="Inkluderet antal kilometer" name="includedKM" required/>
     </p>
     <p>
+        <label for="customerID"></label>
         <input type="number" id="carID" placeholder="Bil ID" name="carID" required/>
     </p>
-    <p>
-        <input type="submit" value=" Opret lease "/>
-    </p>
-
-
 </form>
-
+    <p>
+        <button type="submit"> Opret lease </button>
+    </p>
+</main>
 </div>
-
 </body>
 </html>

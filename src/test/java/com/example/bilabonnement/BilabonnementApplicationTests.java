@@ -1,4 +1,4 @@
-package com.example.bilabonnement;
+/*package com.example.bilabonnement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class BilabonnementApplicationTests {
     void contextLoads() {
     }
 
-}
+}*/
