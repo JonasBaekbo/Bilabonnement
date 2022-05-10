@@ -1,12 +1,73 @@
 <footer th:fragment="footer">
-    <div class="row">
-        <div class="col-md-4 float-left" style="font-size: small; margin-left: 2vw ; color: #264973;">
-            <p> Whatever</p>
-            <p><i class="fa-solid fa-copyright"></i> Whatever you wish - Whatever... 4.0 - 2022</p>
+    <div class="container sticky-bottom">
+        <div class="row">
+            <div class="text-center col-md-4 offset-md-4">
+                <h5>Bilabonnement A/S</h5>
+                <p>Slotsherrensvej 411c
+                    2610 Rødovre
+                    CVR-nr. 37856827</p>
+            </div>
         </div>
-        <div class="col-md-4">
-            <a href="#"><i class="fa-solid fa-square-caret-up float-right"></i></a>
+        <div class="row">
+            <div class="col-md-3 float-left">
+                <img src="https://res.cloudinary.com/digital-interdan-bilabonnement/image/upload/c_fit,q_80,w_448/v1/Logos/BILABONNEMENT_rgb_mmahqw.png" width="192px" height="auto">
+            </div>
+            <div class="col-md-3 float-left">
+                <a href="https://bilabonnement.dk/om-bilabonnement">Om Bilabonnement</a>
+                <br>
+                <a href="https://bilabonnement.dk/faq/">Spørgsmål og svar</a>
+                <br>
+                <a href="https://bilabonnement.dk/indhold-pa-siden">Indhold på siden</a>
+                <br>
+                <a href="https://bilabonnement.dk/samarbejdspartnere">Samarbejdspartnere</a>
+                <br>
+                <a href="https://bilabonnement.dk/faq/">Kontakt os</a>
+            </div>
+            <div class="col-md-3 float-left">
+                <a href="https://bilabonnement.dk/information-om-cookies">Information om cookies</a>
+                <br>
+                <a href="https://bilabonnement.dk/persondatapolitik">Persondatapolitik</a>
+                <br>
+                <a href="https://bilabonnement.dk/samtykke">Samtykke</a>
+                <br>
+                <a href="https://bilabonnement.dk/opbevaring-af-dine-oplysninger">Opbevaring af dine oplysninger</a>
+            </div>
+            <div class="col-md-3 float-left">
+                <a href="https://www.facebook.com/Bilabonnement/"><i class="fa-brands fa-facebook-f"></i>Følg os på Facebook</a>
+            </div>
         </div>
+    <button
+            type="button"
+            class="btn btn-danger btn-floating btn-lg"
+            id="btn-back-to-top"
+    >
+        <i class="fas fa-arrow-up"></i>
+    </button>
     </div>
+<script>
+    let mybutton = document.getElementById("btn-back-to-top");
 
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        if (
+            document.body.scrollTop > 20 ||
+            document.documentElement.scrollTop > 20
+        ) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+    // When the user clicks on the button, scroll to the top of the document
+    mybutton.addEventListener("click", backToTop);
+
+    function backToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
 </footer>
