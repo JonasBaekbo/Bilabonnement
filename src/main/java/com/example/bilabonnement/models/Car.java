@@ -1,10 +1,11 @@
 package com.example.bilabonnement.models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Car {
     private int carID;
-    private int chassisNumber;
+    private String chassisNumber;
     private String registrationNumber;
     private String modelName;
     private Enum fuelType;
@@ -17,7 +18,7 @@ public class Car {
     private String damages;
     private Date registrationDate;
 
-    public Car(int carID, int chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {
+    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries, Date registrationDate) {
         this.carID = carID;
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
@@ -30,10 +31,11 @@ public class Car {
         this.rentedFrom = rentedFrom;
         this.rentedTo = rentedTo;
         this.damages = injuries;
+        this.registrationDate=registrationDate;
 
     }
 
-    public Car(int chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {
+    public Car(String chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
         this.modelName = modelName;
@@ -45,6 +47,13 @@ public class Car {
         this.rentedFrom = rentedFrom;
         this.rentedTo = rentedTo;
         this.damages = injuries;
+        this.registrationDate= getDate();
+    }
+
+    private Date getDate() {
+        LocalDate localDate=LocalDate.now();
+        Date currentDate=java.sql.Date.valueOf( localDate );
+        return currentDate;
     }
 
     public String getModelName() {
@@ -85,11 +94,11 @@ public class Car {
         this.registrationNumber = registrationNumber;
     }
 
-    public int getChassisNumber() {
+    public String getChassisNumber() {
         return chassisNumber;
     }
 
-    public void setChassisNumber(int chassisNumber) {
+    public void setChassisNumber(String chassisNumber) {
         this.chassisNumber = chassisNumber;
     }
 
@@ -143,4 +152,5 @@ public class Car {
     public void setRentedTo(Date rentedTo) {
         this.rentedTo = rentedTo;
     }
-}
+
+     }
