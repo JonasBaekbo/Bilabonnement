@@ -60,4 +60,9 @@ public class LeasingRepository implements IRepository<Leasing> {
         return false;
     }
 
+    public static void main(String[] args) {
+        LeasingRepository lp=new LeasingRepository();
+        lp.makeLease(5,new Date(),new Date(),500,3);
+    }
+
 }
