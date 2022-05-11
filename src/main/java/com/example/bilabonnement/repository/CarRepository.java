@@ -60,9 +60,6 @@ public class CarRepository implements IRepository<Car> {
         try {
             // Get id_status
             int statusId = getStatusID(entity);
-            // Get model
-            //int modelId=getModelID(entity);
-
 
             // Update "biler"
             PreparedStatement pstmt = conn.prepareStatement("UPDATE biler SET status = ?, stelnummer = ? ,registreringsnummer= ?, model= ?, brændstoftype= ?, farve= ?, geartype= ?, registreringsafgift =?,skader= ?, `aktuel_leasingaftale`= ?, bil_oprettet= ? WHERE bil_id = ?");
@@ -105,24 +102,7 @@ public class CarRepository implements IRepository<Car> {
         return -1;
     }
 
-   /* private int getModelID(Car car){
-        Connection conn = getConnection();
-        try {
-            String status = car.getCarStatus();
-            PreparedStatement pstmt = conn.prepareStatement("SELECT id_status FROM status WHERE status = ?");
-
-            pstmt.setString(1, status);
-            pstmt.execute();
-            ResultSet resultSet = pstmt.getResultSet();
-            resultSet.next();
-            int statusId = resultSet.getInt(1);
-            System.out.println(statusId);
-            return statusId;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;*/
-    }
+}
 
 
 
