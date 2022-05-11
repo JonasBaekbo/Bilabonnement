@@ -1,22 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http:/www.thymeleaf.org">
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Login - Company ABC</title>
-</head>
+<head th:include="fragments/login_head :: login_head"></head>
+
 <body>
 <div>
-    <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;">
-        <p>
-            E-mail: <input type="text" name="username" required />
-        </p>
-        <p>
-            Password: <input type="password" name="pass" required />
-        </p>
-        <p>
-            <input type="submit" value="Login" />
-        </p>
-    </form>
+    <div class="wrapper">
+        <div class="card">
+            <form th:action="@{/login}" class="d-flex flex-column" method="post">
+                <div class="h3 text-center text-white">Login</div>
+                <div class="d-flex align-items-center input-field my-3 mb-4">
+                    <span class="far fa-user p-2"></span>
+                    <input type="text" placeholder="Brugernavn" required class="form-control" name="username">
+                </div>
+                <div class="d-flex align-items-center input-field mb-4">
+                    <span class="fas fa-lock p-2"></span>
+                    <input type="password" placeholder="Kodeord" required class="form-control" id="pass" name="pass">
+                    <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+
+                </div>
+                <div class="my-3">
+                    <button type="submit" id="submit" class="submit btn btn-primary">Log ind</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#pass");
+
+        togglePassword.addEventListener("click", function () {
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+
+            // toggle the icon
+            if(this.classList.contains("fa-eye-slash")){
+            this.classList.remove("fa-eye-slash")
+            this.classList.toggle("fa-eye");
+            }else{
+                this.classList.remove("fa-eye")
+                this.classList.toggle("fa-eye-slash");
+
+            }
+        });
+    </script>
+    </script>
 </div>
 </body>
 </html>

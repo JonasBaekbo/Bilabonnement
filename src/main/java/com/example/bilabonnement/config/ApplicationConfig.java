@@ -34,8 +34,8 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     //login
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-       http.authorizeRequests().antMatchers("/admin/*").hasAnyRole("ADMIN", "DATA", "DAMAGE", "BUISNESS").and().formLogin().loginPage("/login").usernameParameter("username").passwordParameter("pass").failureUrl("/login-error").successForwardUrl("/login_success").successHandler(new AuthenticationSuccessHandler() {
+// TODO Skal lave antMatchers til hele admin delen, når alle funktioner er lavet
+       http.authorizeRequests().antMatchers("/admin").hasAnyRole("ADMIN", "DATA", "DAMAGE", "BUISNESS").and().formLogin().loginPage("/login").usernameParameter("username").passwordParameter("pass").failureUrl("/login-error").successForwardUrl("/login_success").successHandler(new AuthenticationSuccessHandler() {
 
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
