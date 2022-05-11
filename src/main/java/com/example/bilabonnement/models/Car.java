@@ -8,17 +8,16 @@ public class Car {
     private String chassisNumber;
     private String registrationNumber;
     private String modelName;
-    private Enum fuelType;
+    private String fuelType;
     private String colour;
     private String gearType;
     private String carStatus;
     private int registrationFee;
-    private Date rentedFrom;
-    private Date rentedTo;
     private String damages;
+    private String currentLeasing;
     private Date registrationDate;
 
-    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries, Date registrationDate) {
+    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, String currentLeasing, Date registrationDate) {
         this.carID = carID;
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
@@ -28,14 +27,13 @@ public class Car {
         this.gearType = gearType;
         this.carStatus = status;
         this.registrationFee = registrationFee;
-        this.rentedFrom = rentedFrom;
-        this.rentedTo = rentedTo;
         this.damages = injuries;
-        this.registrationDate=registrationDate;
+        this.currentLeasing = currentLeasing;
+        this.registrationDate = registrationDate;
 
     }
 
-    public Car(String chassisNumber, String registrationNumber, String modelName, Enum fuelType, String colour, String gearType, String status, int registrationFee, Date rentedFrom, Date rentedTo, String injuries) {
+    public Car(String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, String currentLeasing) {
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
         this.modelName = modelName;
@@ -44,15 +42,19 @@ public class Car {
         this.gearType = gearType;
         this.carStatus = status;
         this.registrationFee = registrationFee;
-        this.rentedFrom = rentedFrom;
-        this.rentedTo = rentedTo;
         this.damages = injuries;
-        this.registrationDate= getDate();
+        this.currentLeasing = currentLeasing;
+        this.registrationDate = getDate();
+    }
+
+    public java.sql.Date getUtilAsSQL(Date utilDate) {
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return sqlDate;
     }
 
     private Date getDate() {
-        LocalDate localDate=LocalDate.now();
-        Date currentDate=java.sql.Date.valueOf( localDate );
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = java.sql.Date.valueOf(localDate);
         return currentDate;
     }
 
@@ -64,7 +66,7 @@ public class Car {
         this.modelName = modelName;
     }
 
-    public Enum getFuelType() {
+    public String getFuelType() {
         return fuelType;
     }
 
@@ -126,7 +128,7 @@ public class Car {
         this.carID = carID;
     }
 
-    public void setFuelType(Enum fuelType) {
+    public void setFuelType(String fuelType) {
         this.fuelType = fuelType;
     }
 
@@ -137,20 +139,20 @@ public class Car {
     public void setCarStatus(String carStatus) {
         this.carStatus = carStatus;
     }
-    public Date getRentedFrom() {
-        return rentedFrom;
+
+    public String getCurrentLeasing() {
+        return currentLeasing;
     }
 
-    public void setRentedFrom(Date rentedFrom) {
-        this.rentedFrom = rentedFrom;
+    public void setCurrentLeasing(String currentLeasing) {
+        this.currentLeasing = currentLeasing;
     }
 
-    public Date getRentedTo() {
-        return rentedTo;
+    public Date getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setRentedTo(Date rentedTo) {
-        this.rentedTo = rentedTo;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
-
-     }
+}

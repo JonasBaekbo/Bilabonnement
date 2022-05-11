@@ -22,6 +22,7 @@ public class StatisticsRepository {
 
             return numCarsLeased;
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("error in getNumberOfCarsLeased-method");
         }
         return -1;
@@ -41,6 +42,7 @@ public class StatisticsRepository {
 
             return totalNumberOfCars;
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("error in getNumbersOfCarsInTotal-method");
         }
         return -1;

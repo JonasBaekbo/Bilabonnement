@@ -28,6 +28,11 @@ public class Leasing {
         this.carID = carID;
     }
 
+    public java.sql.Date getUtilAsSQL(Date utilDate) {
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return sqlDate;
+    }
+
     public int getCustomerID() {
         return customerID;
     }

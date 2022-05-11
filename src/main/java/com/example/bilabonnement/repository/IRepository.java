@@ -13,6 +13,7 @@ public interface IRepository<T> {
     public List<T> getAllEntities();
 
     //Update
+    public boolean update(T entity);
 
     //Delete
 }
