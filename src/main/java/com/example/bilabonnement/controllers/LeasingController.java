@@ -15,10 +15,10 @@ public class LeasingController {
 
     LeasingRepository lr = new LeasingRepository();
 
-    @GetMapping("/opretlease")
+    @GetMapping("/admin/opretlease")
     public String leasingaftaleFront(Model model) {
         model.addAttribute("title", "Opret lease");
-        return "leasing/opretlease";
+        return "admin/leasing/opretlease";
     }
 
     @PostMapping("/opretlease")
@@ -26,6 +26,6 @@ public class LeasingController {
                               @RequestParam("includedKM") int includedKM, @RequestParam("carID") int carID){
         Leasing lease = new Leasing(customerID, startDate, endDate, includedKM, carID);
         lr.create(lease);
-        return "redirect:/opretlease";
+        return "redirect:/admin";
             }
 }

@@ -1,54 +1,49 @@
 //Template found on https://www.codeply.com/p/WGCqYEiPBg
-<div class="container-fluid" th:fragment="dashboard_header">
+<div class="container-fluid" th:fragment="dashboard_header" xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                    <span class="fs-5 d-none d-sm-inline">Bilabonnement Dashboard</span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                        <a href="/admin" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Forside</span>
                         </a>
                     </li>
-                    <li>
+
+                    <li sec:authorize="hasAnyRole('DATA', 'ADMIN')">
                         <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Leasing</span> </a>
                         <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>
+                                <a href="/admin/opretlease" class="nav-link px-0">Opret Lease</a>
                             </li>
                             <li>
                                 <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Orders</span></a>
-                    </li>
-                    <li>
+                    <li sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')">
                         <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
+                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Skader</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Registrer fejl og mangler</span></a>
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')">
                         <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products</span> </a>
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Forretningsudviklere</span> </a>
                         <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Se antal<br>udlejede biler</span></a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
+                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Se sammenlagte pris<br> på nuværende<br>udlejede biler</span></a>
                             </li>
                             <li>
                                 <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
@@ -83,54 +78,6 @@
                 </div>
             </div>
         </div>
-        <div class="col py-3">
-            <div id="chart_div"></div>
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
-        </div>
-        <script th:inline="javascript">
-            var real_data = /*[[${chartData}]]*/'noValue';
-            $(document).ready(function() {
-                google.charts.load('current', {
-                    packages : [ 'corechart', 'bar' ]
-                });
-                google.charts.setOnLoadCallback(drawColumnChart);
-                google.charts.setOnLoadCallback(drawPieChart);
-            });
-            function drawColumnChart() {
-                var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Year');
-                data.addColumn('number', 'Views');
-                Object.keys(real_data).forEach(function(key) {
-                    data.addRow([ key, real_data[key] ]);
-                });
-                var options = {
-                    title : 'Blog stats',
-                    hAxis : {
-                        title : 'Years',
-                    },
-                    vAxis : {
-                        title : 'View Count'
-                    }
-                };
-                var chart = new google.visualization.ColumnChart(document
-                    .getElementById('chart_div'));
-                chart.draw(data, options);
-            }
-            function drawPieChart() {
-                var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Year');
-                data.addColumn('number', 'Views');
-                Object.keys(real_data).forEach(function(key) {
-                    data.addRow([ key, real_data[key] ]);
-                });
-                var options = {
-                    title : 'Blog stats'
-                };
-                var chart = new google.visualization.PieChart(document
-                    .getElementById('piechart'));
-                chart.draw(data, options);
-            }
-        </script>
         </div>
     </div>
 </div>

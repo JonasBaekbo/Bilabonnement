@@ -67,11 +67,12 @@
                         </form>
                             <a class="dropdown-item" href="javascript: logoutForm.submit();">Sign Out</a></li>
                     </ul>
-                        </div>
+                </div>
                 </ul>
             </div>
         </div>
-        <p>Vælg venligst et punkt i menuen til venstre</p>
+        <div th:include="admin/includes/dashboard_content :: opretlease"></div>
+
     </div>
 </div>
 <script th:inline="javascript">
