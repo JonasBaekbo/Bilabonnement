@@ -58,14 +58,14 @@
                         <span class="d-none d-sm-inline mx-1">[[${#httpServletRequest.getRemoteUser}]]</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="/">Tilbage til siden</a></li>
+                        <li><a class="dropdown-item" href="/">Tilbage til forsiden</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li><form name="logoutForm" th:hidden="true" method="post" th:action="@{/logout}">
                             <input type="submit" value="Logout" />
                         </form>
-                            <a class="dropdown-item" href="javascript: logoutForm.submit();">Sign Out</a></li>
+                            <a class="dropdown-item" href="javascript: logoutForm.submit();">Log ud</a></li>
                     </ul>
                         </div>
                 </ul>
