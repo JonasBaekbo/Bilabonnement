@@ -7,34 +7,47 @@ import java.time.LocalDateTime;
 public class Damage {
 
     private int damageID;
+    private int carID;
     private String damageDescription;
     private int price;
+    private String damageRapporter;
     private Date damageRegistationsDate;
     private Date damageFixedDate;
     private Timestamp timestamp;
 
-    public Damage(String damageDescription, int price, Date damageRegistationsDate) {
+    public Damage(int carID, String damageDescription, int price,String damageRapporter, Date damageRegistationsDate) {
+        this.carID=carID;
         this.damageDescription = damageDescription;
         this.price = price;
+        this.damageRapporter=damageRapporter;
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = null;
         this.timestamp = getTimeStamp();
     }
 
-    public Damage(int damageID, String damageDescription, int price, Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
+    public Damage(int damageID, int carID, String damageDescription, int price, String damageRapporter,Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
         this.damageID = damageID;
+        this.carID=carID;
         this.damageDescription = damageDescription;
         this.price = price;
+        this.damageRapporter=damageRapporter;
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = damageFixedDate;
         this.timestamp = timestamp;
     }
 
-    private Timestamp getTimeStamp() {
+
+    public Timestamp getTimeStamp() {
         LocalDateTime localDateTime = LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
         return timestamp;
     }
+
+    public java.sql.Date getUtilDateAsSQL(java.util.Date utilDate) {
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        return sqlDate;
+    }
+
 
     public String getDamageDescription() {
         return damageDescription;
@@ -82,6 +95,22 @@ public class Damage {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getCarID() {
+        return carID;
+    }
+
+    public void setCarID(int carID) {
+        this.carID = carID;
+    }
+
+    public String getDamageRapporter() {
+        return damageRapporter;
+    }
+
+    public void setDamageRapporter(String damageRapporter) {
+        this.damageRapporter = damageRapporter;
     }
 }
 

@@ -21,7 +21,7 @@ public class CarRepository implements IRepository<Car> {
         Connection conn = getConnection();
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT bil_id, stelnummer, registreringsnummer, model, brændstoftype, farve, geartype, status, registreringsafgift,skader, aktuel_leasingaftale, bil_oprettet FROM biler WHERE bil_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT bil_id, stelnummer, registreringsnummer, model, brændstoftype, farve, geartype, status, registreringsafgift, aktuel_leasingaftale, bil_oprettet FROM biler WHERE bil_id = ?");
             pstmt.setInt(1, id);
             pstmt.execute();
             ResultSet resultSet = pstmt.getResultSet();
@@ -37,7 +37,6 @@ public class CarRepository implements IRepository<Car> {
                     resultSet.getString("geartype"),
                     resultSet.getString("status"),
                     resultSet.getInt("registreringsafgift"),
-                    resultSet.getString("skader"),
                     resultSet.getInt("aktuel_leasingaftale"),
                     resultSet.getTimestamp("bil_oprettet")
             );
@@ -61,7 +60,7 @@ public class CarRepository implements IRepository<Car> {
             int statusId = getStatusID(entity);
 
             // Update "biler"
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE biler SET status = ?, stelnummer = ? ,registreringsnummer= ?, model= ?, brændstoftype= ?, farve= ?, geartype= ?, registreringsafgift =?,skader= ?, `aktuel_leasingaftale`= ?, bil_oprettet= ? WHERE bil_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE biler SET status = ?, stelnummer = ? ,registreringsnummer= ?, model= ?, brændstoftype= ?, farve= ?, geartype= ?, registreringsafgift =?, `aktuel_leasingaftale`= ?, bil_oprettet= ? WHERE bil_id = ?");
             pstmt.setInt(1, statusId);
             pstmt.setString(2, entity.getChassisNumber());
             pstmt.setString(3, entity.getRegistrationNumber());
@@ -70,10 +69,9 @@ public class CarRepository implements IRepository<Car> {
             pstmt.setString(6, entity.getColour());
             pstmt.setString(7, entity.getGearType());
             pstmt.setInt(8, entity.getRegistrationFee());
-            pstmt.setString(9, entity.getDamages());
-            pstmt.setInt(10, entity.getCurrentLeasing());
-            pstmt.setDate(11, entity.getUtilDateAsSQL(entity.getRegistrationDate()));
-            pstmt.setInt(12, entity.getCarID());
+            pstmt.setInt(9, entity.getCurrentLeasing());
+            pstmt.setDate(10, entity.getUtilDateAsSQL(entity.getRegistrationDate()));
+            pstmt.setInt(11, entity.getCarID());
             pstmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();

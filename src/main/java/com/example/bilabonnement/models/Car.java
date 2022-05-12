@@ -15,11 +15,10 @@ public class Car {
     private String gearType;
     private String carStatus;
     private int registrationFee;
-    private String damages;
     private int currentLeasing;
     private Timestamp registrationDate;
 
-    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, int currentLeasing, Timestamp registrationDate) {
+    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, int currentLeasing, Timestamp registrationDate) {
         this.carID = carID;
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
@@ -29,13 +28,12 @@ public class Car {
         this.gearType = gearType;
         this.carStatus = status;
         this.registrationFee = registrationFee;
-        this.damages = injuries;
         this.currentLeasing = currentLeasing;
         this.registrationDate = registrationDate;
 
     }
 
-    public Car(String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, int currentLeasing) {
+    public Car(String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, int currentLeasing) {
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
         this.modelName = modelName;
@@ -44,7 +42,6 @@ public class Car {
         this.gearType = gearType;
         this.carStatus = status;
         this.registrationFee = registrationFee;
-        this.damages = injuries;
         this.currentLeasing = currentLeasing;
         this.registrationDate = getTimeStamp();
     }
@@ -61,11 +58,6 @@ public class Car {
         return sqlDate;
     }
 
-    private Date getDate() {
-        LocalDate localDate = LocalDate.now();
-        Date currentDate = java.sql.Date.valueOf(localDate);
-        return currentDate;
-    }
 
     public String getModelName() {
         return modelName;
@@ -86,15 +78,6 @@ public class Car {
 
     public void setRegistrationFee(int registrationFee) {
         this.registrationFee = registrationFee;
-    }
-
-
-    public String getDamages() {
-        return damages;
-    }
-
-    public void setDamages(String damages) {
-        this.damages = damages;
     }
 
     public String getRegistrationNumber() {
