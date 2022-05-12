@@ -17,6 +17,9 @@ public class Car {
     private int registrationFee;
     private int currentLeasing;
     private Timestamp registrationDate;
+    private String currentLeasing;
+    private Date registrationDate;
+    private int pricePrMonth;
 
     public Car(int carID, String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, int currentLeasing, Timestamp registrationDate) {
         this.carID = carID;
@@ -54,6 +57,22 @@ public class Car {
 
 
     public java.sql.Date getUtilDateAsSQL(Date utilDate) {
+    public Car(int carID, String carStatus, int pricePrMonth) {
+        this.carID = carID;
+        this.carStatus = carStatus;
+        this.pricePrMonth = pricePrMonth;
+
+    }
+
+    public Car(int carID, String registrationNumber, String currentLeasing, String carStatus, int pricePrMonth) {
+        this.carID = carID;
+        this.registrationNumber = registrationNumber;
+        this.currentLeasing = currentLeasing;
+        this.carStatus = carStatus;
+        this.pricePrMonth = pricePrMonth;
+    }
+
+    public java.sql.Date getUtilAsSQL(Date utilDate) {
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         return sqlDate;
     }
@@ -146,5 +165,13 @@ public class Car {
 
     public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public int getPricePrMonth() {
+        return pricePrMonth;
+    }
+
+    public void setPricePrMonth(int pricePrMonth) {
+        this.pricePrMonth = pricePrMonth;
     }
 }

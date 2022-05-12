@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+    <tr
+            th:each="Car : ${cars}">
+        <td th:text="${Car.getCarID()}"></td>
+        <td th:text="${Car.getRegistrationNumber()}"></td>
+        <td th:text="${Car.getCurrentLeasing()}"></td>
+        <td th:text="${Car.getCarStatus()}"></td>
+        <td th:text="${Car.getPricePrMonth()}"></td>
+    </tr>
+    </table>
+    totalMontlyIncome = <td th:text="${totalMontlyIncome}"></td>
+</body>
+</html>
