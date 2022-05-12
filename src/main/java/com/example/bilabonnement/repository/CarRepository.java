@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
@@ -39,8 +38,8 @@ public class CarRepository implements IRepository<Car> {
                     resultSet.getString("status"),
                     resultSet.getInt("registreringsafgift"),
                     resultSet.getString("skader"),
-                    resultSet.getString("aktuel_leasingaftale"),
-                    resultSet.getDate("bil_oprettet")
+                    resultSet.getInt("aktuel_leasingaftale"),
+                    resultSet.getTimestamp("bil_oprettet")
             );
             return car;
         } catch (SQLException e) {
@@ -72,8 +71,8 @@ public class CarRepository implements IRepository<Car> {
             pstmt.setString(7, entity.getGearType());
             pstmt.setInt(8, entity.getRegistrationFee());
             pstmt.setString(9, entity.getDamages());
-            pstmt.setString(10, entity.getCurrentLeasing());
-            pstmt.setDate(11, entity.getUtilAsSQL(entity.getRegistrationDate()));
+            pstmt.setInt(10, entity.getCurrentLeasing());
+            pstmt.setDate(11, entity.getUtilDateAsSQL(entity.getRegistrationDate()));
             pstmt.setInt(12, entity.getCarID());
             pstmt.execute();
         } catch (SQLException e) {
@@ -94,7 +93,6 @@ public class CarRepository implements IRepository<Car> {
             ResultSet resultSet = pstmt.getResultSet();
             resultSet.next();
             int statusId = resultSet.getInt(1);
-            System.out.println(statusId);
             return statusId;
         } catch (SQLException e) {
             e.printStackTrace();

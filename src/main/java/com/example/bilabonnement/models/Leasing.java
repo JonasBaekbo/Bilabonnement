@@ -1,5 +1,7 @@
 package com.example.bilabonnement.models;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Leasing {
@@ -10,6 +12,7 @@ public class Leasing {
     private int includedKM;
     private int carID;
     private int leasingId;
+    private Timestamp timeAdded;
 
     public Leasing(int customerID, Date startDate, Date endDate, int includedKM, int carID) {
         this.customerID = customerID;
@@ -17,18 +20,27 @@ public class Leasing {
         this.endDate = endDate;
         this.includedKM = includedKM;
         this.carID = carID;
+        this.timeAdded=getTimeStamp();
     }
 
-    public Leasing(int leasingId, int customerID,  Date startDate, Date endDate, int includedKM, int carID) {
+
+    public Leasing(int leasingId, int customerID,  Date startDate, Date endDate, int includedKM, int carID, Timestamp timeAdded) {
         this.leasingId=leasingId;
         this.customerID = customerID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.includedKM = includedKM;
         this.carID = carID;
+        this.timeAdded=timeAdded;
     }
 
-    public java.sql.Date getUtilAsSQL(Date utilDate) {
+    private Timestamp getTimeStamp() {
+        LocalDateTime localDateTime= LocalDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+        return timestamp;
+    }
+
+    public java.sql.Date getUtilDateAsSQL(Date utilDate) {
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         return sqlDate;
     }
@@ -79,6 +91,14 @@ public class Leasing {
 
     public void setLeasingId(int leasingId) {
         this.leasingId = leasingId;
+    }
+
+    public Timestamp getTimeAdded() {
+        return timeAdded;
+    }
+
+    public void setTimeAdded(Timestamp timeAdded) {
+        this.timeAdded = timeAdded;
     }
 }
 

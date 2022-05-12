@@ -1,6 +1,8 @@
 package com.example.bilabonnement.models;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Car {
@@ -14,10 +16,10 @@ public class Car {
     private String carStatus;
     private int registrationFee;
     private String damages;
-    private String currentLeasing;
-    private Date registrationDate;
+    private int currentLeasing;
+    private Timestamp registrationDate;
 
-    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, String currentLeasing, Date registrationDate) {
+    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, int currentLeasing, Timestamp registrationDate) {
         this.carID = carID;
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
@@ -33,7 +35,7 @@ public class Car {
 
     }
 
-    public Car(String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, String currentLeasing) {
+    public Car(String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, String injuries, int currentLeasing) {
         this.chassisNumber = chassisNumber;
         this.registrationNumber = registrationNumber;
         this.modelName = modelName;
@@ -44,10 +46,17 @@ public class Car {
         this.registrationFee = registrationFee;
         this.damages = injuries;
         this.currentLeasing = currentLeasing;
-        this.registrationDate = getDate();
+        this.registrationDate = getTimeStamp();
     }
 
-    public java.sql.Date getUtilAsSQL(Date utilDate) {
+    private Timestamp getTimeStamp() {
+        LocalDateTime localDateTime= LocalDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+        return timestamp;
+    }
+
+
+    public java.sql.Date getUtilDateAsSQL(Date utilDate) {
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         return sqlDate;
     }
@@ -140,19 +149,19 @@ public class Car {
         this.carStatus = carStatus;
     }
 
-    public String getCurrentLeasing() {
+    public int getCurrentLeasing() {
         return currentLeasing;
     }
 
-    public void setCurrentLeasing(String currentLeasing) {
+    public void setCurrentLeasing(int currentLeasing) {
         this.currentLeasing = currentLeasing;
     }
 
-    public Date getRegistrationDate() {
+    public Timestamp getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
 }
