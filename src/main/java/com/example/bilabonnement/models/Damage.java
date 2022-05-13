@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Damage {
-    private DateTool dateTool = new DateTool();
+    private final DateTool dateTool = new DateTool();
 
     private int damageID;
     private int carID;

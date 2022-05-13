@@ -7,7 +7,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Car {
-    private DateTool dateTool =new DateTool();
+    private final DateTool dateTool =new DateTool();
+
     private int carID;
     private String chassisNumber;
     private String registrationNumber;

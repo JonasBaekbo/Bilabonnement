@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Leasing {
-    private DateTool dateTool =new DateTool();
+    private final DateTool dateTool =new DateTool();
 
     private int customerID;
     private Date startDate;

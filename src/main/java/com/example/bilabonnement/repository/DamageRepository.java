@@ -12,7 +12,7 @@ import java.util.List;
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class DamageRepository implements IRepository<Damage>{
-   private DateTool dateTool =new DateTool();
+   private final DateTool dateTool =new DateTool();
 
     @Override
     public boolean create(Damage entity) {
@@ -141,7 +141,7 @@ public class DamageRepository implements IRepository<Damage>{
             return false;
         }
 
-
+//test at sql henter det korrekte
     public static void main(String[] args) {
         DamageRepository dr=new DamageRepository();
         ArrayList<DamagedCar>all= (ArrayList<DamagedCar>) dr.getAllDamgesCars();

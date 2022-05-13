@@ -1,7 +1,7 @@
 package com.example.bilabonnement.models;
 
 import java.sql.Date;
-import java.sql.Timestamp;
+
 
 public class DamagedCar {
 
@@ -34,6 +34,7 @@ public class DamagedCar {
         this.damageFixedDate = damageFixedDate;
     }
 
+    //skal slettes kun til test
     @Override
     public String toString() {
         return "DamagedCar{" +
