@@ -1,10 +1,13 @@
 package com.example.bilabonnement.models;
 
+import com.example.bilabonnement.servises.DateTool;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Leasing {
+    private DateTool dateTool =new DateTool();
 
     private int customerID;
     private Date startDate;
@@ -20,7 +23,7 @@ public class Leasing {
         this.endDate = endDate;
         this.includedKM = includedKM;
         this.carID = carID;
-        this.timeAdded=getTimeStamp();
+        this.timeAdded=dateTool.getTimeStamp();
     }
 
 
@@ -32,17 +35,6 @@ public class Leasing {
         this.includedKM = includedKM;
         this.carID = carID;
         this.timeAdded=timeAdded;
-    }
-
-    private Timestamp getTimeStamp() {
-        LocalDateTime localDateTime= LocalDateTime.now();
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
-        return timestamp;
-    }
-
-    public java.sql.Date getUtilDateAsSQL(Date utilDate) {
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        return sqlDate;
     }
 
     public int getCustomerID() {

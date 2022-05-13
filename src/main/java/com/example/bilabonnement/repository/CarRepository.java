@@ -1,6 +1,7 @@
 package com.example.bilabonnement.repository;
 
 import com.example.bilabonnement.models.Car;
+import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,8 @@ import java.util.List;
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class CarRepository implements IRepository<Car> {
+    DateTool dateTool =new DateTool();
+
     @Override
     public boolean create(Car entity) {
         return false;
@@ -70,7 +73,7 @@ public class CarRepository implements IRepository<Car> {
             pstmt.setString(7, entity.getGearType());
             pstmt.setInt(8, entity.getRegistrationFee());
             pstmt.setInt(9, entity.getCurrentLeasing());
-            pstmt.setDate(10, entity.getUtilDateAsSQL(entity.getRegistrationDate()));
+            pstmt.setDate(10, dateTool.getUtilDateAsSQL(entity.getRegistrationDate()));
             pstmt.setInt(11, entity.getCarID());
             pstmt.execute();
         } catch (SQLException e) {

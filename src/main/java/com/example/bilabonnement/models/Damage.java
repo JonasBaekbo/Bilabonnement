@@ -1,10 +1,13 @@
 package com.example.bilabonnement.models;
 
+import com.example.bilabonnement.servises.DateTool;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Damage {
+    private DateTool dateTool = new DateTool();
 
     private int damageID;
     private int carID;
@@ -22,7 +25,7 @@ public class Damage {
         this.damageRapporter=damageRapporter;
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = null;
-        this.timestamp = getTimeStamp();
+        this.timestamp = dateTool.getTimeStamp();
     }
 
     public Damage(int damageID, int carID, String damageDescription, int price, String damageRapporter,Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
@@ -34,18 +37,6 @@ public class Damage {
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = damageFixedDate;
         this.timestamp = timestamp;
-    }
-
-
-    public Timestamp getTimeStamp() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
-        return timestamp;
-    }
-
-    public java.sql.Date getUtilDateAsSQL(java.util.Date utilDate) {
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        return sqlDate;
     }
 
 
@@ -89,9 +80,6 @@ public class Damage {
         this.damageID = damageID;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
@@ -112,5 +100,11 @@ public class Damage {
     public void setDamageRapporter(String damageRapporter) {
         this.damageRapporter = damageRapporter;
     }
+
+
+    public Timestamp getTimeStamp() {
+            return timestamp;
+        }
+
 }
 
