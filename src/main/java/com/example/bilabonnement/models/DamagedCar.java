@@ -5,6 +5,15 @@ import java.sql.Date;
 
 public class DamagedCar {
 
+    private Car car;
+    private Damage damage;
+
+    public DamagedCar(Car car, Damage damage) {
+        this.car = car;
+        this.damage = damage;
+    }
+
+    /*
     private int carID;
 
     private int damageID;
@@ -52,4 +61,6 @@ public class DamagedCar {
                 ", damageFixedDate=" + damageFixedDate +
                 '}';
     }
+
+     */
 }

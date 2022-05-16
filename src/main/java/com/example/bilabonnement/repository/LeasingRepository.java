@@ -19,7 +19,7 @@ private DateTool dateTool =new DateTool();
     public boolean create(Leasing entity) {
         Connection conn = getConnection();
         try {
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO leasing(`kunde_id`,`id_bil`, `start_dato`, `slut_dato`, `inkluderede_km`,timeAdded) VALUES (?,?,?,?,?,?)");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO leasing(customer_id, car_id, start_date, end_date, included_km,leasing_added) VALUES (?,?,?,?,?,?)");
             pstmt.setInt(1, entity.getCustomerID());
             pstmt.setInt(2, entity.getCarID());
             pstmt.setDate(3, dateTool.getUtilDateAsSQL(entity.getStartDate()));

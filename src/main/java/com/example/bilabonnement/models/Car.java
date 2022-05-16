@@ -2,69 +2,58 @@ package com.example.bilabonnement.models;
 
 import com.example.bilabonnement.servises.DateTool;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class Car {
     private final DateTool dateTool =new DateTool();
 
     private int carID;
     private String chassisNumber;
-    private String registrationNumber;
+    private String vinNumber;
     private String modelName;
     private String fuelType;
     private String colour;
     private String gearType;
     private String carStatus;
-    private int registrationFee;
     private int currentLeasing;
     private Timestamp registrationDate;
-    private int pricePrMonth;
 
-    public Car(int carID, String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, int currentLeasing, Timestamp registrationDate) {
+
+    public Car(int carID, String chassisNumber, String vinNumber, String modelName, String fuelType, String colour, String gearType, String status, int currentLeasing, Timestamp registrationDate) {
         this.carID = carID;
         this.chassisNumber = chassisNumber;
-        this.registrationNumber = registrationNumber;
+        this.vinNumber = vinNumber;
         this.modelName = modelName;
         this.fuelType = fuelType;
         this.colour = colour;
         this.gearType = gearType;
         this.carStatus = status;
-        this.registrationFee = registrationFee;
         this.currentLeasing = currentLeasing;
         this.registrationDate = registrationDate;
 
     }
 
-    public Car(String chassisNumber, String registrationNumber, String modelName, String fuelType, String colour, String gearType, String status, int registrationFee, int currentLeasing) {
+    public Car(String chassisNumber, String vinNumber, String modelName, String fuelType, String colour, String gearType, String status, int currentLeasing) {
         this.chassisNumber = chassisNumber;
-        this.registrationNumber = registrationNumber;
+        this.vinNumber = vinNumber;
         this.modelName = modelName;
         this.fuelType = fuelType;
         this.colour = colour;
         this.gearType = gearType;
         this.carStatus = status;
-        this.registrationFee = registrationFee;
         this.currentLeasing = currentLeasing;
         this.registrationDate = dateTool.getTimeStamp();
     }
 
-    public Car(int carID, String carStatus, int pricePrMonth) {
-        this.carID = carID;
-        this.carStatus = carStatus;
-        this.pricePrMonth = pricePrMonth;
 
-    }
 
-    public Car(int carID, String registrationNumber, int currentLeasing, String carStatus, int pricePrMonth) {
+    public Car(int carID, String vinNumber, int currentLeasing, String carStatus) {
         this.carID = carID;
-        this.registrationNumber = registrationNumber;
+        this.vinNumber = vinNumber;
         this.currentLeasing = currentLeasing;
         this.carStatus = carStatus;
-        this.pricePrMonth = pricePrMonth;
-    }
 
+    }
 
     public String getModelName() {
         return modelName;
@@ -79,28 +68,12 @@ public class Car {
     }
 
 
-    public int getRegistrationFee() {
-        return registrationFee;
+    public String getVinNumber() {
+        return vinNumber;
     }
 
-    public void setRegistrationFee(int registrationFee) {
-        this.registrationFee = registrationFee;
-    }
-
-    public String getRegistrationNumber() {
-        return registrationNumber;
-    }
-
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
-    }
-
-    public String getChassisNumber() {
-        return chassisNumber;
-    }
-
-    public void setChassisNumber(String chassisNumber) {
-        this.chassisNumber = chassisNumber;
+    public void setVinNumber(String vinNumber) {
+        this.vinNumber = vinNumber;
     }
 
     public String getColour() {
@@ -155,13 +128,6 @@ public class Car {
         this.registrationDate = registrationDate;
     }
 
-    public int getPricePrMonth() {
-        return pricePrMonth;
-    }
-
-    public void setPricePrMonth(int pricePrMonth) {
-        this.pricePrMonth = pricePrMonth;
-    }
 
 
 }

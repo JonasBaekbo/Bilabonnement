@@ -11,22 +11,25 @@ import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
-public class DamageRepository implements IRepository<Damage>{
-   private final DateTool dateTool =new DateTool();
+public class DamageRepository implements IRepository<Damage> {
+    private final DateTool dateTool = new DateTool();
+
+    private final CarRepository carRepository = new CarRepository();
+    private final DamageRepository damageRepository = new DamageRepository();
 
     @Override
     public boolean create(Damage entity) {
         Connection conn = getConnection();
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO skadeliste (id_bil, beskrivelse, omkostning_kr, anmelder,skade_dato,timestamp ) VALUES (?,?,?,?,?,?)");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO damages (car_id, description, damages_cost_kr, claimant,damage_date,damage_added) VALUES (?,?,?,?,?,?)");
             pstmt.setInt(1, entity.getCarID());
-            pstmt.setString(2,entity.getDamageDescription());
-            pstmt.setInt(3,entity.getPrice());
-            pstmt.setString(4,entity.getDamageRapporter());
+            pstmt.setString(2, entity.getDamageDescription());
+            pstmt.setInt(3, entity.getPrice());
+            pstmt.setString(4, entity.getDamageRapporter());
 
             pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
-            pstmt.setTimestamp(6,entity.getTimeStamp());
+            pstmt.setTimestamp(6, entity.getTimeStamp());
             pstmt.execute();
 
             CarRepository carRepository = new CarRepository();
@@ -42,34 +45,34 @@ public class DamageRepository implements IRepository<Damage>{
         return false;
     }
 
-    public List<DamagedCar> getAllDamgesCars(){
-        ArrayList<DamagedCar>allDamagedCars=new ArrayList<>();
+    public List<DamagedCar> getAllDamgesCars() {
+        ArrayList<DamagedCar> allDamagedCars = new ArrayList<>();
 
         String sql = """
                 SELECT
-                	biler.bil_id,
-                    skadeliste.id_skade,
-                    biler.stelnummer,
-                    biler.registreringsnummer,
-                    producent.prducent,
-                    bilmodeller.bilmodel,
-                    status.status,
-                    skadeliste.beskrivelse,
-                    skadeliste.omkostning_kr,
-                    skadeliste.anmelder,
-                    skadeliste.skade_dato,
-                    skadeliste.skade_afsluttet
+                	cars.car_id,
+                    damages.damages_id,
+                    cars.vin_number,
+                    cars.registration_number,
+                    manufacturer.manufacturer,
+                    car_models.model,
+                    car_status.car_status,
+                    damages.description,
+                    damages.damages_cost_kr,
+                    damages.claimant,
+                    damages.damage_date,
+                    damages.damage_closed
                 FROM
-                	biler
+                	cars
                 JOIN
-                    bilmodeller ON biler.model = bilmodeller.id_bilmodeller
+                    car_models ON cars.car_model = car_models.car_model_id
                 JOIN
-                    producent ON bilmodeller.producent = producent.id_producent
+                    manufacturer ON car_models.manufacturer = manufacturer.manufacturer_id
                 JOIN
-                    status ON biler.status = status.id_status
+                    car_status ON cars.car_status = car_status.car_status_id
                 JOIN
-                    skadeliste ON biler.bil_id = skadeliste.id_bil
-                WHERE biler.status = 3
+                    damages ON cars.car_id = damages.car_id
+                WHERE cars.car_status = 3
                 """;
 
         Connection conn = getConnection();
@@ -78,6 +81,12 @@ public class DamageRepository implements IRepository<Damage>{
             pstmt.execute();
             ResultSet resultSet = pstmt.getResultSet();
             while (resultSet.next()) {
+
+                Car car = carRepository.getSingleById(resultSet.getInt(1));
+                Damage damage = damageRepository.getSingleById(resultSet.getInt(2));
+                DamagedCar damagedCar = new DamagedCar(car, damage);
+
+/*
                 DamagedCar damagedCar = new DamagedCar(
                 //int carID, int damageID, String chassisNumber, String registrationNumber, String modelName, String carStatus, String damageDescription, int price, String damageRapporter, Date damageRegistationsDate, Date damageFixedDate) {
                 resultSet.getInt(1),  // carID
@@ -92,7 +101,7 @@ public class DamageRepository implements IRepository<Damage>{
                         resultSet.getString(10),  // damageRapporter
                         resultSet.getDate(11),  // damageRegistrationDate
                         resultSet.getDate(12)  // damageFixedDate
-                );
+                );*/
                 allDamagedCars.add(damagedCar);
             }
             return allDamagedCars;
@@ -102,6 +111,7 @@ public class DamageRepository implements IRepository<Damage>{
         return null;
 
     }
+
     @Override
     public Damage getSingleById(int id) {
         return null;
@@ -114,37 +124,32 @@ public class DamageRepository implements IRepository<Damage>{
 
     @Override
     public boolean update(Damage entity) {
-            Connection conn = getConnection();
-            try {
+        Connection conn = getConnection();
+        try {
 
-                // Update "skader"
-                PreparedStatement pstmt = conn.prepareStatement("UPDATE skadeliste SET id_bil= ?, beskrivelse = ? ,omkostning_kr= ?, anmelder= ?, skade_dato= ?, skade_afsluttet= ?, timestamp = ? WHERE id_skade = ?");
-                pstmt.setInt(1, entity.getCarID());
-                pstmt.setString(2, entity.getDamageDescription());
-                pstmt.setInt(3, entity.getPrice());
-                pstmt.setString(4, entity.getDamageRapporter());
-                pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
-                pstmt.setDate(6, dateTool.getUtilDateAsSQL(entity.getDamageFixedDate()));
-                pstmt.setInt(7, entity.getCarID());
-                pstmt.execute();
+            // Update "skader"
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
+            pstmt.setInt(1, entity.getCarID());
+            pstmt.setString(2, entity.getDamageDescription());
+            pstmt.setInt(3, entity.getPrice());
+            pstmt.setString(4, entity.getDamageRapporter());
+            pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
+            pstmt.setDate(6, dateTool.getUtilDateAsSQL(entity.getDamageFixedDate()));
+            pstmt.setInt(7, entity.getCarID());
+            pstmt.execute();
 
-                CarRepository carRepository = new CarRepository();
-                Car car = carRepository.getSingleById(entity.getCarID());
-                car.setCarStatus("hjemme");
-                carRepository.update(car);
+            CarRepository carRepository = new CarRepository();
+            Car car = carRepository.getSingleById(entity.getCarID());
+            car.setCarStatus("hjemme");
+            carRepository.update(car);
 
-                return true;
+            return true;
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-//test at sql henter det korrekte
-    public static void main(String[] args) {
-        DamageRepository dr=new DamageRepository();
-        ArrayList<DamagedCar>all= (ArrayList<DamagedCar>) dr.getAllDamgesCars();
-        System.out.println(all);
+        return false;
     }
+
+
 }

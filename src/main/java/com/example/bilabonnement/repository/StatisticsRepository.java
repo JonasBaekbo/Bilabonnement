@@ -11,7 +11,7 @@ public class StatisticsRepository {
         Connection conn = getConnection();
         try {
 
-            String searchForCarsLeased = "SELECT COUNT(*) FROM biler WHERE `status` = ?";
+            String searchForCarsLeased = "SELECT COUNT(*) FROM cars WHERE `car_status` = ?";
             PreparedStatement pstmt = conn.prepareStatement(searchForCarsLeased);
             pstmt.setInt(1, 1);
             pstmt.execute();
@@ -32,7 +32,7 @@ public class StatisticsRepository {
         Connection conn = getConnection();
         try {
 
-            String numberOfCars = "SELECT COUNT(*) FROM biler";
+            String numberOfCars = "SELECT COUNT(*) FROM cars";
             PreparedStatement pstmt = conn.prepareStatement(numberOfCars);
             pstmt.execute();
             ResultSet rs = pstmt.getResultSet();

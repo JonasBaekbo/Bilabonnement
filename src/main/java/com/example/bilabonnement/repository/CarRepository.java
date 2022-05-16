@@ -24,24 +24,23 @@ public class CarRepository implements IRepository<Car> {
         Connection conn = getConnection();
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT bil_id, stelnummer, registreringsnummer, model, brændstoftype, farve, geartype, status, registreringsafgift, aktuel_leasingaftale, bil_oprettet FROM biler WHERE bil_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT car_id, vin_number, registration_number, car_model, fuel_type, colour, gear_type, car_status, current_leasing, car_added FROM cars WHERE car_id = ?");
             pstmt.setInt(1, id);
             pstmt.execute();
             ResultSet resultSet = pstmt.getResultSet();
             resultSet.next();
 
             Car car = new Car(
-                    resultSet.getInt("bil_id"),
-                    resultSet.getString("stelnummer"),
-                    resultSet.getString("registreringsnummer"),
-                    resultSet.getString("model"),
-                    resultSet.getString("brændstoftype"),
-                    resultSet.getString("farve"),
-                    resultSet.getString("geartype"),
-                    resultSet.getString("status"),
-                    resultSet.getInt("registreringsafgift"),
-                    resultSet.getInt("aktuel_leasingaftale"),
-                    resultSet.getTimestamp("bil_oprettet")
+                    resultSet.getInt("car_id"),
+                    resultSet.getString("vin_number"),
+                    resultSet.getString("registration_number"),
+                    resultSet.getString("car_model"),
+                    resultSet.getString("fuel_type"),
+                    resultSet.getString("colour"),
+                    resultSet.getString("gear_type"),
+                    resultSet.getString("car_status"),
+                    resultSet.getInt("current_leasing"),
+                    resultSet.getTimestamp("car_added")
             );
             return car;
         } catch (SQLException e) {
@@ -63,18 +62,17 @@ public class CarRepository implements IRepository<Car> {
             int statusId = getStatusID(entity);
 
             // Update "biler"
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE biler SET status = ?, stelnummer = ? ,registreringsnummer= ?, model= ?, brændstoftype= ?, farve= ?, geartype= ?, registreringsafgift =?, `aktuel_leasingaftale`= ?, bil_oprettet= ? WHERE bil_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE cars SET car_status = ?, vin_number = ? ,registration_number= ?, car_model= ?, fuel_type= ?, colour= ?, gear_type= ?, current_leasing= ?, car_added= ? WHERE car_id = ?");
             pstmt.setInt(1, statusId);
-            pstmt.setString(2, entity.getChassisNumber());
-            pstmt.setString(3, entity.getRegistrationNumber());
+            pstmt.setString(2, entity.getVinNumber());
+            pstmt.setString(3, entity.getVinNumber());
             pstmt.setString(4, entity.getModelName());
             pstmt.setString(5, entity.getFuelType());
             pstmt.setString(6, entity.getColour());
             pstmt.setString(7, entity.getGearType());
-            pstmt.setInt(8, entity.getRegistrationFee());
-            pstmt.setInt(9, entity.getCurrentLeasing());
-            pstmt.setDate(10, dateTool.getUtilDateAsSQL(entity.getRegistrationDate()));
-            pstmt.setInt(11, entity.getCarID());
+            pstmt.setInt(8, entity.getCurrentLeasing());
+            pstmt.setDate(9, dateTool.getUtilDateAsSQL(entity.getRegistrationDate()));
+            pstmt.setInt(10, entity.getCarID());
             pstmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,7 +85,7 @@ public class CarRepository implements IRepository<Car> {
 
         try {
             String status = car.getCarStatus();
-            PreparedStatement pstmt = conn.prepareStatement("SELECT id_status FROM status WHERE status = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT car_status_id FROM car_status WHERE car_status = ?");
 
             pstmt.setString(1, status);
             pstmt.execute();

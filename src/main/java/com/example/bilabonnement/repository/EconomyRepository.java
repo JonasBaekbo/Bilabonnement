@@ -1,6 +1,7 @@
 package com.example.bilabonnement.repository;
 
 import com.example.bilabonnement.models.Car;
+import com.example.bilabonnement.models.CarEconomy;
 import com.example.bilabonnement.ulility.DatabaseConnectionManager;
 
 import java.sql.Connection;
@@ -10,33 +11,36 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EconomyRepository implements IRepository<Car> {
+public class EconomyRepository implements IRepository<CarEconomy> {
 
-    public int totalMonthlyIncome(List<Car> cars){
+    CarRepository cr=new CarRepository();
 
-
-
+    public int totalMonthlyIncome(List<CarEconomy> carEconomies){
 
         return 0;
     }
 
-    public List<Car> getAllRentedCars() {
+    public List<CarEconomy> getAllRentedCars() {
         Connection conn = DatabaseConnectionManager.getConnection();
-        List<Car> allCars = new ArrayList<>();
+        List<CarEconomy> allCars = new ArrayList<>();
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT biler.bil_id,status.status,bilmodeller.pris_pr_måned FROM status LEFT JOIN biler RIGHT JOIN bilmodeller");
+            PreparedStatement pstmt = conn.prepareStatement("""
+                    SELECT 
+                    cars.car_id,
+                    car_status.car_status,
+                    car_models.price_per_month 
+                    FROM cars 
+                    JOIN  car_models ON cars.car_model = car_models.car_model_id
+                    JOIN car_status ON cars.car_status=car_status.car_status_id;
+                    """);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                if(rs.getString(2).equals("udlejet")) {
-                    Car temp = new Car(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getInt(3)
-                    );
-                    allCars.add(temp);
+                if(rs.getString(2).equals("udlejet-Limited")||rs.getString(2).equals("udlejet-unlimited")) {
+                    Car car = cr.getSingleById(rs.getInt(1));
+                    CarEconomy carEconomy=new CarEconomy(car, rs.getInt(3));
+                    allCars.add(carEconomy);
                 }
             }
-
         } catch (SQLException e) {
             System.out.println("Something wrong in statement");
             e.printStackTrace();
@@ -44,43 +48,37 @@ public class EconomyRepository implements IRepository<Car> {
         return allCars;
     }
 
+
     @Override
-    public boolean create(Car entity) {
+    public boolean create(CarEconomy entity) {
         return false;
     }
 
     @Override
-    public Car getSingleById(int id) {
+    public CarEconomy getSingleById(int id) {
         return null;
     }
 
     @Override
-    public List<Car> getAllEntities() {
+    public List<CarEconomy> getAllEntities() {
         Connection conn = DatabaseConnectionManager.getConnection();
-        List<Car> allCars = new ArrayList<>();
+        List<CarEconomy> allCars = new ArrayList<>();
         try {
-            String select ="SELECT"+
-                    " bilabonnement.biler.bil_id," +
-                    " bilabonnement.biler.registreringsnummer,"+
-                    " bilabonnement.biler.aktuel_leasingaftale," +
-                    " bilabonnement.status.status," +
-                    " bilabonnement.bilmodeller.pris_pr_måned " +
-                    "FROM biler INNER JOIN status ON biler.status = status.id_status INNER JOIN" +
-                    " bilmodeller ON biler.model=bilmodeller.id_bilmodeller " +
-                    "WHERE biler.status =1";
+            String select ="""
+                    SELECT
+                    cars.car_id,
+                    car_models.price_per_month
+                    FROM cars
+                    JOIN car_status ON cars.car_status = car_status.car_status_id
+                    JOIN car_models ON cars.car_model=car_models.car_model_id
+                    WHERE cars.car_status IN (1,5)""";
             PreparedStatement stmt = conn.prepareStatement(select);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
-
-                    Car temp = new Car(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getInt(3),
-                            rs.getString(4),
-                            rs.getInt(5)
-                    );
-                    allCars.add(temp);
+                Car car = cr.getSingleById(rs.getInt(1));
+                CarEconomy carEconomy=new CarEconomy(car, rs.getInt(2));
+                    allCars.add(carEconomy);
                 }
 
         } catch (SQLException e) {
@@ -91,7 +89,8 @@ public class EconomyRepository implements IRepository<Car> {
     }
 
     @Override
-    public boolean update(Car entity) {
+    public boolean update(CarEconomy entity) {
         return false;
     }
+
 }
