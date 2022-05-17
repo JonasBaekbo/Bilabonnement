@@ -4,7 +4,6 @@ import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class Damage {
     private final DateTool dateTool = new DateTool();
@@ -13,27 +12,27 @@ public class Damage {
     private int carID;
     private String damageDescription;
     private int price;
-    private String damageRapporter;
+    private String claimant;
     private Date damageRegistationsDate;
     private Date damageFixedDate;
     private Timestamp timestamp;
 
-    public Damage(int carID, String damageDescription, int price,String damageRapporter, Date damageRegistationsDate) {
+    public Damage(int carID, String damageDescription, int price,String claimant, Date damageRegistationsDate) {
         this.carID=carID;
         this.damageDescription = damageDescription;
         this.price = price;
-        this.damageRapporter=damageRapporter;
+        this.claimant =claimant;
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = null;
         this.timestamp = dateTool.getTimeStamp();
     }
 
-    public Damage(int damageID, int carID, String damageDescription, int price, String damageRapporter,Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
+    public Damage(int damageID, int carID, String damageDescription, int price, String claimant,Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
         this.damageID = damageID;
         this.carID=carID;
         this.damageDescription = damageDescription;
         this.price = price;
-        this.damageRapporter=damageRapporter;
+        this.claimant =claimant;
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = damageFixedDate;
         this.timestamp = timestamp;
@@ -93,12 +92,12 @@ public class Damage {
         this.carID = carID;
     }
 
-    public String getDamageRapporter() {
-        return damageRapporter;
+    public String getClaimant() {
+        return claimant;
     }
 
-    public void setDamageRapporter(String damageRapporter) {
-        this.damageRapporter = damageRapporter;
+    public void setClaimant(String claimant) {
+        this.claimant = claimant;
     }
 
 
@@ -114,7 +113,7 @@ public class Damage {
                 ", carID=" + carID +
                 ", damageDescription='" + damageDescription + '\'' +
                 ", price=" + price +
-                ", damageRapporter='" + damageRapporter + '\'' +
+                ", claimant='" + claimant + '\'' +
                 ", damageRegistationsDate=" + damageRegistationsDate +
                 ", damageFixedDate=" + damageFixedDate +
                 ", timestamp=" + timestamp +

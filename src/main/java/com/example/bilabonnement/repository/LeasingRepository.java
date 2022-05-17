@@ -14,6 +14,7 @@ import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getCon
 
 public class LeasingRepository implements IRepository<Leasing> {
 private DateTool dateTool =new DateTool();
+private CarRepository carRepository = new CarRepository();
 
     @Override
     public boolean create(Leasing entity) {
@@ -34,11 +35,10 @@ private DateTool dateTool =new DateTool();
             resultSet.next();
             int leasingId = resultSet.getInt(1);
 
-            CarRepository carRepository = new CarRepository();
+
             Car car = carRepository.getSingleById(entity.getCarID());
-            car.setCarStatus("udlejet");
             car.setCurrentLeasing(leasingId);
-            carRepository.update(car);
+            carRepository.updateCarStatus("udlejet",car);
 
             return true;
 
@@ -67,6 +67,7 @@ private DateTool dateTool =new DateTool();
     public boolean update(Leasing entity) {
         return false;
     }
+
 
 
 }

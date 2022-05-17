@@ -8,21 +8,21 @@ public class Car {
     private final DateTool dateTool =new DateTool();
 
     private int carID;
-    private String chassisNumber;
     private String vinNumber;
+    private String numberPlate;
     private String modelName;
     private String fuelType;
     private String colour;
     private String gearType;
     private String carStatus;
-    private int currentLeasing;
+    private Integer currentLeasing;
     private Timestamp registrationDate;
 
 
-    public Car(int carID, String chassisNumber, String vinNumber, String modelName, String fuelType, String colour, String gearType, String status, int currentLeasing, Timestamp registrationDate) {
+    public Car(int carID, String vinNumber, String numberPlate, String modelName, String fuelType, String colour, String gearType, String status, Integer currentLeasing, Timestamp registrationDate) {
         this.carID = carID;
-        this.chassisNumber = chassisNumber;
         this.vinNumber = vinNumber;
+        this.numberPlate = numberPlate;
         this.modelName = modelName;
         this.fuelType = fuelType;
         this.colour = colour;
@@ -33,9 +33,9 @@ public class Car {
 
     }
 
-    public Car(String chassisNumber, String vinNumber, String modelName, String fuelType, String colour, String gearType, String status, int currentLeasing) {
-        this.chassisNumber = chassisNumber;
+    public Car(String vinNumber, String numberPlate, String modelName, String fuelType, String colour, String gearType, String status, Integer currentLeasing) {
         this.vinNumber = vinNumber;
+        this.numberPlate = numberPlate;
         this.modelName = modelName;
         this.fuelType = fuelType;
         this.colour = colour;
@@ -47,9 +47,9 @@ public class Car {
 
 
 
-    public Car(int carID, String vinNumber, int currentLeasing, String carStatus) {
+    public Car(int carID, String numberPlate, Integer currentLeasing, String carStatus) {
         this.carID = carID;
-        this.vinNumber = vinNumber;
+        this.numberPlate = numberPlate;
         this.currentLeasing = currentLeasing;
         this.carStatus = carStatus;
 
@@ -68,12 +68,12 @@ public class Car {
     }
 
 
-    public String getVinNumber() {
-        return vinNumber;
+    public String getNumberPlate() {
+        return numberPlate;
     }
 
-    public void setVinNumber(String vinNumber) {
-        this.vinNumber = vinNumber;
+    public void setNumberPlate(String numberPlate) {
+        this.numberPlate = numberPlate;
     }
 
     public String getColour() {
@@ -112,11 +112,11 @@ public class Car {
         this.carStatus = carStatus;
     }
 
-    public int getCurrentLeasing() {
+    public Integer getCurrentLeasing() {
         return currentLeasing;
     }
 
-    public void setCurrentLeasing(int currentLeasing) {
+    public void setCurrentLeasing(Integer currentLeasing) {
         this.currentLeasing = currentLeasing;
     }
 
@@ -128,6 +128,11 @@ public class Car {
         this.registrationDate = registrationDate;
     }
 
+    public String getVinNumber() {
+        return vinNumber;
+    }
 
-
+    public void setVinNumber(String vinNumber) {
+        this.vinNumber = vinNumber;
+    }
 }

@@ -29,13 +29,16 @@ public class EconomyRepository implements IRepository<CarEconomy> {
                     cars.car_id,
                     car_status.car_status,
                     car_models.price_per_month 
-                    FROM cars 
-                    JOIN  car_models ON cars.car_model = car_models.car_model_id
-                    JOIN car_status ON cars.car_status=car_status.car_status_id;
+                    FROM 
+                    cars 
+                    JOIN  
+                    car_models ON cars.car_model = car_models.car_model_id
+                    JOIN 
+                    car_status ON cars.car_status=car_status.car_status_id;
                     """);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                if(rs.getString(2).equals("udlejet-Limited")||rs.getString(2).equals("udlejet-unlimited")) {
+                if(rs.getString(2).equals("udlejet-limited")||rs.getString(2).equals("udlejet-unlimited")) {
                     Car car = cr.getSingleById(rs.getInt(1));
                     CarEconomy carEconomy=new CarEconomy(car, rs.getInt(3));
                     allCars.add(carEconomy);
@@ -68,10 +71,13 @@ public class EconomyRepository implements IRepository<CarEconomy> {
                     SELECT
                     cars.car_id,
                     car_models.price_per_month
-                    FROM cars
-                    JOIN car_status ON cars.car_status = car_status.car_status_id
-                    JOIN car_models ON cars.car_model=car_models.car_model_id
-                    WHERE cars.car_status IN (1,5)""";
+                    FROM 
+                    cars
+                    JOIN 
+                    car_status ON cars.car_status = car_status.car_status_id
+                    JOIN 
+                    car_models ON cars.car_model=car_models.car_model_id
+                    WHERE cars.car_status IN (1,2)""";
             PreparedStatement stmt = conn.prepareStatement(select);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();

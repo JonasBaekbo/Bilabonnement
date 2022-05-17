@@ -38,12 +38,12 @@ public class CarEconomy {
 
 
     public String getRegistrationNumber() {
-        return car.getVinNumber();
+        return car.getNumberPlate();
     }
 
 
     public String getVinNumber() {
-        return car.getVinNumber();
+        return car.getNumberPlate();
     }
 
 

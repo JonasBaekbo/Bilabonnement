@@ -25,16 +25,13 @@ public class DamageRepository implements IRepository<Damage> {
             pstmt.setInt(1, entity.getCarID());
             pstmt.setString(2, entity.getDamageDescription());
             pstmt.setInt(3, entity.getPrice());
-            pstmt.setString(4, entity.getDamageRapporter());
+            pstmt.setString(4, entity.getClaimant());
 
             pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
             pstmt.setTimestamp(6, entity.getTimeStamp());
             pstmt.execute();
 
-            //CarRepository carRepository = new CarRepository();
-            Car car = carRepository.getSingleById(entity.getCarID());
-            car.setCarStatus("skadet");
-            carRepository.update(car);
+            updateAndSetCArStatus("skadet",entity);
 
             return true;
 
@@ -44,10 +41,15 @@ public class DamageRepository implements IRepository<Damage> {
         return false;
     }
 
-    public boolean closeDamage(int id){
+    public void closeDamage(int id, Date damageFixedDate) {
+        Damage damage=getSingleById(id);
+        damage.setDamageFixedDate(damageFixedDate);
+        update(damage);
+    }
+    @Override
+    public List<Damage> getAllEntities() {
 
-
-return false;
+        return null;
     }
 
 
@@ -132,31 +134,31 @@ return false;
     }
 
 
-    @Override
-    public List<Damage> getAllEntities() {
-        return null;
+
+    public void updateAndSetCArStatus(String carStatus, Damage entity) {
+        //update "damages"
+        Car car = carRepository.getSingleById(entity.getCarID());
+        carRepository.updateCarStatus(carStatus,car);
+
     }
+
+
 
     @Override
     public boolean update(Damage entity) {
         Connection conn = getConnection();
         try {
 
-            // Update "skader"
+            // Update "damages"
             PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, damage_description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
             pstmt.setInt(1, entity.getCarID());
             pstmt.setString(2, entity.getDamageDescription());
             pstmt.setInt(3, entity.getPrice());
-            pstmt.setString(4, entity.getDamageRapporter());
+            pstmt.setString(4, entity.getClaimant());
             pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
             pstmt.setDate(6, dateTool.getUtilDateAsSQL(entity.getDamageFixedDate()));
             pstmt.setInt(7, entity.getCarID());
             pstmt.execute();
-
-            //CarRepository carRepository = new CarRepository();
-            Car car = carRepository.getSingleById(entity.getCarID());
-            car.setCarStatus("hjemme");
-            carRepository.update(car);
 
             return true;
 
@@ -164,12 +166,6 @@ return false;
             e.printStackTrace();
         }
         return false;
-    }
-
-    public void setCarStatus(String carStatus, Damage entity){
-        Car car = carRepository.getSingleById(entity.getCarID());
-        car.setCarStatus(carStatus);
-        carRepository.update(car);
     }
 
 }

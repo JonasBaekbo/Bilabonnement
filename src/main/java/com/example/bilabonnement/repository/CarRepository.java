@@ -3,16 +3,13 @@ package com.example.bilabonnement.repository;
 import com.example.bilabonnement.models.Car;
 import com.example.bilabonnement.servises.DateTool;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class CarRepository implements IRepository<Car> {
-    DateTool dateTool =new DateTool();
+    DateTool dateTool = new DateTool();
 
     @Override
     public boolean create(Car entity) {
@@ -65,12 +62,12 @@ public class CarRepository implements IRepository<Car> {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE cars SET car_status = ?, vin_number = ? ,registration_number= ?, car_model= ?, fuel_type= ?, colour= ?, gear_type= ?, current_leasing= ?, car_added= ? WHERE car_id = ?");
             pstmt.setInt(1, statusId);
             pstmt.setString(2, entity.getVinNumber());
-            pstmt.setString(3, entity.getVinNumber());
+            pstmt.setString(3, entity.getNumberPlate());
             pstmt.setString(4, entity.getModelName());
             pstmt.setString(5, entity.getFuelType());
             pstmt.setString(6, entity.getColour());
             pstmt.setString(7, entity.getGearType());
-            pstmt.setInt(8, entity.getCurrentLeasing());
+            pstmt.setObject(8, entity.getCurrentLeasing() == 0 ? null : entity.getCurrentLeasing());
             pstmt.setDate(9, dateTool.getUtilDateAsSQL(entity.getRegistrationDate()));
             pstmt.setInt(10, entity.getCarID());
             pstmt.execute();
@@ -97,6 +94,11 @@ public class CarRepository implements IRepository<Car> {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public void updateCarStatus(String carStatus, Car car) {
+        car.setCarStatus(carStatus);
+        update(car);
     }
 
 }

@@ -11,9 +11,8 @@ public class StatisticsRepository {
         Connection conn = getConnection();
         try {
 
-            String searchForCarsLeased = "SELECT COUNT(*) FROM cars WHERE `car_status` = ?";
+            String searchForCarsLeased = "SELECT COUNT(*) FROM cars WHERE cars.car_status IN (1,2)";
             PreparedStatement pstmt = conn.prepareStatement(searchForCarsLeased);
-            pstmt.setInt(1, 1);
             pstmt.execute();
             ResultSet rs = pstmt.getResultSet();
 
