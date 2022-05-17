@@ -106,5 +106,19 @@ public class Damage {
             return timestamp;
         }
 
+    @Override
+    public String toString() {
+        return "Damage{" +
+                "dateTool=" + dateTool +
+                ", damageID=" + damageID +
+                ", carID=" + carID +
+                ", damageDescription='" + damageDescription + '\'' +
+                ", price=" + price +
+                ", damageRapporter='" + damageRapporter + '\'' +
+                ", damageRegistationsDate=" + damageRegistationsDate +
+                ", damageFixedDate=" + damageFixedDate +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }
 

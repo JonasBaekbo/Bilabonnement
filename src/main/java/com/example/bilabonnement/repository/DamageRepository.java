@@ -15,14 +15,13 @@ public class DamageRepository implements IRepository<Damage> {
     private final DateTool dateTool = new DateTool();
 
     private final CarRepository carRepository = new CarRepository();
-    private final DamageRepository damageRepository = new DamageRepository();
 
     @Override
     public boolean create(Damage entity) {
         Connection conn = getConnection();
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO damages (car_id, description, damages_cost_kr, claimant,damage_date,damage_added) VALUES (?,?,?,?,?,?)");
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO damages (car_id, damage_description, damages_cost_kr, claimant,damage_date,damage_added) VALUES (?,?,?,?,?,?)");
             pstmt.setInt(1, entity.getCarID());
             pstmt.setString(2, entity.getDamageDescription());
             pstmt.setInt(3, entity.getPrice());
@@ -32,7 +31,7 @@ public class DamageRepository implements IRepository<Damage> {
             pstmt.setTimestamp(6, entity.getTimeStamp());
             pstmt.execute();
 
-            CarRepository carRepository = new CarRepository();
+            //CarRepository carRepository = new CarRepository();
             Car car = carRepository.getSingleById(entity.getCarID());
             car.setCarStatus("skadet");
             carRepository.update(car);
@@ -44,6 +43,13 @@ public class DamageRepository implements IRepository<Damage> {
         }
         return false;
     }
+
+    public boolean closeDamage(int id){
+
+
+return false;
+    }
+
 
     public List<DamagedCar> getAllDamgesCars() {
         ArrayList<DamagedCar> allDamagedCars = new ArrayList<>();
@@ -57,7 +63,7 @@ public class DamageRepository implements IRepository<Damage> {
                     manufacturer.manufacturer,
                     car_models.model,
                     car_status.car_status,
-                    damages.description,
+                    damages.damage_description,
                     damages.damages_cost_kr,
                     damages.claimant,
                     damages.damage_date,
@@ -83,25 +89,9 @@ public class DamageRepository implements IRepository<Damage> {
             while (resultSet.next()) {
 
                 Car car = carRepository.getSingleById(resultSet.getInt(1));
-                Damage damage = damageRepository.getSingleById(resultSet.getInt(2));
+                Damage damage = getSingleById(resultSet.getInt(2));
                 DamagedCar damagedCar = new DamagedCar(car, damage);
 
-/*
-                DamagedCar damagedCar = new DamagedCar(
-                //int carID, int damageID, String chassisNumber, String registrationNumber, String modelName, String carStatus, String damageDescription, int price, String damageRapporter, Date damageRegistationsDate, Date damageFixedDate) {
-                resultSet.getInt(1),  // carID
-                        resultSet.getInt(2),  // damageID
-                        resultSet.getString(3),  // chassisNumber
-                        resultSet.getString(4),  // registrationNumber,
-                        resultSet.getString(5),  // producerName
-                        resultSet.getString(6),  // modelName
-                        resultSet.getString(7),  // status
-                        resultSet.getString(8),  // damageDescription
-                        resultSet.getInt(9),  // price
-                        resultSet.getString(10),  // damageRapporter
-                        resultSet.getDate(11),  // damageRegistrationDate
-                        resultSet.getDate(12)  // damageFixedDate
-                );*/
                 allDamagedCars.add(damagedCar);
             }
             return allDamagedCars;
@@ -114,8 +104,33 @@ public class DamageRepository implements IRepository<Damage> {
 
     @Override
     public Damage getSingleById(int id) {
+
+        Connection conn = getConnection();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT car_id, damage_description, damages_cost_kr, claimant, damage_date, damage_closed, damage_added FROM damages WHERE damages_id = ?");
+            pstmt.setInt(1, id);
+            pstmt.execute();
+            ResultSet resultSet = pstmt.getResultSet();
+            resultSet.next();
+
+            Damage damage = new Damage(
+                    id,
+                    resultSet.getInt("car_id"),
+                    resultSet.getString("damage_description"),
+                    resultSet.getInt("damages_cost_kr"),
+                    resultSet.getString("claimant"),
+                    resultSet.getDate("damage_date"),
+                    resultSet.getDate("damage_closed"),
+                    resultSet.getTimestamp("damage_added")
+            );
+            return damage;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
+
 
     @Override
     public List<Damage> getAllEntities() {
@@ -128,7 +143,7 @@ public class DamageRepository implements IRepository<Damage> {
         try {
 
             // Update "skader"
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, damage_description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
             pstmt.setInt(1, entity.getCarID());
             pstmt.setString(2, entity.getDamageDescription());
             pstmt.setInt(3, entity.getPrice());
@@ -138,7 +153,7 @@ public class DamageRepository implements IRepository<Damage> {
             pstmt.setInt(7, entity.getCarID());
             pstmt.execute();
 
-            CarRepository carRepository = new CarRepository();
+            //CarRepository carRepository = new CarRepository();
             Car car = carRepository.getSingleById(entity.getCarID());
             car.setCarStatus("hjemme");
             carRepository.update(car);
@@ -151,5 +166,10 @@ public class DamageRepository implements IRepository<Damage> {
         return false;
     }
 
+    public void setCarStatus(String carStatus, Damage entity){
+        Car car = carRepository.getSingleById(entity.getCarID());
+        car.setCarStatus(carStatus);
+        carRepository.update(car);
+    }
 
 }
