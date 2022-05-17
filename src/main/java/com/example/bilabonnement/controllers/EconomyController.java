@@ -16,12 +16,19 @@ public class EconomyController {
     private final Economy economy = new Economy();
 
 
-    @GetMapping("/test")
-    public String leasingaftaleFront(Model model) {
+    @GetMapping("/admin/lejedebiler")
+    public String leasedCars(Model model) {
         List<CarEconomy> carEconomies = economyRepository.getAllRentedCars();
-        int totalMontlyIncome = economy.totalMonthlyIncomeThisMonthFromRentedCars();
-        model.addAttribute("carEconomies", carEconomies);
-        model.addAttribute("totalMontlyIncome",totalMontlyIncome);
-        return "admin/includes/Ecotest";
+        model.addAttribute("cars", carEconomies);
+        model.addAttribute("title", "Alle lejede biler");
+        return "admin/economy/showAllLeasedCars";
     }
+    @GetMapping("/admin/samletpris")
+    public String monthlyIncome(Model model) {
+        int totalMontlyIncome = economy.totalMonthlyIncomeThisMonthFromRentedCars();
+        model.addAttribute("totalMontlyIncome",totalMontlyIncome);
+        model.addAttribute("title", "Samlet pris");
+        return "admin/economy/showMonthlyIncome";
+    }
+
 }

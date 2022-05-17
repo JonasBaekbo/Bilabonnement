@@ -6,71 +6,8 @@
 
 
 <body>
-<div class="container-fluid" th:fragment="dashboard_header" xmlns:th="http://www.thymeleaf.org"
-     xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
-    <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">Bilabonnement Dashboard</span>
-                </a>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item">
-                        <a href="/admin" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Forside</span>
-                        </a>
-                    </li>
+<head th:include="admin/includes/dashboard_header :: dashboard_header"></head>
 
-                    <li sec:authorize="hasAnyRole('DATA', 'ADMIN')">
-                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Leasing</span> </a>
-                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            <li class="w-100">
-                                <a href="/admin/opretlease" class="nav-link px-0">Opret Lease</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')">
-                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Skader</span></a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                            <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Registrer fejl og mangler</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')">
-                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Forretningsudviklere</span> </a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                            <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Se antal<br>udlejede biler</span></a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Se sammenlagte pris<br> på nuværende<br>udlejede biler</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="d-none d-sm-inline mx-1">[[${#httpServletRequest.getRemoteUser}]]</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="/">Tilbage til siden</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><form name="logoutForm" th:hidden="true" method="post" th:action="@{/logout}">
-                            <input type="submit" value="Logout" />
-                        </form>
-                            <a class="dropdown-item" href="javascript: logoutForm.submit();">Sign Out</a></li>
-                    </ul>
-                </div>
-                </ul>
-            </div>
-        </div>
         <div th:include="admin/includes/dashboard_content :: opretlease"></div>
 
     </div>

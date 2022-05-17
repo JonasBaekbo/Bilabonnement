@@ -1,4 +1,3 @@
-//Template found on https://www.codeply.com/p/WGCqYEiPBg
 <div class="container-fluid" th:fragment="dashboard_header" xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
     <div class="row flex-nowrap">
@@ -21,9 +20,6 @@
                             <li class="w-100">
                                 <a href="/admin/opretlease" class="nav-link px-0">Opret Lease</a>
                             </li>
-                            <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
-                            </li>
                         </ul>
                     </li>
                     <li sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')">
@@ -40,22 +36,12 @@
                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Forretningsudviklere</span> </a>
                         <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                             <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Se antal<br>udlejede biler</span></a>
+                                <a href="/admin/lejedebiler" class="nav-link px-0"> <span class="d-none d-sm-inline">Se antal<br>udlejede biler</span></a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Se sammenlagte pris<br> på nuværende<br>udlejede biler</span></a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
+                                <a href="/admin/samletpris" class="nav-link px-0"> <span class="d-none d-sm-inline">Se sammenlagte pris<br> på nuværende<br>udlejede biler</span></a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Customers</span> </a>
                     </li>
                 </ul>
                 <hr>
@@ -64,20 +50,16 @@
                         <span class="d-none d-sm-inline mx-1">[[${#httpServletRequest.getRemoteUser}]]</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="/">Tilbage til forsiden</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li><form name="logoutForm" th:hidden="true" method="post" th:action="@{/logout}">
                             <input type="submit" value="Logout" />
                         </form>
-                            <a class="dropdown-item" href="javascript: logoutForm.submit();">Sign Out</a></li>
+                            <a class="dropdown-item" href="javascript: logoutForm.submit();">Log ud</a></li>
                     </ul>
                 </div>
+                </ul>
             </div>
         </div>
-        </div>
-    </div>
-</div>

@@ -2,11 +2,23 @@
 
 <div class="content" xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
-<div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="buisnesscharts">
-    <div id="chart_div"></div>
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
+<div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="monthlyIncome">
+    <p>    totalMontlyIncome = <td th:text="${totalMontlyIncome}"></td> </p>
 
 </div>
+    <div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="allLeasedCars">
+        <table>
+            <tr
+                    th:each="Car : ${cars}">
+                <td th:text="${Car.getCarID()}"></td>
+                <td th:text="${Car.getRegistrationNumber()}"></td>
+                <td th:text="${Car.getCurrentLeasing()}"></td>
+                <td th:text="${Car.getCarStatus()}"></td>
+                <td th:text="${Car.getPricePrMonth()}"></td>
+            </tr>
+        </table>
+    </div>
+
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="opretlease">
         <form th:action="@{/opretlease}" method="post">
             <p>
