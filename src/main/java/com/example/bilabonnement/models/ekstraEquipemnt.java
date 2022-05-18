@@ -20,6 +20,10 @@ public class ekstraEquipemnt {
         this.car = car;
     }
 
+    public String getNumberPlate(){
+        return car.getNumberPlate();
+    }
+
     public ArrayList<String> getEkstraEquipemntdescription() {
         return ekstraEquipemntdescription;
     }

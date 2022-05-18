@@ -1,5 +1,6 @@
 package com.example.bilabonnement.repository;
 
+import com.example.bilabonnement.models.Car;
 import com.example.bilabonnement.models.ekstraEquipemnt;
 
 import java.sql.Connection;
@@ -11,7 +12,8 @@ import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
-public class ExtraEquipmentRepository {
+public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
+    CarRepository cr=new CarRepository();
 
     public int getnumberOfCars() {
         Connection conn = getConnection();
@@ -71,12 +73,33 @@ public class ExtraEquipmentRepository {
             int numberOfCars=getnumberOfCars();
 
             for (int i = 0; i < numberOfCars; i++) {
-               List<String>exraequipment=getListOfExtraEquipment(i);
+               ArrayList<String>exraequipment= (ArrayList<String>) getListOfExtraEquipment(i+1);
+                Car car = cr.getSingleById(i+1);
+               allCars.add(new ekstraEquipemnt(car,exraequipment));
 
             }
             return allCars;
         }
 
 
+    @Override
+    public boolean create(ekstraEquipemnt entity) {
+        return false;
     }
+
+    @Override
+    public ekstraEquipemnt getSingleById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<ekstraEquipemnt> getAllEntities() {
+        return null;
+    }
+
+    @Override
+    public boolean update(ekstraEquipemnt entity) {
+        return false;
+    }
+}
 
