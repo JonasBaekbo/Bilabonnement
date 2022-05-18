@@ -24,7 +24,7 @@ public class DamageRepository implements IRepository<Damage> {
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO damages (car_id, damage_description, damages_cost_kr, claimant,damage_date,damage_added) VALUES (?,?,?,?,?,?)");
             pstmt.setInt(1, entity.getCarID());
             pstmt.setString(2, entity.getDamageDescription());
-            pstmt.setInt(3, entity.getPrice());
+            pstmt.setDouble(3, entity.getPrice());
             pstmt.setString(4, entity.getClaimant());
 
             pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
@@ -153,7 +153,7 @@ public class DamageRepository implements IRepository<Damage> {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, damage_description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
             pstmt.setInt(1, entity.getCarID());
             pstmt.setString(2, entity.getDamageDescription());
-            pstmt.setInt(3, entity.getPrice());
+            pstmt.setDouble(3, entity.getPrice());
             pstmt.setString(4, entity.getClaimant());
             pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
             pstmt.setDate(6, dateTool.getUtilDateAsSQL(entity.getDamageFixedDate()));

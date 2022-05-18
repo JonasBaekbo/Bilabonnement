@@ -10,26 +10,32 @@
             <div class="row">
                 <div class="col-md-6">
 
-                        <tr th:if="${wishList.empty}">
-                            <td colspan="2"> Der er ikke registeret nogle ønsker</td>
-                        </tr>
-                        <tr th:each="wish: ${wishList}">
-                            <td><span th:text="${wish.itemName}"> Ønske </span></td>
-                            <td><span th:text="${wish.description}"> Beskrivelse </span></td>
-                            <td style="text-align:right"><span th:text="${wish.quantity}"> Antal </span></td>
-                            <td style="text-align:right">
-                                <button type="button" class="btn btn-primary"
-                                        th:attr="onclick=|remove('${wish.wishID}')|"><i
-                                        class="fa-solid fa-square-xmark"></i></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
                 <div class="col-md-6" style="justify-content: left">
                     <p class="centertext">Tilf&oslash;j ny skade</p>
-                    <form th:action="@{/make-a-wish}" method="post">
+                    <form th:action="@{/create}" method="post">
                         <section class="content">
+
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown button
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+
+                            <option value="Sample" th:each="temp :${incomeCategories}"
+                                    th:value="${temp.id}" th:text="${temp.description}">Sample Description</option>
+
+
+                            <p>
+                                <input type="number" id="carid" placeholder="Navn p&aring; &oslash;nske"
+                                       name="itemName" required/>
+                            </p>
+
+
                             <p>
                                 <input type="text" id="itemName" placeholder="Navn p&aring; &oslash;nske"
                                        name="itemName" required/>

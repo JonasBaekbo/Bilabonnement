@@ -18,26 +18,31 @@ public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
     public int getnumberOfCars() {
         Connection conn = getConnection();
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement("""
-                    SELECT COUNT(*) cars;
-                    """);
-            ResultSet rs = pstmt.executeQuery();
-            rs.next();
-            int totalAmountOfCars = rs.getInt(1);
-            return totalAmountOfCars;
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+
+                String numberOfCars = "SELECT COUNT(*) FROM cars";
+                PreparedStatement pstmt = conn.prepareStatement(numberOfCars);
+                pstmt.execute();
+                ResultSet rs = pstmt.getResultSet();
+
+                rs.next();
+                int totalNumberOfCars = rs.getInt(1);
+                System.out.println(totalNumberOfCars);
+                return totalNumberOfCars;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("error in getNumbersOfCarsInTotal-method");
+            }
             return -1;
         }
-    }
+
 
         public List<String> getListOfExtraEquipment ( int carID){
             Connection conn = getConnection();
 
             ArrayList<String> extraEquipment = new ArrayList<>();
             String sql = """
-                    SELECT cars.registration_number, extra_equipemnt_description.extra_equipemnt_description
+                    SELECT extra_equipemnt_description.extra_equipemnt_description
                                  FROM
                                  extra_equipemnt_description
                                  JOIN

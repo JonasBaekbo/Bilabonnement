@@ -7,7 +7,7 @@ public class ekstraEquipemnt {
     private Car car;
     private ArrayList<String> ekstraEquipemntdescription;
 
-    public ekstraEquipemnt (Car car, ArrayList<String> ekstraEquipemntdescription){
+    public ekstraEquipemnt(Car car, ArrayList<String> ekstraEquipemntdescription) {
         this.car = car;
         this.ekstraEquipemntdescription = ekstraEquipemntdescription;
     }

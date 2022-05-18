@@ -4,20 +4,22 @@ import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 public class Damage {
     private final DateTool dateTool = new DateTool();
 
+
     private int damageID;
     private int carID;
     private String damageDescription;
-    private int price;
+    private double price;
     private String claimant;
     private Date damageRegistationsDate;
     private Date damageFixedDate;
     private Timestamp timestamp;
 
-    public Damage(int carID, String damageDescription, int price,String claimant, Date damageRegistationsDate) {
+    public Damage(int carID, String damageDescription, double price,String claimant, Date damageRegistationsDate) {
         this.carID=carID;
         this.damageDescription = damageDescription;
         this.price = price;
@@ -27,7 +29,7 @@ public class Damage {
         this.timestamp = dateTool.getTimeStamp();
     }
 
-    public Damage(int damageID, int carID, String damageDescription, int price, String claimant,Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
+    public Damage(int damageID, int carID, String damageDescription, double price, String claimant,Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
         this.damageID = damageID;
         this.carID=carID;
         this.damageDescription = damageDescription;
@@ -47,11 +49,11 @@ public class Damage {
         this.damageDescription = damageDescription;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
