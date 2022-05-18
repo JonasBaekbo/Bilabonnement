@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org">
+<head th:include="head :: headerfragment"></head>
+<body>
+<link rel="stylesheet" th:href="@{style.css}" href="../static/style.css">
+<div class="container">
+    <header th:include="header :: header"></header>
+    <div id="wrap">
+        <main id="main">
+            <div class="row">
+                <div class="col-md-6">
+
+                        <tr th:if="${wishList.empty}">
+                            <td colspan="2"> Der er ikke registeret nogle ønsker</td>
+                        </tr>
+                        <tr th:each="wish: ${wishList}">
+                            <td><span th:text="${wish.itemName}"> Ønske </span></td>
+                            <td><span th:text="${wish.description}"> Beskrivelse </span></td>
+                            <td style="text-align:right"><span th:text="${wish.quantity}"> Antal </span></td>
+                            <td style="text-align:right">
+                                <button type="button" class="btn btn-primary"
+                                        th:attr="onclick=|remove('${wish.wishID}')|"><i
+                                        class="fa-solid fa-square-xmark"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6" style="justify-content: left">
+                    <p class="centertext">Tilf&oslash;j ny skade</p>
+                    <form th:action="@{/make-a-wish}" method="post">
+                        <section class="content">
+                            <p>
+                                <input type="text" id="itemName" placeholder="Navn p&aring; &oslash;nske"
+                                       name="itemName" required/>
+                            </p>
+                            <p>
+                                <input type="text" id="description" placeholder="Evt. beskrivelse"
+                                       name="description"/>
+                            </p>
+                            <p>
+                                <input type="number" id="quantity" placeholder="Antal" name="quantity" required/>
+                            </p>
+                            <p>
+                                <input type="submit" value=" Tilf&oslash;j "/>
+                            </p>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<footer th:include="footer :: footer"></footer>
+<script>
+    function edit(id) {
+        if (confirm("Er du sikker på at du vil slette det valgte ønske?")) {
+            window.location.replace("http://whateveryouwish.azurewebsites.net/remove?id=" + id) // If program needs to be run on localhost, change to localhost:8080
+        }
+    }
+</script>
+</body>
+</html>

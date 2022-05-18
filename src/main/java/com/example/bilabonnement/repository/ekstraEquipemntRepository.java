@@ -60,14 +60,16 @@ public class ekstraEquipemntRepository implements IRepository<ekstraEquipemnt>{
 
             }
 
-
-
         }catch (SQLException e){
             System.out.println("Something wrong in statement :)");
             e.printStackTrace();
         }
         return allCars;
     }
+
+    private
+
+
 
     @Override
     public boolean update(ekstraEquipemnt entity) {
