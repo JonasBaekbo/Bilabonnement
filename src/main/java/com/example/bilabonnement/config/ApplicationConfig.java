@@ -35,7 +35,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 // TODO Skal lave antMatchers til hele admin delen, når alle funktioner er lavet
-       http.authorizeRequests().antMatchers("/admin").hasAnyRole("ADMIN", "DATA", "DAMAGE", "BUISNESS").antMatchers("/admin/opretlease").hasAnyRole("ADMIN","DATA").antMatchers("/admin/lejedebiler").hasAnyRole("ADMIN","BUISNESS").antMatchers("/admin/samletpris").hasAnyRole("ADMIN","BUISNESS").and().formLogin().loginPage("/login").usernameParameter("username").passwordParameter("pass").failureUrl("/login-error").successForwardUrl("/login_success").successHandler(new AuthenticationSuccessHandler() {
+       http.authorizeRequests().antMatchers("/admin").hasAnyRole("ADMIN", "DATA", "DAMAGE", "BUISNESS").antMatchers("/admin/opretlease").hasAnyRole("ADMIN","DATA").antMatchers("/admin/lejedebiler").hasAnyRole("ADMIN","BUISNESS").antMatchers("/admin/samletpris").hasAnyRole("ADMIN","BUISNESS").antMatchers("/admin/visekstraudstyr").hasAnyRole("ADMIN","DATA").and().formLogin().loginPage("/login").usernameParameter("username").passwordParameter("pass").failureUrl("/login-error").successForwardUrl("/login_success").successHandler(new AuthenticationSuccessHandler() {
 
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

@@ -27,7 +27,6 @@ public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
 
                 rs.next();
                 int totalNumberOfCars = rs.getInt(1);
-                System.out.println(totalNumberOfCars);
                 return totalNumberOfCars;
             } catch (SQLException e) {
                 e.printStackTrace();

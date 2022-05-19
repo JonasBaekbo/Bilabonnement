@@ -52,4 +52,14 @@
 
     </div>
 
+    <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="extraEquipment">
+        <table>
+            <tr
+                    th:each="ekstraEquipemnt : ${ekstraEquipemnts}">
+                <td th:text="${ekstraEquipemnt.getNumberPlate()}"></td>
+                <td th:text="${ekstraEquipemnt.getEkstraEquipemntdescription()}"></td>
+            </tr>
+        </table>
+
+    </div>
 </div>

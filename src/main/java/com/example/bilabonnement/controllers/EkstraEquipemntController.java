@@ -14,11 +14,11 @@ public class EkstraEquipemntController {
 
     private final ExtraEquipmentRepository extraEquipmentRepository = new ExtraEquipmentRepository();
 
-    @GetMapping("/test")
+    @GetMapping("/admin/visekstraudstyr")
     public String ekstreEq(Model model){
         List<ekstraEquipemnt> ekstraEquipemnts = new ArrayList<>();
         ekstraEquipemnts = extraEquipmentRepository.getAllExtraEqupment();
         model.addAttribute("ekstraEquipemnts",ekstraEquipemnts);
-        return "test";
+        return "admin/leasing/extraEquipment";
     }
 }
