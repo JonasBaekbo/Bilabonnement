@@ -19,7 +19,7 @@ public class Damage {
     private Date damageFixedDate;
     private Timestamp timestamp;
 
-    public Damage(int carID, String damageDescription, double price,String claimant, Date damageRegistationsDate) {
+    public Damage(int carID, String damageDescription, Double price,String claimant, Date damageRegistationsDate) {
         this.carID=carID;
         this.damageDescription = damageDescription;
         this.price = price;

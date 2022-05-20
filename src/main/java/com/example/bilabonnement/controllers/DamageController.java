@@ -1,7 +1,9 @@
 package com.example.bilabonnement.controllers;
 
+import com.example.bilabonnement.models.Car;
 import com.example.bilabonnement.models.Damage;
 import com.example.bilabonnement.models.DamagedCar;
+import com.example.bilabonnement.repository.CarRepository;
 import com.example.bilabonnement.repository.DamageRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +20,23 @@ public class DamageController {
 
 
    DamageRepository dr=new DamageRepository();
+   CarRepository cr =new CarRepository();
+
+  /*  @PostMapping("/create")
+    public String updateDamage(@RequestParam("damage") int damageID){
+        System.out.println(damageID);
+        return "redirect:/admin";
+    }*/
 
 
+
+    @GetMapping ("/createDamage")
+    public String showListOfCars(Model model) {
+        model.addAttribute("title", "Opret");
+        ArrayList<Car> carList = (ArrayList<Car>) cr.getAllEntities();
+        model.addAttribute("carList", carList);
+        return "createDamage";
+    }
 
 
     @PostMapping("/createDamage")
@@ -27,7 +44,7 @@ public class DamageController {
                               @RequestParam("damageDate") Date damageDate){
         Damage damage = new Damage(carID,damageDescription,damagesCost,claimant,damageDate);
         dr.create(damage);
-        return "redirect:/admin";
+        return "redirect:/createDamage";
     }
 
 
@@ -45,13 +62,9 @@ public class DamageController {
         for (Integer damageID : selectedDamageIDs) {
             dr.closeDamage(damageID, fixedDate);
         }
-        return "redirect:/admin";
+        return "redirect:/closeDamage";
     }
 
 
-    @PostMapping("/create")
-    public String updateDamage(@RequestParam("damage") int damageID){
-        System.out.println(damageID);
-        return "redirect:/admin";
-    }
+
 }

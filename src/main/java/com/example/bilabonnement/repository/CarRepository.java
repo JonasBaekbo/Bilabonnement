@@ -1,9 +1,12 @@
 package com.example.bilabonnement.repository;
 
 import com.example.bilabonnement.models.Car;
+import com.example.bilabonnement.models.Damage;
+import com.example.bilabonnement.models.DamagedCar;
 import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
@@ -48,8 +51,29 @@ public class CarRepository implements IRepository<Car> {
 
     @Override
     public List<Car> getAllEntities() {
+        //vi fra sortere status 5, da det er status for biler der ikke er hos bilabonnement.dk mere
+        ArrayList<Car> allCars = new ArrayList<>();
+        Connection conn = getConnection();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(" SELECT  cars.car_id, cars.numberplate, cars.vin_number FROM cars where cars.car_status<>5");
+
+            pstmt.execute();
+            ResultSet resultSet = pstmt.getResultSet();
+            while (resultSet.next()) {
+
+                Car car = getSingleById(resultSet.getInt(1));
+                car.setNumberPlate(resultSet.getString("numberplate"));
+                car.setVinNumber(resultSet.getString("vin_number"));
+                allCars.add(car);
+            }
+            return allCars;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
+
 
     @Override
     public boolean update(Car entity) {

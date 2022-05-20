@@ -1,70 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
-<head th:include="head :: headerfragment"></head>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
 <body>
-<link rel="stylesheet" th:href="@{style.css}" href="../static/style.css">
-<div class="container">
-    <header th:include="header :: header"></header>
-    <div id="wrap">
-        <main id="main">
-            <div class="row">
-                <div class="col-md-6">
 
-                <div class="col-md-6" style="justify-content: left">
-                    <p class="centertext">Tilf&oslash;j ny skade</p>
-                    <form th:action="@{/create}" method="post">
-                        <section class="content">
+<form th:action="@{/createDamage}" method="post">
+    <p>vælg bil</p>
+    <p>bil-Id - Nummerplade - Stelnummer</p>
+    <select name="carID">
+        <option value="Sample" th:each="car:${carList}"
+                th:value="${car.getCarID()}"
+                th:text="${car.getCarID()}+' - '+${car.getNumberPlate()} +' - '+${car.getVinNumber()} ">
+        </option>
+    </select>
 
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown button
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
+    <p>
+        Skadebeskrivelse :<br>
+        <label for="damageDescription"></label>
+        <input type="text" id="damageDescription" placeholder="skade beskrivelse" name="damageDescription" required/>
+    </p>
+    <p>
+        Pris for skade:<br>
+        <label for="damagesCost"></label>
+        <input type="number" id="damagesCost" name="damagesCost" min="0" value="0" step="any" required/>
+    </p>
+    <p>
+        Skade anmelder :<br>
+        <label for="claimant"></label>
+        <input type="text" id="claimant" placeholder="Anmelder" name="claimant" required/>
+    </p>
+    <p>
+        Dato for skade:<br>
+        <label for="damageDate"></label>
+        <input type="date" id="damageDate" placeholder="Skade dato" name="damageDate"/>
+    </p>
 
-                            <option value="Sample" th:each="temp :${incomeCategories}"
-                                    th:value="${temp.id}" th:text="${temp.description}">Sample Description</option>
+    <input type="submit" value="Submit">
+</form>
 
-
-                            <p>
-                                <input type="number" id="carid" placeholder="Navn p&aring; &oslash;nske"
-                                       name="itemName" required/>
-                            </p>
-
-
-                            <p>
-                                <input type="text" id="itemName" placeholder="Navn p&aring; &oslash;nske"
-                                       name="itemName" required/>
-                            </p>
-                            <p>
-                                <input type="text" id="description" placeholder="Evt. beskrivelse"
-                                       name="description"/>
-                            </p>
-                            <p>
-                                <input type="number" id="quantity" placeholder="Antal" name="quantity" required/>
-                            </p>
-                            <p>
-                                <input type="submit" value=" Tilf&oslash;j "/>
-                            </p>
-                        </section>
-                    </form>
-                </div>
-            </div>
-            </div>
-        </main>
-    </div>
-</div>
-<footer th:include="footer :: footer"></footer>
-<script>
-    function edit(id) {
-        if (confirm("Er du sikker på at du vil slette det valgte ønske?")) {
-            window.location.replace("http://whateveryouwish.azurewebsites.net/remove?id=" + id) // If program needs to be run on localhost, change to localhost:8080
-        }
-    }
-</script>
 </body>
 </html>

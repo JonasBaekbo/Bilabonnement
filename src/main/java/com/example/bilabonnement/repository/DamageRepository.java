@@ -152,7 +152,7 @@ public class DamageRepository implements IRepository<Damage> {
                     id,
                     resultSet.getInt("car_id"),
                     resultSet.getString("damage_description"),
-                    resultSet.getInt("damages_cost_kr"),
+                    resultSet.getDouble("damages_cost_kr"),
                     resultSet.getString("claimant"),
                     resultSet.getDate("damage_date"),
                     resultSet.getDate("damage_closed"),
