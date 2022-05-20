@@ -36,7 +36,6 @@ public class LeasingRepository implements IRepository<Leasing> {
             resultSet.next();
             int leasingId = resultSet.getInt(1);
 
-//TODO: hvordan får vi skildt mellem lieted og unlimeited
             Car car = carRepository.getSingleById(entity.getCarID());
             car.setCurrentLeasing(leasingId);
             String leasingtype=entity.getLeasingType();
@@ -67,7 +66,6 @@ public class LeasingRepository implements IRepository<Leasing> {
 
         Connection conn = getConnection();
         ArrayList<Car> allFreeCars = new ArrayList<>();
-        /*String sql ="Select cars.car_id from cars where car_status =4";*/
 
         String sql = """
                     SELECT 
@@ -112,8 +110,6 @@ public class LeasingRepository implements IRepository<Leasing> {
                         resultSet.getString("fuel_type"),
                         resultSet.getString("gear_type"));
 
-
-                // Car car = carRepository.getSingleById(resultSet.getInt(1));
 
                 allFreeCars.add(car);
             }
