@@ -113,8 +113,87 @@
         </form>
 
     </div>
-    <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')">
+    <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')" th:fragment="closeDamage">
+        <form th:action="@{/closeDamage}" method="post">
 
+            <p> vælg den/de skader der er blevet udbedret</p>
+            <table>
+                <thead>
+                <tr>
+                    <th>Vælg</th>
+                    <th>Skade-id</th>
+                    <th>Bil-id</th>
+                    <th>Nummerplade</th>
+                    <th>Stelnummer</th>
+                    <th>Beskrivelse</th>
+                    <th>Pris</th>
+                    <th>Anmelder</th>
+                    <th>Skadesdato</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="damage :${damageList}">
+                    <td>
+                        <input type="checkbox" name="damage"
+                               th:id="${damage.getDamageID()}"
+                               th:value="${damage.getDamageID()}" />
+                    </td>
+                    <td th:text="${damage.getDamageID()}"></td>
+                    <td th:text="${damage.getCarID()}"></td>
+                    <td th:text="${damage.getNumberPlate()}"></td>
+                    <td th:text="${damage.getVinNumber()}"></td>
+                    <td th:text="${damage.getDamageDescription()}"></td>
+                    <td th:text="${damage.getPrice()}"></td>
+                    <td th:text="${damage.getClaimant()}"></td>
+                    <td th:text="${damage.getDamageRegistationsDate()}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <p>
+                Skade udbedret:<br>
+                <label for="fixedDate"></label>
+                <input type="date" id="fixedDate" placeholder="Skade udbedret" name="fixedDate"/>
+            </p>
+            <input type="submit" value="Luk skade">
+        </form>
+
+    </div>
+    <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')" th:fragment="createDamage">
+        <form th:action="@{/createDamage}" method="post">
+            <p>vælg bil</p>
+            <p>bil-Id - Nummerplade - Stelnummer</p>
+            <select name="carID">
+                <option value="Sample" th:each="car:${carList}"
+                        th:value="${car.getCarID()}"
+                        th:text="${car.getCarID()}+' - '+${car.getNumberPlate()} +' - '+${car.getVinNumber()} ">
+                </option>
+            </select>
+
+            <p>
+                Skadebeskrivelse :<br>
+                <label for="damageDescription"></label>
+                <input type="text" id="damageDescription" placeholder="skade beskrivelse" name="damageDescription" required/>
+            </p>
+            <p>
+                Pris for skade:<br>
+                <label for="damagesCost"></label>
+                <input type="number" id="damagesCost" name="damagesCost" min="0" value="0" step="any" required/>
+            </p>
+            <p>
+                Skade anmelder :<br>
+                <label for="claimant"></label>
+                <input type="text" id="claimant" placeholder="Anmelder" name="claimant" required/>
+            </p>
+            <p>
+                Dato for skade:<br>
+                <label for="damageDate"></label>
+                <input type="date" id="damageDate" placeholder="Skade dato" name="damageDate"/>
+            </p>
+
+            <input type="submit" value="Opret skade">
+        </form>
 
     </div>
 

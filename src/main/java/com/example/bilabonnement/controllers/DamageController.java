@@ -30,12 +30,12 @@ public class DamageController {
 
 
 
-    @GetMapping ("/createDamage")
+    @GetMapping ("/admin/opretskade")
     public String showListOfCars(Model model) {
         model.addAttribute("title", "Opret");
         ArrayList<Car> carList = (ArrayList<Car>) cr.getAllEntities();
         model.addAttribute("carList", carList);
-        return "createDamage";
+        return "admin/damage/createDamage";
     }
 
 
@@ -44,16 +44,16 @@ public class DamageController {
                               @RequestParam("damageDate") Date damageDate){
         Damage damage = new Damage(carID,damageDescription,damagesCost,claimant,damageDate);
         dr.create(damage);
-        return "redirect:/createDamage";
+        return "redirect:/admin/opretskade";
     }
 
 
-    @GetMapping("/closeDamage")
+    @GetMapping("/admin/lukskade")
     public String showListOfDamagedCars(Model model) {
         model.addAttribute("title", "Luk skade");
         ArrayList<DamagedCar> damageList = (ArrayList<DamagedCar>) dr.getAllDamgesCars();
         model.addAttribute("damageList", damageList);
-        return "closeDamage";
+        return "admin/damage/closeDamage";
     }
 
 
@@ -62,7 +62,7 @@ public class DamageController {
         for (Integer damageID : selectedDamageIDs) {
             dr.closeDamage(damageID, fixedDate);
         }
-        return "redirect:/closeDamage";
+        return "redirect:/admin/lukskade";
     }
 
 
