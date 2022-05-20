@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/closeDamage}" method="post">
+  <table>
+    <thead>
+    <tr>
+      <th>Vælg</th>
+      <th>Skade-id</th>
+      <th>Bil-id</th>
+      <th>Nummerplade</th>
+      <th>Stelnummer</th>
+      <th>Beskrivelse</th>
+      <th>Pris</th>
+      <th>Anmelder</th>
+      <th>Skadesdato</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr th:each="damage :${damageList}">
+        <td>
+          <input type="checkbox" name="damage"
+                 th:id="${damage.getDamageID()}"
+                 th:value="${damage.getDamageID()}" />
+        </td>
+        <td th:text="${damage.getDamageID()}"></td>
+        <td th:text="${damage.getCarID()}"></td>
+        <td th:text="${damage.getNumberPlate()}"></td>
+        <td th:text="${damage.getVinNumber()}"></td>
+        <td th:text="${damage.getDamageDescription()}"></td>
+        <td th:text="${damage.getPrice()}"></td>
+        <td th:text="${damage.getClaimant()}"></td>
+        <td th:text="${damage.getDamageRegistationsDate()}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <p>
+    Skade udbedret:<br>
+    <label for="fixedDate"></label>
+    <input type="date" id="fixedDate" placeholder="Skade udbedret" name="fixedDate"/>
+  </p>
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

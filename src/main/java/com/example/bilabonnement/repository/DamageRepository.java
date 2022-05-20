@@ -17,21 +17,21 @@ public class DamageRepository implements IRepository<Damage> {
     private final CarRepository carRepository = new CarRepository();
 
     @Override
-    public boolean create(Damage entity) {
+    public boolean create(Damage damage) {
         Connection conn = getConnection();
 
         try {
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO damages (car_id, damage_description, damages_cost_kr, claimant,damage_date,damage_added) VALUES (?,?,?,?,?,?)");
-            pstmt.setInt(1, entity.getCarID());
-            pstmt.setString(2, entity.getDamageDescription());
-            pstmt.setDouble(3, entity.getPrice());
-            pstmt.setString(4, entity.getClaimant());
+            pstmt.setInt(1, damage.getCarID());
+            pstmt.setString(2, damage.getDamageDescription());
+            pstmt.setDouble(3, damage.getPrice());
+            pstmt.setString(4, damage.getClaimant());
 
-            pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
-            pstmt.setTimestamp(6, entity.getTimeStamp());
+            pstmt.setDate(5, dateTool.getUtilDateAsSQL(damage.getDamageRegistationsDate()));
+            pstmt.setTimestamp(6, damage.getTimeStamp());
             pstmt.execute();
 
-            updateAndSetCArStatus("skadet",entity);
+            updateAndSetCArStatus("skadet", damage);
 
             return true;
 
@@ -52,28 +52,28 @@ public class DamageRepository implements IRepository<Damage> {
         ArrayList<DamagedCar> allDamagedCars = new ArrayList<>();
 
         String sql = """
-                SELECT
-                	cars.car_id,
-                    damages.damages_id,
-                    cars.vin_number,
-                    cars.numberplate,
-                    manufacturer.manufacturer,
-                    car_models.model,
-                    damages.damage_description,
-                    damages.damages_cost_kr,
-                    damages.claimant,
-                    damages.damage_date
-                FROM
-                	cars
-                JOIN
-                    car_models ON cars.car_model = car_models.car_model_id
-                JOIN
-                    manufacturer ON car_models.manufacturer = manufacturer.manufacturer_id
-                JOIN
-                    car_status ON cars.car_status = car_status.car_status_id
-                JOIN
-                    damages ON cars.car_id = damages.car_id
-                WHERE cars.car_status = 3
+                 SELECT
+                   cars.car_id,
+                   damages.damages_id,
+                   cars.vin_number,
+                   cars.numberplate,
+                   manufacturer.manufacturer,
+                   car_models.model,
+                   damages.damage_description,
+                   damages.damages_cost_kr,
+                   damages.claimant,
+                   damages.damage_date
+                 FROM
+                   cars
+                 JOIN
+                   car_models ON cars.car_model = car_models.car_model_id
+                 JOIN
+                   manufacturer ON car_models.manufacturer = manufacturer.manufacturer_id
+                 JOIN
+                   car_status ON cars.car_status = car_status.car_status_id
+                 JOIN
+                   damages ON cars.car_id = damages.car_id
+                 WHERE damage_closed is null
                 """;
 
         try {
@@ -96,18 +96,44 @@ public class DamageRepository implements IRepository<Damage> {
 
     }
 
-    public void closeDamage(int id, Date damageFixedDate) {
-        Damage damage=getSingleById(id);
+    public void closeDamage(int damageId, Date damageFixedDate) {
+        Damage damage = getSingleById(damageId);
         damage.setDamageFixedDate(damageFixedDate);
         update(damage);
-        updateAndSetCArStatus("hjemme",damage);
+        int carID=damage.getCarID();
+        boolean isLast=checkIsLast(damageId,carID);
+        if(isLast){
+        updateAndSetCArStatus("hjemme", damage);}
     }
 
 
-    private void updateAndSetCArStatus(String carStatus, Damage entity) {
-        Car car = carRepository.getSingleById(entity.getCarID());
-        carRepository.updateCarStatus(carStatus,car);
+    private void updateAndSetCArStatus(String carStatus, Damage damage) {
+        Car car = carRepository.getSingleById(damage.getCarID());
+        carRepository.updateCarStatus(carStatus, car);
 
+    }
+
+    private boolean checkIsLast(int damageID, int carID) {
+
+        Connection conn = getConnection();
+        try {
+
+            String countDamgesLeft = "SELECT COUNT(*) FROM bilabonnement.damages where damages_id<>? and car_id =? and damage_closed is null";
+            PreparedStatement pstmt = conn.prepareStatement(countDamgesLeft);
+            pstmt.setInt(1, damageID);
+            pstmt.setInt(2, carID);
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+
+            rs.next();
+            int damgesLeft = rs.getInt(1);
+            return damgesLeft == 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in checkIsLast-method");
+        }
+        return false;
     }
 
     @Override
@@ -140,19 +166,19 @@ public class DamageRepository implements IRepository<Damage> {
     }
 
     @Override
-    public boolean update(Damage entity) {
+    public boolean update(Damage damage) {
         Connection conn = getConnection();
         try {
 
             PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, damage_description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
-            pstmt.setInt(1, entity.getCarID());
-            pstmt.setString(2, entity.getDamageDescription());
-            pstmt.setDouble(3, entity.getPrice());
-            pstmt.setString(4, entity.getClaimant());
-            pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
-            pstmt.setDate(6, dateTool.getUtilDateAsSQL(entity.getDamageFixedDate()));
-            pstmt.setTimestamp(7, entity.getTimeStamp());
-            pstmt.setInt(8, entity.getDamageID());
+            pstmt.setInt(1, damage.getCarID());
+            pstmt.setString(2, damage.getDamageDescription());
+            pstmt.setDouble(3, damage.getPrice());
+            pstmt.setString(4, damage.getClaimant());
+            pstmt.setDate(5, dateTool.getUtilDateAsSQL(damage.getDamageRegistationsDate()));
+            pstmt.setDate(6, dateTool.getUtilDateAsSQL(damage.getDamageFixedDate()));
+            pstmt.setTimestamp(7, damage.getTimeStamp());
+            pstmt.setInt(8, damage.getDamageID());
             pstmt.execute();
 
             return true;

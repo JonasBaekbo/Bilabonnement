@@ -1,9 +1,14 @@
 package com.example.bilabonnement.models;
 
+import com.example.bilabonnement.servises.EcomomyTool;
+
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 
 public class DamagedCar {
+
 
     private Car car;
     private Damage damage;
@@ -28,54 +33,95 @@ public class DamagedCar {
     public void setDamage(Damage damage) {
         this.damage = damage;
     }
-/*
-    private int carID;
 
-    private int damageID;
-    private String chassisNumber;
-    private String registrationNumber;
-    private String producerName;
-    private String modelName;
-    private String carStatus;
-    private String damageDescription;
-    private int price;
-    private String damageRapporter;
-    private java.sql.Date damageRegistationsDate;
-    private Date damageFixedDate;
-
-    public DamagedCar(int carID, int damageID, String chassisNumber, String registrationNumber, String producerName, String modelName, String carStatus, String damageDescription, int price, String damageRapporter, Date damageRegistationsDate, Date damageFixedDate) {
-        this.carID = carID;
-        this.damageID = damageID;
-        this.chassisNumber = chassisNumber;
-        this.registrationNumber = registrationNumber;
-        this.producerName = producerName;
-        this.modelName = modelName;
-        this.carStatus = carStatus;
-        this.damageDescription = damageDescription;
-        this.price = price;
-        this.damageRapporter = damageRapporter;
-        this.damageRegistationsDate = damageRegistationsDate;
-        this.damageFixedDate = damageFixedDate;
+    public String getDamageDescription() {
+        return damage.getDamageDescription();
     }
 
-    //skal slettes kun til test
-    @Override
-    public String toString() {
-        return "DamagedCar{" +
-                "carID=" + carID +
-                ", damageID=" + damageID +
-                ", chassisNumber='" + chassisNumber + '\'' +
-                ", registrationNumber='" + registrationNumber + '\'' +
-                ", producerName='" + producerName + '\'' +
-                ", modelName='" + modelName + '\'' +
-                ", carStatus='" + carStatus + '\'' +
-                ", damageDescription='" + damageDescription + '\'' +
-                ", price=" + price +
-                ", damageRapporter='" + damageRapporter + '\'' +
-                ", damageRegistationsDate=" + damageRegistationsDate +
-                ", damageFixedDate=" + damageFixedDate +
-                '}';
+
+    public double getPrice() {
+        return damage.getPrice();
     }
 
-     */
+
+    public Date getDamageRegistationsDate() {
+        return damage.getDamageRegistationsDate();
+    }
+
+
+    public Date getDamageFixedDate() {
+        return damage.getDamageFixedDate();
+    }
+
+
+    public int getDamageID() {
+        return damage.getDamageID();
+    }
+
+
+    public int getCarID() {
+        return damage.getCarID();
+    }
+
+
+    public String getClaimant() {
+        return damage.getClaimant();
+    }
+
+
+    public Timestamp getTimeStamp() {
+        return damage.getTimeStamp();
+    }
+
+
+    public String getModelName() {
+        return car.getModelName();
+    }
+
+
+    public String getFuelType() {
+        return car.getFuelType();
+    }
+
+
+    public String getNumberPlate() {
+        return car.getNumberPlate();
+    }
+
+
+    public String getColour() {
+        return car.getColour();
+    }
+
+
+    public String getGearType() {
+        return car.getGearType();
+    }
+
+
+    public String getCarStatus() {
+        return car.getCarStatus();
+    }
+
+
+    public Integer getCurrentLeasing() {
+        return car.getCurrentLeasing();
+    }
+
+
+    public Timestamp getRegistrationDate() {
+        return car.getRegistrationDate();
+    }
+
+
+    public String getVinNumber() {
+        return car.getVinNumber();
+    }
+
+
+    public String getManufacturer() {
+        return car.getManufacturer();
+    }
+
+
 }
