@@ -13,7 +13,22 @@ public class DamagedCar {
         this.damage = damage;
     }
 
-    /*
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Damage getDamage() {
+        return damage;
+    }
+
+    public void setDamage(Damage damage) {
+        this.damage = damage;
+    }
+/*
     private int carID;
 
     private int damageID;

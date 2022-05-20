@@ -21,7 +21,7 @@ public class CarRepository implements IRepository<Car> {
         Connection conn = getConnection();
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT car_id, vin_number, registration_number, car_model, fuel_type, colour, gear_type, car_status, current_leasing, car_added FROM cars WHERE car_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT car_id, vin_number, numberplate, car_model, fuel_type, colour, gear_type, car_status, current_leasing, car_added FROM cars WHERE car_id = ?");
             pstmt.setInt(1, id);
             pstmt.execute();
             ResultSet resultSet = pstmt.getResultSet();
@@ -30,7 +30,7 @@ public class CarRepository implements IRepository<Car> {
             Car car = new Car(
                     resultSet.getInt("car_id"),
                     resultSet.getString("vin_number"),
-                    resultSet.getString("registration_number"),
+                    resultSet.getString("numberplate"),
                     resultSet.getString("car_model"),
                     resultSet.getString("fuel_type"),
                     resultSet.getString("colour"),
@@ -59,7 +59,7 @@ public class CarRepository implements IRepository<Car> {
             int statusId = getStatusID(entity);
 
             // Update "biler"
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE cars SET car_status = ?, vin_number = ? ,registration_number= ?, car_model= ?, fuel_type= ?, colour= ?, gear_type= ?, current_leasing= ?, car_added= ? WHERE car_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE cars SET car_status = ?, vin_number = ? ,numberplate= ?, car_model= ?, fuel_type= ?, colour= ?, gear_type= ?, current_leasing= ?, car_added= ? WHERE car_id = ?");
             pstmt.setInt(1, statusId);
             pstmt.setString(2, entity.getVinNumber());
             pstmt.setString(3, entity.getNumberPlate());

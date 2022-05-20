@@ -15,7 +15,7 @@ import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getCon
 public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
     CarRepository cr=new CarRepository();
 
-    public int getnumberOfCars() {
+    public int getNumberOfCars() {
         Connection conn = getConnection();
 
             try {
@@ -52,7 +52,6 @@ public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
                                  extra_equipemnt_m2m.car_id =?
                        """;
 
-
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, carID);
@@ -74,7 +73,7 @@ public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
 
         public  List<ekstraEquipemnt> getAllExtraEqupment(){
             List<ekstraEquipemnt> allCars = new ArrayList<>();
-            int numberOfCars=getnumberOfCars();
+            int numberOfCars= getNumberOfCars();
 
             for (int i = 0; i < numberOfCars; i++) {
                ArrayList<String>exraequipment= (ArrayList<String>) getListOfExtraEquipment(i+1);

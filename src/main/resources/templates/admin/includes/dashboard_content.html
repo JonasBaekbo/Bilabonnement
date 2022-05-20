@@ -1,17 +1,25 @@
+!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
 
 
 <div class="content" xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
-<div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="monthlyIncome">
-    <p>    totalMontlyIncome = <td th:text="${totalMontlyIncome}"></td> </p>
+    <div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="monthlyIncome">
+        <p> totalMontlyIncome =
+        <td th:text="${totalMontlyIncome}"></td>
+        </p>
 
-</div>
+    </div>
     <div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="allLeasedCars">
+
         <table>
             <tr
                     th:each="Car : ${cars}">
                 <td th:text="${Car.getCarID()}"></td>
-                <td th:text="${Car.getRegistrationNumber()}"></td>
+                <td th:text="${Car.getNumberPlate()}"></td>
                 <td th:text="${Car.getCurrentLeasing()}"></td>
                 <td th:text="${Car.getCarStatus()}"></td>
                 <td th:text="${Car.getPricePrMonth()}"></td>
@@ -20,29 +28,78 @@
     </div>
 
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="opretlease">
+
+        <h3>Biler der er registeret som ledige</h3>
+        <table width="85%">
+            <thead>
+            <tr>
+                <th style="width: 5%"> Bil id</th>
+                <th style="width: 6%"> Nummerplade</th>
+                <th style="width: 15%"> Stelnummer</th>
+                <th style="width: 8%"> mærke</th>
+                <th style="width: 20%"> model</th>
+                <th style="width: 5%"> farve</th>
+                <th style="width: 8%"> brændstof</th>
+                <th style="width: 10%"> geartype</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car:${listOfFreeCars}">
+                <td th:text="${car.getCarID()}"></td>
+                <td th:text="${car.getNumberPlate()}"></td>
+                <td th:text="${car.getVinNumber()}"></td>
+                <td th:text="${car.getManufacturer()}"></td>
+                <td th:text="${car.getModelName()}"></td>
+                <td th:text="${car.getColour()}"></td>
+                <td th:text="${car.getFuelType()}"></td>
+                <td th:text="${car.getGearType()}"></td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <h5>Udfyld oplysningerne nedenfor, for at register ny leasingaftale</h5>
         <form th:action="@{/opretlease}" method="post">
             <p>
+                Kundenummer:<br>
                 <label for="customerID"></label>
                 <input type="number" id="customerID" placeholder="Kunde ID" name="customerID" required/>
             </p>
             <p>
+                Startdato for leasing:<br>
                 <label for="startDate"></label>
                 <input type="date" id="startDate" placeholder="Start dato for lease" name="startDate"/>
             </p>
             <p>
+                Slutdato for leasing:<br>
                 <label for="endDate"></label>
                 <input type="date" id="endDate" placeholder="Slut dato for lease" name="endDate" required/>
             </p>
             <p>
+                Inkluderede km:<br>
                 <label for="includedKM"></label>
-                <input type="number" id="includedKM" placeholder="Inkluderet antal kilometer" name="includedKM" required/>
+                <input type="number" id="includedKM" placeholder="Inkluderet antal kilometer" name="includedKM"
+                       required/>
             </p>
             <p>
-                <label for="customerID"></label>
-                <input type="number" id="carID" placeholder="Bil ID" name="carID" required/>
+                Leasing-type:<br>
+                <input type="radio" name="leasingType" value="udlejet-limited" id="udlejet-limited">
+                <label for="udlejet-limited">Limited</label>
+                <input type="radio" name="leasingType" value="udlejet-unlimited" id="udlejet-unlimited">
+                <label for="udlejet-unlimited">Unlimited</label>
             </p>
             <p>
-                <button type="submit"> Opret lease </button>
+                Vælg bil id:<br>
+                <select name="carID">
+                    <option value="Sample" th:each="car:${listOfFreeCars}"
+                            th:value="${car.getCarID()}"
+                            th:text="${car.getCarID()}">
+                    </option>
+                </select>
+            </p>
+
+            <p>
+                <button type="submit"> Opret lease</button>
             </p>
         </form>
 
@@ -56,6 +113,7 @@
         <table>
             <tr
                     th:each="ekstraEquipemnt : ${ekstraEquipemnts}">
+                <td th:text="${ekstraEquipemnt.getCarID()}"></td>
                 <td th:text="${ekstraEquipemnt.getNumberPlate()}"></td>
                 <td th:text="${ekstraEquipemnt.getEkstraEquipemntdescription()}"></td>
             </tr>

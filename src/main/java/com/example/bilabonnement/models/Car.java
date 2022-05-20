@@ -10,6 +10,7 @@ public class Car {
     private int carID;
     private String vinNumber;
     private String numberPlate;
+    private String manufacturer;
     private String modelName;
     private String fuelType;
     private String colour;
@@ -54,6 +55,22 @@ public class Car {
         this.carStatus = carStatus;
 
     }
+
+    public Car(int carID,String vinNumber,String numberPlate ,String manufacturer, String modelName, String colour,String fuelType, String gearType){
+        this.carID=carID;
+        this.vinNumber=vinNumber;
+        this.numberPlate=numberPlate;
+        this.manufacturer=manufacturer;
+        this.modelName=modelName;
+        this.fuelType=fuelType;
+        this.colour=colour;
+        this.gearType=gearType;
+
+    }
+
+
+
+
 
     public String getModelName() {
         return modelName;
@@ -134,5 +151,13 @@ public class Car {
 
     public void setVinNumber(String vinNumber) {
         this.vinNumber = vinNumber;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 }

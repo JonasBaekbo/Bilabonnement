@@ -15,14 +15,16 @@ public class Leasing {
     private int includedKM;
     private int carID;
     private int leasingId;
+    private String leasingType;
     private Timestamp timeAdded;
 
-    public Leasing(int customerID, Date startDate, Date endDate, int includedKM, int carID) {
+    public Leasing(int customerID, Date startDate, Date endDate, int includedKM, int carID, String leasingType) {
         this.customerID = customerID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.includedKM = includedKM;
         this.carID = carID;
+        this.leasingType = leasingType;
         this.timeAdded=dateTool.getTimeStamp();
     }
 
@@ -91,6 +93,14 @@ public class Leasing {
 
     public void setTimeAdded(Timestamp timeAdded) {
         this.timeAdded = timeAdded;
+    }
+
+    public String getLeasingType() {
+        return leasingType;
+    }
+
+    public void setLeasingType(String leasingType) {
+        this.leasingType = leasingType;
     }
 }
 

@@ -41,19 +41,14 @@ public class DamageRepository implements IRepository<Damage> {
         return false;
     }
 
-    public void closeDamage(int id, Date damageFixedDate) {
-        Damage damage=getSingleById(id);
-        damage.setDamageFixedDate(damageFixedDate);
-        update(damage);
-    }
+
     @Override
     public List<Damage> getAllEntities() {
-
         return null;
     }
 
-
     public List<DamagedCar> getAllDamgesCars() {
+        Connection conn = getConnection();
         ArrayList<DamagedCar> allDamagedCars = new ArrayList<>();
 
         String sql = """
@@ -61,15 +56,13 @@ public class DamageRepository implements IRepository<Damage> {
                 	cars.car_id,
                     damages.damages_id,
                     cars.vin_number,
-                    cars.registration_number,
+                    cars.numberplate,
                     manufacturer.manufacturer,
                     car_models.model,
-                    car_status.car_status,
                     damages.damage_description,
                     damages.damages_cost_kr,
                     damages.claimant,
-                    damages.damage_date,
-                    damages.damage_closed
+                    damages.damage_date
                 FROM
                 	cars
                 JOIN
@@ -83,7 +76,6 @@ public class DamageRepository implements IRepository<Damage> {
                 WHERE cars.car_status = 3
                 """;
 
-        Connection conn = getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.execute();
@@ -101,6 +93,20 @@ public class DamageRepository implements IRepository<Damage> {
             e.printStackTrace();
         }
         return null;
+
+    }
+
+    public void closeDamage(int id, Date damageFixedDate) {
+        Damage damage=getSingleById(id);
+        damage.setDamageFixedDate(damageFixedDate);
+        update(damage);
+        updateAndSetCArStatus("hjemme",damage);
+    }
+
+
+    private void updateAndSetCArStatus(String carStatus, Damage entity) {
+        Car car = carRepository.getSingleById(entity.getCarID());
+        carRepository.updateCarStatus(carStatus,car);
 
     }
 
@@ -133,23 +139,11 @@ public class DamageRepository implements IRepository<Damage> {
         return null;
     }
 
-
-
-    public void updateAndSetCArStatus(String carStatus, Damage entity) {
-        //update "damages"
-        Car car = carRepository.getSingleById(entity.getCarID());
-        carRepository.updateCarStatus(carStatus,car);
-
-    }
-
-
-
     @Override
     public boolean update(Damage entity) {
         Connection conn = getConnection();
         try {
 
-            // Update "damages"
             PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, damage_description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
             pstmt.setInt(1, entity.getCarID());
             pstmt.setString(2, entity.getDamageDescription());
@@ -157,7 +151,8 @@ public class DamageRepository implements IRepository<Damage> {
             pstmt.setString(4, entity.getClaimant());
             pstmt.setDate(5, dateTool.getUtilDateAsSQL(entity.getDamageRegistationsDate()));
             pstmt.setDate(6, dateTool.getUtilDateAsSQL(entity.getDamageFixedDate()));
-            pstmt.setInt(7, entity.getCarID());
+            pstmt.setTimestamp(7, entity.getTimeStamp());
+            pstmt.setInt(8, entity.getDamageID());
             pstmt.execute();
 
             return true;

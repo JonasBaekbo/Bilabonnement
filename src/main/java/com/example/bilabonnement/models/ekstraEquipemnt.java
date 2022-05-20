@@ -16,6 +16,10 @@ public class ekstraEquipemnt {
         return car;
     }
 
+    public int getCarID(){
+        return car.getCarID();
+    }
+
     public void setCar(Car car) {
         this.car = car;
     }
