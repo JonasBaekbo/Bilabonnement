@@ -16,14 +16,24 @@
     <div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="allLeasedCars">
 
         <table>
-            <tr
-                    th:each="Car : ${cars}">
-                <td th:text="${Car.getCarID()}"></td>
-                <td th:text="${Car.getNumberPlate()}"></td>
-                <td th:text="${Car.getCurrentLeasing()}"></td>
-                <td th:text="${Car.getCarStatus()}"></td>
-                <td th:text="${Car.getPricePrMonth()}"></td>
+        <thead>
+        <tr>
+            <th > Bil id</th>
+            <th > Nummerplade</th>
+            <th > leasing</th>
+            <th > type</th>
+            <th > pris</th>
+        </tr>
+        </thead>
+            <tbody>
+            <tr th:each="car : ${carEconomies}">
+                <td th:text="${car.getCarID()}"></td>
+                <td th:text="${car.getNumberPlate()}"></td>
+                <td th:text="${car.getCurrentLeasing()}"></td>
+                <td th:text="${car.getCarStatus()}"></td>
+                <td th:text="${car.getPricePrMonth()}"></td>
             </tr>
+            </tbody>
         </table>
     </div>
 

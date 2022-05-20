@@ -13,9 +13,9 @@ import java.util.List;
 
 public class EconomyRepository implements IRepository<CarEconomy> {
 
-    CarRepository cr=new CarRepository();
+    CarRepository cr = new CarRepository();
 
-    public int totalMonthlyIncome(List<CarEconomy> carEconomies){
+    public int totalMonthlyIncome(List<CarEconomy> carEconomies) {
 
         return 0;
     }
@@ -25,24 +25,27 @@ public class EconomyRepository implements IRepository<CarEconomy> {
         List<CarEconomy> allCars = new ArrayList<>();
         try {
             PreparedStatement pstmt = conn.prepareStatement("""
-                    SELECT 
+                    SELECT
                     cars.car_id,
+                    cars.numberplate,
+                    cars.current_leasing,
                     car_status.car_status,
-                    car_models.price_per_month 
-                    FROM 
-                    cars 
-                    JOIN  
+                    car_models.price_per_month
+                    FROM
+                    cars
+                    JOIN
                     car_models ON cars.car_model = car_models.car_model_id
-                    JOIN 
-                    car_status ON cars.car_status=car_status.car_status_id;
+                    JOIN
+                    car_status ON cars.car_status=car_status.car_status_id
+                    where cars.car_status in (1,2)
                     """);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                if(rs.getString(2).equals("udlejet-limited")||rs.getString(2).equals("udlejet-unlimited")) {
-                    Car car = cr.getSingleById(rs.getInt(1));
-                    CarEconomy carEconomy=new CarEconomy(car, rs.getInt(3));
-                    allCars.add(carEconomy);
-                }
+                Car car = cr.getSingleById(rs.getInt("car_id"));
+                car.setCarStatus(rs.getString("car_status"));
+                CarEconomy carEconomy = new CarEconomy(car, rs.getInt("price_per_month"));
+                allCars.add(carEconomy);
+
             }
         } catch (SQLException e) {
             System.out.println("Something wrong in statement");
@@ -67,7 +70,7 @@ public class EconomyRepository implements IRepository<CarEconomy> {
         Connection conn = DatabaseConnectionManager.getConnection();
         List<CarEconomy> allCars = new ArrayList<>();
         try {
-            String select ="""
+            String select = """
                     SELECT
                     cars.car_id,
                     car_models.price_per_month
@@ -83,9 +86,9 @@ public class EconomyRepository implements IRepository<CarEconomy> {
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
                 Car car = cr.getSingleById(rs.getInt(1));
-                CarEconomy carEconomy=new CarEconomy(car, rs.getInt(2));
-                    allCars.add(carEconomy);
-                }
+                CarEconomy carEconomy = new CarEconomy(car, rs.getInt(2));
+                allCars.add(carEconomy);
+            }
 
         } catch (SQLException e) {
             System.out.println("Something wrong in statement :)");
