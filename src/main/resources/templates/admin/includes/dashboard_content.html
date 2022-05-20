@@ -101,7 +101,8 @@
                 <select name="carID">
                     <option value="Sample" th:each="car:${listOfFreeCars}"
                             th:value="${car.getCarID()}"
-                            th:text="${car.getCarID()}">
+                        th:text="${car.getCarID()}+' - '+${car.getNumberPlate()}">
+
                     </option>
                 </select>
             </p>
