@@ -18,7 +18,7 @@ public class EconomyController {
 
     @GetMapping("/admin/lejedebiler")
     public String leasedCars(Model model) {
-        List<CarEconomy> carEconomies = economyRepository.getAllRentedCars();
+        List<CarEconomy> carEconomies = economyRepository.getAllEntities();
         model.addAttribute("carEconomies", carEconomies);
         model.addAttribute("title", "Alle lejede biler");
         return "admin/economy/showAllLeasedCars";
