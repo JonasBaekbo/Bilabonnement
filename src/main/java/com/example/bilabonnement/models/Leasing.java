@@ -3,6 +3,7 @@ package com.example.bilabonnement.models;
 import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -10,15 +11,15 @@ public class Leasing {
     private final DateTool dateTool =new DateTool();
 
     private int customerID;
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private int includedKM;
     private int carID;
     private int leasingId;
     private String leasingType;
     private Timestamp timeAdded;
 
-    public Leasing(int customerID, Date startDate, Date endDate, int includedKM, int carID, String leasingType) {
+    public Leasing(int customerID, LocalDateTime startDate, LocalDateTime endDate, int includedKM, int carID, String leasingType) {
         this.customerID = customerID;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -28,8 +29,7 @@ public class Leasing {
         this.timeAdded=dateTool.getTimeStamp();
     }
 
-
-    public Leasing(int leasingId, int customerID,  Date startDate, Date endDate, int includedKM, int carID, Timestamp timeAdded) {
+    public Leasing(int leasingId, int customerID, LocalDateTime startDate, LocalDateTime endDate, int includedKM, int carID, Timestamp timeAdded) {
         this.leasingId=leasingId;
         this.customerID = customerID;
         this.startDate = startDate;
@@ -47,19 +47,17 @@ public class Leasing {
         this.customerID = customerID;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

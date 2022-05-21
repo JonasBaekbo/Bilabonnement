@@ -1,6 +1,7 @@
 package com.example.bilabonnement.repository;
 
 import com.example.bilabonnement.models.Car;
+import com.example.bilabonnement.models.CarStatus;
 import com.example.bilabonnement.models.Damage;
 import com.example.bilabonnement.models.DamagedCar;
 import com.example.bilabonnement.servises.DateTool;
@@ -15,6 +16,7 @@ public class DamageRepository implements IRepository<Damage> {
     private final DateTool dateTool = new DateTool();
 
     private final CarRepository carRepository = new CarRepository();
+    private final CarStatusRepository csr = new CarStatusRepository();
 
     @Override
     public boolean create(Damage damage) {
@@ -31,7 +33,8 @@ public class DamageRepository implements IRepository<Damage> {
             pstmt.setTimestamp(6, damage.getTimeStamp());
             pstmt.execute();
 
-            updateAndSetCArStatus("skadet", damage);
+            CarStatus carStatus = csr.getByName("skadet");
+            updateAndSetCArStatus(carStatus, damage);
 
             return true;
 
@@ -47,54 +50,7 @@ public class DamageRepository implements IRepository<Damage> {
         return null;
     }
 
-    public List<DamagedCar> getAllDamgesCars() {
-        Connection conn = getConnection();
-        ArrayList<DamagedCar> allDamagedCars = new ArrayList<>();
 
-        String sql = """
-                 SELECT
-                   cars.car_id,
-                   damages.damages_id,
-                   cars.vin_number,
-                   cars.numberplate,
-                   manufacturer.manufacturer,
-                   car_models.model,
-                   damages.damage_description,
-                   damages.damages_cost_kr,
-                   damages.claimant,
-                   damages.damage_date
-                 FROM
-                   cars
-                 JOIN
-                   car_models ON cars.car_model = car_models.car_model_id
-                 JOIN
-                   manufacturer ON car_models.manufacturer = manufacturer.manufacturer_id
-                 JOIN
-                   car_status ON cars.car_status = car_status.car_status_id
-                 JOIN
-                   damages ON cars.car_id = damages.car_id
-                 WHERE damage_closed is null
-                """;
-
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.execute();
-            ResultSet resultSet = pstmt.getResultSet();
-            while (resultSet.next()) {
-
-                Car car = carRepository.getSingleById(resultSet.getInt(1));
-                Damage damage = getSingleById(resultSet.getInt(2));
-                DamagedCar damagedCar = new DamagedCar(car, damage);
-
-                allDamagedCars.add(damagedCar);
-            }
-            return allDamagedCars;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
 
     public void closeDamage(int damageId, Date damageFixedDate) {
         Damage damage = getSingleById(damageId);
@@ -103,11 +59,13 @@ public class DamageRepository implements IRepository<Damage> {
         int carID=damage.getCarID();
         boolean isLast=checkIsLast(damageId,carID);
         if(isLast){
-        updateAndSetCArStatus("hjemme", damage);}
+            CarStatus carStatus = csr.getByName("hjemme");
+            updateAndSetCArStatus(carStatus, damage);
+        }
     }
 
 
-    private void updateAndSetCArStatus(String carStatus, Damage damage) {
+    private void updateAndSetCArStatus(CarStatus carStatus, Damage damage) {
         Car car = carRepository.getSingleById(damage.getCarID());
         carRepository.updateCarStatus(carStatus, car);
 

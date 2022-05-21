@@ -2,12 +2,12 @@ package com.example.bilabonnement.models;
 
 import java.util.ArrayList;
 
-public class ekstraEquipemnt {
+public class ExtraEquipment {
 
     private Car car;
     private ArrayList<String> ekstraEquipemntdescription;
 
-    public ekstraEquipemnt(Car car, ArrayList<String> ekstraEquipemntdescription) {
+    public ExtraEquipment(Car car, ArrayList<String> ekstraEquipemntdescription) {
         this.car = car;
         this.ekstraEquipemntdescription = ekstraEquipemntdescription;
     }

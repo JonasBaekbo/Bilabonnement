@@ -1,6 +1,6 @@
 package com.example.bilabonnement.controllers;
 
-import com.example.bilabonnement.models.ekstraEquipemnt;
+import com.example.bilabonnement.models.ExtraEquipment;
 import com.example.bilabonnement.repository.ExtraEquipmentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +16,9 @@ public class EkstraEquipemntController {
 
     @GetMapping("/admin/visekstraudstyr")
     public String ekstreEq(Model model){
-        List<ekstraEquipemnt> ekstraEquipemnts = new ArrayList<>();
-        ekstraEquipemnts = extraEquipmentRepository.getAllExtraEqupment();
-        model.addAttribute("ekstraEquipemnts",ekstraEquipemnts);
+        List<ExtraEquipment> extraEquipment = new ArrayList<>();
+        extraEquipment = extraEquipmentRepository.getAllExtraEqupment();
+        model.addAttribute("extraEquipment", extraEquipment);
         return "admin/leasing/extraEquipment";
     }
 }

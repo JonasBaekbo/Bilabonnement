@@ -1,7 +1,7 @@
 package com.example.bilabonnement.repository;
 
 import com.example.bilabonnement.models.Car;
-import com.example.bilabonnement.models.ekstraEquipemnt;
+import com.example.bilabonnement.models.ExtraEquipment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
-public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
+public class ExtraEquipmentRepository implements IRepository<ExtraEquipment> {
     CarRepository cr=new CarRepository();
 
     public int getNumberOfCars() {
@@ -71,14 +71,14 @@ public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
             return null;
         }
 
-        public  List<ekstraEquipemnt> getAllExtraEqupment(){
-            List<ekstraEquipemnt> allCars = new ArrayList<>();
+        public  List<ExtraEquipment> getAllExtraEqupment(){
+            List<ExtraEquipment> allCars = new ArrayList<>();
             int numberOfCars= getNumberOfCars();
 
             for (int i = 0; i < numberOfCars; i++) {
                ArrayList<String>exraequipment= (ArrayList<String>) getListOfExtraEquipment(i+1);
                 Car car = cr.getSingleById(i+1);
-               allCars.add(new ekstraEquipemnt(car,exraequipment));
+               allCars.add(new ExtraEquipment(car,exraequipment));
 
             }
             return allCars;
@@ -86,22 +86,22 @@ public class ExtraEquipmentRepository implements IRepository<ekstraEquipemnt> {
 
 
     @Override
-    public boolean create(ekstraEquipemnt entity) {
+    public boolean create(ExtraEquipment entity) {
         return false;
     }
 
     @Override
-    public ekstraEquipemnt getSingleById(int id) {
+    public ExtraEquipment getSingleById(int id) {
         return null;
     }
 
     @Override
-    public List<ekstraEquipemnt> getAllEntities() {
+    public List<ExtraEquipment> getAllEntities() {
         return null;
     }
 
     @Override
-    public boolean update(ekstraEquipemnt entity) {
+    public boolean update(ExtraEquipment entity) {
         return false;
     }
 }

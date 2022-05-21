@@ -5,6 +5,7 @@ import com.example.bilabonnement.models.Damage;
 import com.example.bilabonnement.models.DamagedCar;
 import com.example.bilabonnement.repository.CarRepository;
 import com.example.bilabonnement.repository.DamageRepository;
+import com.example.bilabonnement.repository.DamagedCarRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,16 +19,9 @@ import java.util.List;
 @Controller
 public class DamageController {
 
-
+DamagedCarRepository dcr=new DamagedCarRepository();
    DamageRepository dr=new DamageRepository();
    CarRepository cr =new CarRepository();
-
-  /*  @PostMapping("/create")
-    public String updateDamage(@RequestParam("damage") int damageID){
-        System.out.println(damageID);
-        return "redirect:/admin";
-    }*/
-
 
 
     @GetMapping ("/admin/opretskade")
@@ -51,7 +45,7 @@ public class DamageController {
     @GetMapping("/admin/lukskade")
     public String showListOfDamagedCars(Model model) {
         model.addAttribute("title", "Luk skade");
-        ArrayList<DamagedCar> damageList = (ArrayList<DamagedCar>) dr.getAllDamgesCars();
+        ArrayList<DamagedCar> damageList = (ArrayList<DamagedCar>) dcr.getAllDamgesCars();
         model.addAttribute("damageList", damageList);
         return "admin/damage/closeDamage";
     }

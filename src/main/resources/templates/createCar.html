@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/createCar}" method="post">
+<p>
+  Vælg model:<br>
+  <select name="carModel">
+    <option th:each="model:${carModels}"
+            th:value="${model.getModelID()}"
+            th:text="${model.getManufacturer()}+' - '+${model.getModelName()}">
+    </option>
+    <option value="-1">Anden ...</option>
+  </select>
+</p>
+    <p>
+        Stelnummer:<br>
+        <label for="vinNumber"></label>
+        <input type="text" id="vinNumber" placeholder="Stelnummer" name="vinNumber" required/>
+    </p>
+    <p>
+        Nummerplade:<br>
+        <label for="numberPlate"></label>
+        <input type="text" id="numberPlate" placeholder="Nummerplade" name="numberPlate"/>
+    </p>
+
+    <p>
+        Brændstof:<br>
+        <select name="fuelType">
+            <option th:each="fuelType:${fuelTypes}"
+                    th:value="${fuelType.getFuelTypeID()}"
+                    th:text="${fuelType.getFuelTypeName()}">
+            </option>
+        </select>
+    </p>
+
+    <p>
+        Geartype:<br>
+        <select name="gearType">
+            <option th:each="gearType:${gearTypes}"
+                    th:value="${gearType.getGearTypeID()}"
+                    th:text="${gearType.getGearTypeName()}">
+            </option>
+        </select>
+    </p>
+
+    <p>
+        Farve:<br>
+        <select name="colour">
+            <option th:each="colour:${colours}"
+                    th:value="${colour.getColourID()}"
+                    th:text="${colour.getColourName()}">
+            </option>
+        </select>
+    </p>
+
+    <p>
+        Registreringafgift:<br>
+        <label for="regFee"></label>
+        <input type="number" id="regFee" placeholder="Registreringsafgift" name="regFee"/>
+    </p>
+
+<p>
+  <button type="submit">Opret bil</button>
+</p>
+
+</form>
+</body>
+</html>

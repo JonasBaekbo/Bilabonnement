@@ -1,24 +1,25 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http:/www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
 </head>
 
-
 <div class="content" xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
     <div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="allLeasedCars">
-<p>Alle udlejede biler</p>
-        <table>
-        <thead>
-        <tr>
-            <th > Bil id</th>
-            <th > Nummerplade</th>
-            <th > leasing</th>
-            <th > type</th>
-            <th > pris</th>
-        </tr>
-        </thead>
+        <p>Alle udlejede biler</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th> Bil-id</th>
+                <th> Nummerplade</th>
+                <th> Leasing</th>
+                <th> Type</th>
+                <th> Pris pr. måned</th>
+                <th> Leasing startdato</th>
+                <th> Leasing slutdato</th>
+            </tr>
+            </thead>
             <tbody>
             <tr th:each="car : ${carEconomies}">
                 <td th:text="${car.getCarID()}"></td>
@@ -26,11 +27,13 @@
                 <td th:text="${car.getCurrentLeasing()}"></td>
                 <td th:text="${car.getCarStatus()}"></td>
                 <td th:text="${car.getPricePrMonth()}"></td>
+                <td th:text="${#dates.format(car.getLeasingStartDate(), 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${#dates.format(car.getLeasingEndDate(), 'dd-MM-yyyy HH:mm')}"></td>
             </tr>
             </tbody>
         </table>
-
-        <p> Sammenlagte pris på alle udlejede biler =
+        <br>
+        <p> Samlet måneds indkomst for alle udlejede biler =
         <td th:text="${totalMontlyIncome}"></td>
         </p>
     </div>
@@ -38,7 +41,7 @@
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="opretlease">
 
         <h3>Biler der er registeret som ledige</h3>
-        <table width="85%">
+        <table >
             <thead>
             <tr>
                 <th style="width: 5%"> Bil id</th>
@@ -58,9 +61,9 @@
                 <td th:text="${car.getVinNumber()}"></td>
                 <td th:text="${car.getManufacturer()}"></td>
                 <td th:text="${car.getModelName()}"></td>
-                <td th:text="${car.getColour()}"></td>
-                <td th:text="${car.getFuelType()}"></td>
-                <td th:text="${car.getGearType()}"></td>
+                <td th:text="${car.getColourName()}"></td>
+                <td th:text="${car.getFuelTypeName()}"></td>
+                <td th:text="${car.getGearTypeName()}"></td>
                 </td>
             </tr>
             </tbody>
@@ -76,12 +79,12 @@
             <p>
                 Startdato for leasing:<br>
                 <label for="startDate"></label>
-                <input type="date" id="startDate" placeholder="Start dato for lease" name="startDate"/>
+                <input type="datetime-local" id="startDate" placeholder="Start dato for lease" name="startDate"/>
             </p>
             <p>
                 Slutdato for leasing:<br>
                 <label for="endDate"></label>
-                <input type="date" id="endDate" placeholder="Slut dato for lease" name="endDate" required/>
+                <input type="datetime-local" id="endDate" placeholder="Slut dato for lease" name="endDate" required/>
             </p>
             <p>
                 Inkluderede km:<br>
@@ -97,11 +100,11 @@
                 <label for="udlejet-unlimited">Unlimited</label>
             </p>
             <p>
-                Vælg bil id:<br>
+                Vælg bil:<br>
                 <select name="carID">
                     <option value="Sample" th:each="car:${listOfFreeCars}"
                             th:value="${car.getCarID()}"
-                        th:text="${car.getCarID()}+' - '+${car.getNumberPlate()}">
+                            th:text="${car.getCarID()}+' - '+${car.getNumberPlate()}">
 
                     </option>
                 </select>
@@ -136,7 +139,7 @@
                     <td>
                         <input type="checkbox" name="damage"
                                th:id="${damage.getDamageID()}"
-                               th:value="${damage.getDamageID()}" />
+                               th:value="${damage.getDamageID()}"/>
                     </td>
                     <td th:text="${damage.getDamageID()}"></td>
                     <td th:text="${damage.getCarID()}"></td>
@@ -162,8 +165,8 @@
     </div>
     <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')" th:fragment="createDamage">
         <form th:action="@{/createDamage}" method="post">
-            <p>vælg bil</p>
-            <p>bil-Id - Nummerplade - Stelnummer</p>
+            <h5>Opret skade eller mangel på bil</h5>
+            <p>Bil-Id - Nummerplade - Stelnummer</p>
             <select name="carID">
                 <option value="Sample" th:each="car:${carList}"
                         th:value="${car.getCarID()}"
@@ -174,7 +177,8 @@
             <p>
                 Skadebeskrivelse :<br>
                 <label for="damageDescription"></label>
-                <input type="text" id="damageDescription" placeholder="skade beskrivelse" name="damageDescription" required/>
+                <textarea id="damageDescription" name="damageDescription" maxlength="200" rows="4" cols="50" required>
+                </textarea>
             </p>
             <p>
                 Pris for skade:<br>
@@ -184,7 +188,7 @@
             <p>
                 Skade anmelder :<br>
                 <label for="claimant"></label>
-                <input type="text" id="claimant" placeholder="Anmelder" name="claimant" required/>
+                <input type="text" id="claimant" name="claimant" required/>
             </p>
             <p>
                 Dato for skade:<br>
@@ -200,7 +204,7 @@
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="extraEquipment">
         <table>
             <tr
-                    th:each="ekstraEquipemnt : ${ekstraEquipemnts}">
+                    th:each="ekstraEquipemnt : ${extraEquipment}">
                 <td th:text="${ekstraEquipemnt.getCarID()}"></td>
                 <td th:text="${ekstraEquipemnt.getNumberPlate()}"></td>
                 <td th:text="${ekstraEquipemnt.getEkstraEquipemntdescription()}"></td>
