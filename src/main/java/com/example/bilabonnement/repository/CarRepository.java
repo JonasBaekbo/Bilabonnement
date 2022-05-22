@@ -5,7 +5,6 @@ import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
@@ -112,11 +111,9 @@ public class CarRepository implements IRepository<Car> {
                 WHERE
                     cars.car_status_id<>5
                 """;
-
         allCars=findCars(sql);
         return allCars;
     }
-
 
     public ArrayList<Car> getAllFreeCars() {
 
@@ -140,12 +137,9 @@ public class CarRepository implements IRepository<Car> {
                 WHERE
                     cars.car_status_id = 4
                 """;
-
-
         allFreeCars = findCars(sql);
         return allFreeCars;
     }
-
 
     public ArrayList<Car> getCarsMissigLicence() {
         ArrayList<Car> missingLicense;
@@ -171,7 +165,6 @@ public class CarRepository implements IRepository<Car> {
         missingLicense=findCars(sql);
         return missingLicense;
     }
-
 
     private ArrayList<Car> findCars(String sql) {
         Connection conn = getConnection();
@@ -199,10 +192,7 @@ public class CarRepository implements IRepository<Car> {
                         resultSet.getString("licence_plate"),
                         resultSet.getInt("current_leasing_id"),
                         resultSet.getTimestamp("car_added"),
-                        resultSet.getDouble("registration_fee")
-
-                );
-
+                        resultSet.getDouble("registration_fee"));
 
                 cars.add(car);
             }
@@ -212,7 +202,6 @@ public class CarRepository implements IRepository<Car> {
         }
         return null;
     }
-
 
     @Override
     public boolean update(Car car) {
@@ -226,13 +215,9 @@ public class CarRepository implements IRepository<Car> {
             pstmt.setInt(1, statusId);
             pstmt.setString(2, car.getVinNumber());
             pstmt.setString(3, car.getLicencePlate());
-            //pstmt.setInt(4, entity.getCarModel().getModelID());
             pstmt.setInt(4, car.getModelID());
-            //pstmt.setInt(5, entity.getFuelType().getFuelTypeID());
             pstmt.setInt(5, car.getFuelTypeID());
-            //pstmt.setInt(6, entity.getColour().getColourID());
             pstmt.setInt(6, car.getColourID());
-            //pstmt.setInt(7, entity.getGearType().getGearTypeID());
             pstmt.setInt(7, car.getGearTypeID());
             pstmt.setObject(8, car.getCurrentLeasing());
             pstmt.setDate(9, dateTool.getUtilDateAsSQL(car.getRegistrationDate()));
@@ -254,8 +239,4 @@ public class CarRepository implements IRepository<Car> {
         car.setCarStatus(carStatus);
         update(car);
     }
-
 }
-
-
-

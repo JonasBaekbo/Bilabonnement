@@ -1,17 +1,13 @@
 package com.example.bilabonnement.models;
 
-import com.example.bilabonnement.repository.CarRepository;
 import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 
 public class Damage {
 
-    CarRepository carRepository = new CarRepository();
     private final DateTool dateTool = new DateTool();
-
 
     private int damageID;
     private int carID;
@@ -21,7 +17,6 @@ public class Damage {
     private Date damageRegistationsDate;
     private Date damageFixedDate;
     private Timestamp timestamp;
-
 
     //Opret skade i database
     public Damage(int carID, String damageDescription, Double price, String claimant, Date damageRegistationsDate) {
@@ -46,29 +41,16 @@ public class Damage {
         this.timestamp = timestamp;
     }
 
-
     public String getDamageDescription() {
         return damageDescription;
-    }
-
-    public void setDamageDescription(String damageDescription) {
-        this.damageDescription = damageDescription;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public Date getDamageRegistationsDate() {
         return damageRegistationsDate;
-    }
-
-    public void setDamageRegistationsDate(Date damageRegistationsDate) {
-        this.damageRegistationsDate = damageRegistationsDate;
     }
 
     public Date getDamageFixedDate() {
@@ -83,15 +65,6 @@ public class Damage {
         return damageID;
     }
 
-    public void setDamageID(int damageID) {
-        this.damageID = damageID;
-    }
-
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public int getCarID() {
         return carID;
     }
@@ -104,14 +77,8 @@ public class Damage {
         return claimant;
     }
 
-    public void setClaimant(String claimant) {
-        this.claimant = claimant;
-    }
-
-
     public Timestamp getTimeStamp() {
         return timestamp;
     }
-
 }
 

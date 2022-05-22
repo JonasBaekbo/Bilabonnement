@@ -2,7 +2,6 @@ package com.example.bilabonnement.models;
 
 import java.sql.Date;
 
-
 public class DamagedCar {
 
     private Car car;

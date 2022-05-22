@@ -13,15 +13,7 @@ public class Colour {
         return colourID;
     }
 
-    public void setColourID(int colourID) {
-        this.colourID = colourID;
-    }
-
     public String getColourName() {
         return colourName;
-    }
-
-    public void setColourName(String colourName) {
-        this.colourName = colourName;
     }
 }

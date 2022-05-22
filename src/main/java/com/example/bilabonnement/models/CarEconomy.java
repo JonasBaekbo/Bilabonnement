@@ -1,18 +1,13 @@
 package com.example.bilabonnement.models;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class CarEconomy {
+
     private Car car;
     private double pricePrMonth;
     private LocalDateTime leasingStartDate;
     private LocalDateTime leasingEndDate;
-
-/*    public CarEconomy(Car car, int pricePrMonth) {
-        this.car = car;
-        this.pricePrMonth = pricePrMonth;
-    }*/
 
     public CarEconomy(Car car, int pricePrMonth, LocalDateTime leasingStartDate, LocalDateTime leasingEndDate) {
         this.car = car;

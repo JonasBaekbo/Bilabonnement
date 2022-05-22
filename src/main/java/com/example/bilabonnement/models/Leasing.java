@@ -43,31 +43,18 @@ public class Leasing {
         return customerID;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
     public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
-
     public LocalDateTime getEndDate() {
         return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
     }
 
     public int getIncludedKM() {
         return includedKM;
     }
 
-    public void setIncludedKM(int includedKM) {
-        this.includedKM = includedKM;
-    }
 
     public int getCarID() {
         return carID;
@@ -81,25 +68,14 @@ public class Leasing {
         return leasingId;
     }
 
-    public void setLeasingId(int leasingId) {
-        this.leasingId = leasingId;
-    }
-
     public Timestamp getTimeAdded() {
         return timeAdded;
-    }
-
-    public void setTimeAdded(Timestamp timeAdded) {
-        this.timeAdded = timeAdded;
     }
 
     public String getLeasingType() {
         return leasingType;
     }
 
-    public void setLeasingType(String leasingType) {
-        this.leasingType = leasingType;
-    }
 }
 
 

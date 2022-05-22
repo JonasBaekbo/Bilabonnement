@@ -3,22 +3,22 @@ package com.example.bilabonnement.models;
 public class ExtraEquipment {
 
     private Car car;
-    private int ekstraEquipemntdescriptionID;
-    private String ekstraEquipemntdescription;
+    private int ekstraEquipemntID;
+    private String ekstraEquipemntDescription;
 
-    public ExtraEquipment(Car car, String ekstraEquipemntdescription) {
+    public ExtraEquipment(Car car, String ekstraEquipemntDescription) {
         this.car = car;
-        this.ekstraEquipemntdescription = ekstraEquipemntdescription;
+        this.ekstraEquipemntDescription = ekstraEquipemntDescription;
     }
 
-    public ExtraEquipment(Car car, int ekstraEquipemntdescriptionID) {
+    public ExtraEquipment(Car car, int ekstraEquipemntID) {
         this.car = car;
-        this.ekstraEquipemntdescriptionID = ekstraEquipemntdescriptionID;
+        this.ekstraEquipemntID = ekstraEquipemntID;
     }
 
-    public ExtraEquipment(int ekstraEquipemntdescriptionID, String ekstraEquipemntdescription) {
-        this.ekstraEquipemntdescriptionID=ekstraEquipemntdescriptionID;
-        this.ekstraEquipemntdescription = ekstraEquipemntdescription;
+    public ExtraEquipment(int ekstraEquipemntID, String ekstraEquipemntDescription) {
+        this.ekstraEquipemntID = ekstraEquipemntID;
+        this.ekstraEquipemntDescription = ekstraEquipemntDescription;
     }
 
     public Car getCar() {
@@ -29,8 +29,8 @@ public class ExtraEquipment {
         return car.getCarID();
     }
 
-    public int getEkstraEquipemntdescriptionID() {
-        return ekstraEquipemntdescriptionID;
+    public int getEkstraEquipemntID() {
+        return ekstraEquipemntID;
     }
 
     public void setCar(Car car) {
@@ -41,11 +41,8 @@ public class ExtraEquipment {
         return car.getLicencePlate();
     }
 
-    public String getEkstraEquipemntdescription() {
-        return ekstraEquipemntdescription;
+    public String getEkstraEquipemntDescription() {
+        return ekstraEquipemntDescription;
     }
 
-    public void setEkstraEquipemntdescription(String ekstraEquipemntdescription) {
-        this.ekstraEquipemntdescription = ekstraEquipemntdescription;
-    }
 }

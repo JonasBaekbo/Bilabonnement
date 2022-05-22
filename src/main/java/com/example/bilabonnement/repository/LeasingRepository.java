@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class LeasingRepository implements IRepository<Leasing> {
-    private CarRepository carRepository = new CarRepository();
-    private CarStatusRepository carStatusRepository = new CarStatusRepository();
+    private final CarRepository carRepository = new CarRepository();
+    private final CarStatusRepository carStatusRepository = new CarStatusRepository();
 
 
 

@@ -8,12 +8,11 @@ import com.example.bilabonnement.servises.DateTool;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class DamageRepository implements IRepository<Damage> {
-    private final DateTool dateTool = new DateTool();
 
+    private final DateTool dateTool = new DateTool();
     private final CarRepository carRepository = new CarRepository();
     private final CarStatusRepository carStatusRepository = new CarStatusRepository();
 
@@ -43,63 +42,8 @@ public class DamageRepository implements IRepository<Damage> {
         return false;
     }
 
-
-    @Override
-    public ArrayList<Damage> getAllEntities() {
-        return null;
-    }
-
-
-
-    public void closeDamage(int damageId, Date damageFixedDate) {
-        Damage damage = getSingleById(damageId);
-        damage.setDamageFixedDate(damageFixedDate);
-        update(damage);
-        int carID=damage.getCarID();
-        boolean isLast=checkIsLast(damageId,carID);
-        if(isLast){
-            CarStatus carStatus = carStatusRepository.getByName("hjemme");
-            //updateAndSetCArStatus(carStatus, damage);
-            Car car = carRepository.getSingleById(damage.getCarID());
-            car.setCarStatus(carStatus);
-            car.setCurrentLeasing(null);
-            carRepository.update(car);
-        }
-    }
-
-
-    private void updateAndSetCArStatus(CarStatus carStatus, Damage damage) {
-        Car car = carRepository.getSingleById(damage.getCarID());
-        carRepository.updateCarStatus(carStatus, car);
-
-    }
-
-    private boolean checkIsLast(int damageID, int carID) {
-
-        Connection conn = getConnection();
-        try {
-
-            String countDamgesLeft = "SELECT COUNT(*) FROM bilabonnement.damages where damages_id<>? and car_id =? and damage_closed is null";
-            PreparedStatement pstmt = conn.prepareStatement(countDamgesLeft);
-            pstmt.setInt(1, damageID);
-            pstmt.setInt(2, carID);
-            pstmt.execute();
-            ResultSet rs = pstmt.getResultSet();
-
-            rs.next();
-            int damgesLeft = rs.getInt(1);
-            return damgesLeft == 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("error in checkIsLast-method");
-        }
-        return false;
-    }
-
     @Override
     public Damage getSingleById(int id) {
-
         Connection conn = getConnection();
 
         try {
@@ -117,8 +61,7 @@ public class DamageRepository implements IRepository<Damage> {
                     resultSet.getString("claimant"),
                     resultSet.getDate("damage_date"),
                     resultSet.getDate("damage_closed"),
-                    resultSet.getTimestamp("damage_added")
-            );
+                    resultSet.getTimestamp("damage_added"));
             return damage;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,7 +73,6 @@ public class DamageRepository implements IRepository<Damage> {
     public boolean update(Damage damage) {
         Connection conn = getConnection();
         try {
-
             PreparedStatement pstmt = conn.prepareStatement("UPDATE damages SET car_id= ?, damage_description = ? ,damages_cost_kr= ?, claimant= ?, damage_date= ?, damage_closed= ?, damage_added = ? WHERE damages_id = ?");
             pstmt.setInt(1, damage.getCarID());
             pstmt.setString(2, damage.getDamageDescription());
@@ -150,4 +92,52 @@ public class DamageRepository implements IRepository<Damage> {
         return false;
     }
 
+
+    public void closeDamage(int damageId, Date damageFixedDate) {
+        Damage damage = getSingleById(damageId);
+
+        damage.setDamageFixedDate(damageFixedDate);
+        update(damage);
+
+        int carID = damage.getCarID();
+        boolean isLast = checkIsLast(damageId, carID);
+        if (isLast) {
+            CarStatus carStatus = carStatusRepository.getByName("hjemme");
+            Car car = carRepository.getSingleById(damage.getCarID());
+            car.setCarStatus(carStatus);
+            car.setCurrentLeasing(null);
+            carRepository.update(car);
+        }
+    }
+
+    private void updateAndSetCArStatus(CarStatus carStatus, Damage damage) {
+        Car car = carRepository.getSingleById(damage.getCarID());
+        carRepository.updateCarStatus(carStatus, car);
+    }
+
+    private boolean checkIsLast(int damageID, int carID) {
+        Connection conn = getConnection();
+        try {
+            String countDamgesLeft = "SELECT COUNT(*) FROM bilabonnement.damages where damages_id<>? and car_id =? and damage_closed is null";
+            PreparedStatement pstmt = conn.prepareStatement(countDamgesLeft);
+            pstmt.setInt(1, damageID);
+            pstmt.setInt(2, carID);
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+
+            rs.next();
+            int damgesLeft = rs.getInt(1);
+            return damgesLeft == 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in checkIsLast-method");
+        }
+        return false;
+    }
+
+    @Override
+    public ArrayList<Damage> getAllEntities() {
+        return null;
+    }
 }

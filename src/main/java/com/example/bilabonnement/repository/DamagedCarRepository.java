@@ -14,7 +14,6 @@ import java.util.List;
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 
-
 public class DamagedCarRepository {
 
     private final CarRepository carRepository = new CarRepository();
@@ -52,7 +51,6 @@ public class DamagedCarRepository {
                  ORDER BY 
                    damages.damages_id, cars.car_id
                 """;
-
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.execute();
@@ -71,5 +69,4 @@ public class DamagedCarRepository {
         return null;
 
     }
-
 }

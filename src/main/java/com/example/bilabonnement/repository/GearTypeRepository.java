@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class GearTypeRepository extends ReadOnlyTable<GearType> {
 
     public List<GearType> getAll() {

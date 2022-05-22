@@ -1,5 +1,7 @@
 package com.example.bilabonnement.repository;
 
+import com.example.bilabonnement.models.StatisticsItem;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -27,38 +29,39 @@ public class StatisticsRepository {
         return -1;
     }
 
-    public int getNumbersOfCarsInTotal() {
+
+    public ArrayList<StatisticsItem> getCarsPerStatus() {
+        ArrayList<StatisticsItem> result = new ArrayList<>();
+
         Connection conn = getConnection();
+
+        String sql = """
+                 SELECT
+                     car_status.car_status,
+                     COUNT(*) AS number_of_cars
+                 FROM
+                     cars
+                JOIN
+                     car_status ON cars.car_status_id = car_status.car_status_id
+                 GROUP BY 
+                     cars.car_status_id
+                 ORDER BY 
+                     cars.car_status_id                                
+                 """;
+
         try {
-
-            String numberOfCars = "SELECT COUNT(*) FROM cars";
-            PreparedStatement pstmt = conn.prepareStatement(numberOfCars);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.execute();
-            ResultSet rs = pstmt.getResultSet();
-
-            rs.next();
-            int totalNumberOfCars = rs.getInt(1);
-
-            return totalNumberOfCars;
+            ResultSet resultSet = pstmt.getResultSet();
+            while (resultSet.next()) {
+                StatisticsItem item = new StatisticsItem(resultSet.getString("car_status"), resultSet.getInt("number_of_cars"));
+                result.add(item);
+            }
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("error in getNumbersOfCarsInTotal-method");
         }
-        return -1;
+        return null;
     }
 
-
-   /*
-select
-    car_status.car_status,
-    count(*)
-from
-	cars
-join
-	car_status on cars.car_status_id = car_status.car_status_id
-group by
-    cars.car_status_id
-order by
-    cars.car_status_id
-    */
 }

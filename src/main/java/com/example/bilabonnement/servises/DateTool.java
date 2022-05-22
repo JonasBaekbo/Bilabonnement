@@ -22,9 +22,4 @@ public class DateTool {
         return utilDate;
     }
 
-    public LocalDateTime getSQLDateAsDateTime(Date sqlDate) {
-        String sqlAsString=sqlDate.toString();
-        LocalDateTime localDateTime=LocalDateTime.parse(sqlAsString);
-        return localDateTime;
-    }
 }

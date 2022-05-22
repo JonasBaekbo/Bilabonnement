@@ -13,15 +13,7 @@ public class GearType {
         return gearTypeID;
     }
 
-    public void setGearTypeID(int gearTypeID) {
-        this.gearTypeID = gearTypeID;
-    }
-
     public String getGearTypeName() {
         return gearTypeName;
-    }
-
-    public void setGearTypeName(String gearTypeName) {
-        this.gearTypeName = gearTypeName;
     }
 }

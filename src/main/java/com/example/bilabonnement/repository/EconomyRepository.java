@@ -3,7 +3,6 @@ package com.example.bilabonnement.repository;
 import com.example.bilabonnement.models.Car;
 import com.example.bilabonnement.models.CarEconomy;
 import com.example.bilabonnement.models.CarStatus;
-import com.example.bilabonnement.servises.DateTool;
 import com.example.bilabonnement.ulility.DatabaseConnectionManager;
 
 import java.sql.Connection;
@@ -15,16 +14,14 @@ import java.util.List;
 
 public class EconomyRepository implements IRepository<CarEconomy> {
 
-    DateTool dateTool =new DateTool();
-    CarRepository carRepository = new CarRepository();
-    CarStatusRepository carStatusRepository = new CarStatusRepository();
+   private final CarRepository carRepository = new CarRepository();
+    private final CarStatusRepository carStatusRepository = new CarStatusRepository();
 
 
     @Override
     public ArrayList<CarEconomy> getAllEntities() {
         Connection conn = DatabaseConnectionManager.getConnection();
         ArrayList<CarEconomy> carEconomies = new ArrayList<>();
-
         //Vi søger på status 1 og 2 da det er status-id for de to lejetyper, og det kun er dem vi ønsker at se her
         try {
             PreparedStatement pstmt = conn.prepareStatement("""
@@ -44,7 +41,7 @@ public class EconomyRepository implements IRepository<CarEconomy> {
                     car_status ON cars.car_status_id=car_status.car_status_id
                     JOIN
                     leasing ON cars.current_leasing_id = leasing.leasing_id
-                    where cars.car_status_id in (1,2)
+                    WHERE cars.car_status_id IN (1,2)
                     """);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -65,6 +62,16 @@ public class EconomyRepository implements IRepository<CarEconomy> {
         return carEconomies;
     }
 
+    public double totalMonthlyIncomeThisMonthFromRentedCars(){
+        List<CarEconomy> carEconomies = this.getAllEntities();
+        double totalMoeny = 0;
+        for (CarEconomy carEconomy : carEconomies) {
+            double moneyPrMonthFromCar = carEconomy.getPricePrMonth();
+            totalMoeny = totalMoeny + moneyPrMonthFromCar;
+        }
+        return totalMoeny;
+    }
+
     @Override
     public boolean create(CarEconomy carEconomy) {
         return false;
@@ -78,17 +85,6 @@ public class EconomyRepository implements IRepository<CarEconomy> {
     @Override
     public boolean update(CarEconomy carEconomy) {
         return false;
-    }
-
-
-    public double totalMonthlyIncomeThisMonthFromRentedCars(){
-        List<CarEconomy> carEconomies = this.getAllEntities();
-        double totalMoeny = 0;
-        for (CarEconomy carEconomy : carEconomies) {
-            double moneyPrMonthFromCar = carEconomy.getPricePrMonth();
-            totalMoeny = totalMoeny + moneyPrMonthFromCar;
-        }
-        return totalMoeny;
     }
 
 }

@@ -7,17 +7,33 @@
 <div class="content" xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
     <div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="allLeasedCars">
-        <p>Alle udlejede biler</p>
+        <h3>Biler fordelt på status</h3>
         <table class="table">
             <thead>
             <tr>
-                <th> Bil-id</th>
-                <th> Nummerplade</th>
-                <th> Leasing</th>
-                <th> Type</th>
-                <th> Pris pr. måned</th>
-                <th> Leasing startdato</th>
-                <th> Leasing slutdato</th>
+                <th style="width: 15%"> Status</th>
+                <th> Antal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${carsPerStatus}">
+                <td th:text="${item.getStatus()}"></td>
+                <td th:text="${item.getNumberOfCars()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <h3>Alle udlejede biler</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 5%"> Bil id</th>
+                <th style="width: 6%"> Nummerplade</th>
+                <th style="width: 6%"> Leasing</th>
+                <th style="width: 8%"> Type</th>
+                <th style="width: 8%"> Pris pr. måned</th>
+                <th style="width: 10%"> Leasing startdato</th>
+                <th style="width: 10%"> Leasing slutdato</th>
             </tr>
             </thead>
             <tbody>
@@ -33,9 +49,9 @@
             </tbody>
         </table>
         <br>
-        <p> Samlet måneds indkomst for alle udlejede biler =
-        <td th:text="${#numbers.formatDecimal(totalMontlyIncome,1,2,'COMMA')}"></td> kr
-
+        <p>
+            Samlet måneds indkomst for alle udlejede biler =
+            <span th:text="${#numbers.formatDecimal(totalMontlyIncome,1,2,'COMMA')}"></span> kr
         </p>
     </div>
 
@@ -106,11 +122,9 @@
                     <option th:each="car:${listOfFreeCars}"
                             th:value="${car.getCarID()}"
                             th:text="${car.getCarID()}+' - '+${car.getLicencePlate()}">
-
                     </option>
                 </select>
             </p>
-
             <p>
                 <button type="submit"> Opret lease</button>
             </p>
@@ -120,7 +134,7 @@
     <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')" th:fragment="closeDamage">
         <form th:action="@{/closeDamage}" method="post">
 
-            <p> vælg den/de skader der er blevet udbedret</p>
+            <h5> vælg den/de skader der er blevet udbedret</h5>
             <table class="table">
                 <thead>
                 <tr>
@@ -179,7 +193,8 @@
             <p>
                 Skadebeskrivelse :<br>
                 <label for="damageDescription"></label>
-                <textarea id="damageDescription" name="damageDescription" maxlength="200" rows="4" cols="50" required></textarea>
+                <textarea id="damageDescription" name="damageDescription" maxlength="200" rows="4" cols="50"
+                          required></textarea>
             </p>
             <p>
                 Pris for skade:<br>
@@ -203,14 +218,13 @@
     </div>
 
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="extraEquipment">
+        <h5>Liste over biler og deres ekstraudstyr</h5>
         <table class="table">
-            <tr
-                    th:each="ekstraEquipemnt : ${extraEquipment}">
+            <tr th:each="ekstraEquipemnt : ${extraEquipment}">
                 <td th:text="${ekstraEquipemnt.getCarID()}"></td>
                 <td th:text="${ekstraEquipemnt.getLicencePlate()}"></td>
-                <td th:text="${ekstraEquipemnt.getEkstraEquipemntdescription()}"></td>
+                <td th:text="${ekstraEquipemnt.getEkstraEquipemntDescription()}"></td>
             </tr>
         </table>
-
     </div>
 </div>

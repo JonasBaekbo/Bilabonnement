@@ -19,46 +19,39 @@ import java.util.List;
 @Controller
 public class DamageController {
 
-DamagedCarRepository dcr=new DamagedCarRepository();
-   DamageRepository dr=new DamageRepository();
-   CarRepository cr =new CarRepository();
+    private final DamagedCarRepository damagedCarRepository = new DamagedCarRepository();
+    private final DamageRepository damageRepository = new DamageRepository();
+    private final CarRepository carRepository = new CarRepository();
 
-
-    @GetMapping ("/admin/opretskade")
+    @GetMapping("/admin/opretskade")
     public String showListOfCars(Model model) {
         model.addAttribute("title", "Opret");
-        ArrayList<Car> carList = cr.getAllEntities();
+        ArrayList<Car> carList = carRepository.getAllEntities();
         model.addAttribute("carList", carList);
         return "admin/damage/createDamage";
     }
 
-
     @PostMapping("/createDamage")
-    public String createDamage(@RequestParam("carID") int carID, @RequestParam("damageDescription") String damageDescription, @RequestParam("damagesCost") double damagesCost, @RequestParam("claimant") String claimant,
-                              @RequestParam("damageDate") Date damageDate){
-        Damage damage = new Damage(carID,damageDescription,damagesCost,claimant,damageDate);
-        dr.create(damage);
+    public String createDamage(@RequestParam("carID") int carID, @RequestParam("damageDescription") String damageDescription, @RequestParam("damagesCost") double damagesCost,
+                               @RequestParam("claimant") String claimant, @RequestParam("damageDate") Date damageDate) {
+        Damage damage = new Damage(carID, damageDescription, damagesCost, claimant, damageDate);
+        damageRepository.create(damage);
         return "redirect:/admin/opretskade";
     }
-
 
     @GetMapping("/admin/lukskade")
     public String showListOfDamagedCars(Model model) {
         model.addAttribute("title", "Luk skade");
-        List<DamagedCar> damageList = dcr.getAllDamgesCars();
+        List<DamagedCar> damageList = damagedCarRepository.getAllDamgesCars();
         model.addAttribute("damageList", damageList);
         return "admin/damage/closeDamage";
     }
 
-
     @PostMapping("/closeDamage")
-    public String closeDamage(@RequestParam("damage") List<Integer> selectedDamageIDs, @RequestParam("fixedDate") Date fixedDate){
+    public String closeDamage(@RequestParam("damage") List<Integer> selectedDamageIDs, @RequestParam("fixedDate") Date fixedDate) {
         for (Integer damageID : selectedDamageIDs) {
-            dr.closeDamage(damageID, fixedDate);
+            damageRepository.closeDamage(damageID, fixedDate);
         }
         return "redirect:/admin/lukskade";
     }
-
-
-
 }

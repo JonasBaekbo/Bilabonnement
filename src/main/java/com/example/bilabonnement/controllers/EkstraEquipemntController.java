@@ -20,11 +20,10 @@ public class EkstraEquipemntController {
 
     @GetMapping("/admin/visekstraudstyr")
     public String extraEq(Model model) {
-        List<ExtraEquipment> extraEquipment = extraEquipmentRepository.getExtraEquipmentList();
+        List<ExtraEquipment> extraEquipment = extraEquipmentRepository.getExtraEquipmentCarList();
         model.addAttribute("extraEquipment", extraEquipment);
         return "admin/leasing/extraEquipment";
     }
-
 
     @GetMapping("/adExtraEquipment")
     public String showaddExtraEquipment(Model model){
@@ -34,7 +33,6 @@ public class EkstraEquipemntController {
         model.addAttribute("allCars", allCars);
         return "/adExtraEquipment";
     }
-
 
     @PostMapping("/adExtraEquipment")
     public String adExtraEquipment(@RequestParam("exID") List<Integer> exIDs, @RequestParam("carID") int carID) {

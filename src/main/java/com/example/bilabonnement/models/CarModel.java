@@ -15,23 +15,11 @@ public class CarModel {
         return modelID;
     }
 
-    public void setModelID(int modelID) {
-        this.modelID = modelID;
-    }
-
     public String getModelName() {
         return modelName;
     }
 
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
-    }
-
     public String getManufacturer() {
         return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
     }
 }
