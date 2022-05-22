@@ -11,7 +11,7 @@ public class StatisticsRepository {
         Connection conn = getConnection();
         try {
 
-            String searchForCarsLeased = "SELECT COUNT(*) FROM cars WHERE cars.car_status IN (1,2)";
+            String searchForCarsLeased = "SELECT COUNT(*) FROM cars WHERE cars.car_status_id IN (1,2)";
             PreparedStatement pstmt = conn.prepareStatement(searchForCarsLeased);
             pstmt.execute();
             ResultSet rs = pstmt.getResultSet();
@@ -46,4 +46,19 @@ public class StatisticsRepository {
         }
         return -1;
     }
+
+
+   /*
+select
+    car_status.car_status,
+    count(*)
+from
+	cars
+join
+	car_status on cars.car_status_id = car_status.car_status_id
+group by
+    cars.car_status_id
+order by
+    cars.car_status_id
+    */
 }

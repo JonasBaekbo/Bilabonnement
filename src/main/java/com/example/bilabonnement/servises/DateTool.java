@@ -21,4 +21,10 @@ public class DateTool {
         java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
         return utilDate;
     }
+
+    public LocalDateTime getSQLDateAsDateTime(Date sqlDate) {
+        String sqlAsString=sqlDate.toString();
+        LocalDateTime localDateTime=LocalDateTime.parse(sqlAsString);
+        return localDateTime;
+    }
 }

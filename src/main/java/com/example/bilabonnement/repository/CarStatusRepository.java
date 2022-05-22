@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarStatusRepository extends ReadOnlyTable<CarStatus> {
+
     public List<CarStatus> getAll() {
         ArrayList<CarStatus> carStatuses = new ArrayList<>();
 

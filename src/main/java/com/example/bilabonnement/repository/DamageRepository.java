@@ -3,12 +3,11 @@ package com.example.bilabonnement.repository;
 import com.example.bilabonnement.models.Car;
 import com.example.bilabonnement.models.CarStatus;
 import com.example.bilabonnement.models.Damage;
-import com.example.bilabonnement.models.DamagedCar;
 import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
@@ -16,7 +15,7 @@ public class DamageRepository implements IRepository<Damage> {
     private final DateTool dateTool = new DateTool();
 
     private final CarRepository carRepository = new CarRepository();
-    private final CarStatusRepository csr = new CarStatusRepository();
+    private final CarStatusRepository carStatusRepository = new CarStatusRepository();
 
     @Override
     public boolean create(Damage damage) {
@@ -33,7 +32,7 @@ public class DamageRepository implements IRepository<Damage> {
             pstmt.setTimestamp(6, damage.getTimeStamp());
             pstmt.execute();
 
-            CarStatus carStatus = csr.getByName("skadet");
+            CarStatus carStatus = carStatusRepository.getByName("skadet");
             updateAndSetCArStatus(carStatus, damage);
 
             return true;
@@ -46,7 +45,7 @@ public class DamageRepository implements IRepository<Damage> {
 
 
     @Override
-    public List<Damage> getAllEntities() {
+    public ArrayList<Damage> getAllEntities() {
         return null;
     }
 
@@ -59,8 +58,12 @@ public class DamageRepository implements IRepository<Damage> {
         int carID=damage.getCarID();
         boolean isLast=checkIsLast(damageId,carID);
         if(isLast){
-            CarStatus carStatus = csr.getByName("hjemme");
-            updateAndSetCArStatus(carStatus, damage);
+            CarStatus carStatus = carStatusRepository.getByName("hjemme");
+            //updateAndSetCArStatus(carStatus, damage);
+            Car car = carRepository.getSingleById(damage.getCarID());
+            car.setCarStatus(carStatus);
+            car.setCurrentLeasing(null);
+            carRepository.update(car);
         }
     }
 

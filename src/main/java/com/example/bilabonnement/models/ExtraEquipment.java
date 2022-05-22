@@ -1,14 +1,23 @@
 package com.example.bilabonnement.models;
 
-import java.util.ArrayList;
-
 public class ExtraEquipment {
 
     private Car car;
-    private ArrayList<String> ekstraEquipemntdescription;
+    private int ekstraEquipemntdescriptionID;
+    private String ekstraEquipemntdescription;
 
-    public ExtraEquipment(Car car, ArrayList<String> ekstraEquipemntdescription) {
+    public ExtraEquipment(Car car, String ekstraEquipemntdescription) {
         this.car = car;
+        this.ekstraEquipemntdescription = ekstraEquipemntdescription;
+    }
+
+    public ExtraEquipment(Car car, int ekstraEquipemntdescriptionID) {
+        this.car = car;
+        this.ekstraEquipemntdescriptionID = ekstraEquipemntdescriptionID;
+    }
+
+    public ExtraEquipment(int ekstraEquipemntdescriptionID, String ekstraEquipemntdescription) {
+        this.ekstraEquipemntdescriptionID=ekstraEquipemntdescriptionID;
         this.ekstraEquipemntdescription = ekstraEquipemntdescription;
     }
 
@@ -20,19 +29,23 @@ public class ExtraEquipment {
         return car.getCarID();
     }
 
+    public int getEkstraEquipemntdescriptionID() {
+        return ekstraEquipemntdescriptionID;
+    }
+
     public void setCar(Car car) {
         this.car = car;
     }
 
-    public String getNumberPlate(){
-        return car.getNumberPlate();
+    public String getLicencePlate(){
+        return car.getLicencePlate();
     }
 
-    public ArrayList<String> getEkstraEquipemntdescription() {
+    public String getEkstraEquipemntdescription() {
         return ekstraEquipemntdescription;
     }
 
-    public void setEkstraEquipemntdescription(ArrayList<String> ekstraEquipemntdescription) {
+    public void setEkstraEquipemntdescription(String ekstraEquipemntdescription) {
         this.ekstraEquipemntdescription = ekstraEquipemntdescription;
     }
 }

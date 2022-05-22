@@ -1,32 +1,29 @@
 package com.example.bilabonnement.repository;
 
 import com.example.bilabonnement.models.*;
-import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class LeasingRepository implements IRepository<Leasing> {
     private CarRepository carRepository = new CarRepository();
-    private CarStatusRepository csr = new CarStatusRepository();
+    private CarStatusRepository carStatusRepository = new CarStatusRepository();
 
 
 
     @Override
-    public boolean create(Leasing entity) {
+    public boolean create(Leasing leasing) {
         Connection conn = getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO leasing(customer_id, car_id, start_date, end_date, included_km,leasing_added) VALUES (?,?,?,?,?,?)");
-            pstmt.setInt(1, entity.getCustomerID());
-            pstmt.setInt(2, entity.getCarID());
-            pstmt.setObject(3, entity.getStartDate());
-            pstmt.setObject(4, entity.getEndDate());
-            pstmt.setInt(5, entity.getIncludedKM());
-            pstmt.setTimestamp(6, entity.getTimeAdded());
+            pstmt.setInt(1, leasing.getCustomerID());
+            pstmt.setInt(2, leasing.getCarID());
+            pstmt.setObject(3, leasing.getStartDate());
+            pstmt.setObject(4, leasing.getEndDate());
+            pstmt.setInt(5, leasing.getIncludedKM());
+            pstmt.setTimestamp(6, leasing.getTimeAdded());
             pstmt.execute();
 
             PreparedStatement pstmt2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
@@ -35,10 +32,10 @@ public class LeasingRepository implements IRepository<Leasing> {
             resultSet.next();
             int leasingId = resultSet.getInt(1);
 
-            Car car = carRepository.getSingleById(entity.getCarID());
+            Car car = carRepository.getSingleById(leasing.getCarID());
             car.setCurrentLeasing(leasingId);
-            String leasingtype=entity.getLeasingType();
-            CarStatus carStatus = csr.getByName(leasingtype);
+            String leasingtype=leasing.getLeasingType();
+            CarStatus carStatus = carStatusRepository.getByName(leasingtype);
             carRepository.updateCarStatus(carStatus, car);
 
             return true;
@@ -56,14 +53,12 @@ public class LeasingRepository implements IRepository<Leasing> {
     }
 
     @Override
-    public List getAllEntities() {
-
-
+    public ArrayList getAllEntities() {
         return null;
     }
 
     @Override
-    public boolean update(Leasing entity) {
+    public boolean update(Leasing leasing) {
         return false;
     }
 

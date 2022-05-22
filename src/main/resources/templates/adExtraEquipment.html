@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/adExtraEquipment}" method="post">
+    <p>Vælg bil der skal have ekstraudstyr:</p>
+    <p>
+        Bil-Id - Nummerplade - Stelnummer<br>
+        <select name="carID">
+            <option th:each="car:${allCars}"
+                    th:value="${car.getCarID()}"
+                    th:text="${car.getCarID()} +' - ' + ${car.getLicencePlate()} + ' - ' + ${car.getVinNumber()}">
+            </option>
+        </select>
+    </p>
+    <p>
+        Ekstraudstyr<br>
+        <div th:each="ex:${extraEquipmentList}">
+            <input type="checkbox" name="exID"
+                   th:id="${ex.getEkstraEquipemntdescriptionID()}"
+                   th:value="${ex.getEkstraEquipemntdescriptionID()}"/>
+            <label th:for="${ex.getEkstraEquipemntdescriptionID()}" th:text="${ex.getEkstraEquipemntdescription()}"></label>
+        </div>
+    </p>
+    <input type="submit" value="Tilføj ekstraudstyr">
+</form>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.bilabonnement.models;
 
+import com.example.bilabonnement.repository.CarRepository;
 import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Date;
@@ -7,6 +8,8 @@ import java.sql.Timestamp;
 import java.text.DecimalFormat;
 
 public class Damage {
+
+    CarRepository carRepository = new CarRepository();
     private final DateTool dateTool = new DateTool();
 
 
@@ -19,22 +22,25 @@ public class Damage {
     private Date damageFixedDate;
     private Timestamp timestamp;
 
-    public Damage(int carID, String damageDescription, Double price,String claimant, Date damageRegistationsDate) {
-        this.carID=carID;
+
+    //Opret skade i database
+    public Damage(int carID, String damageDescription, Double price, String claimant, Date damageRegistationsDate) {
+        this.carID = carID;
         this.damageDescription = damageDescription;
         this.price = price;
-        this.claimant =claimant;
+        this.claimant = claimant;
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = null;
         this.timestamp = dateTool.getTimeStamp();
     }
 
-    public Damage(int damageID, int carID, String damageDescription, double price, String claimant,Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
+    //Læs skade ind fra database
+    public Damage(int damageID, int carID, String damageDescription, double price, String claimant, Date damageRegistationsDate, Date damageFixedDate, Timestamp timestamp) {
         this.damageID = damageID;
-        this.carID=carID;
+        this.carID = carID;
         this.damageDescription = damageDescription;
         this.price = price;
-        this.claimant =claimant;
+        this.claimant = claimant;
         this.damageRegistationsDate = damageRegistationsDate;
         this.damageFixedDate = damageFixedDate;
         this.timestamp = timestamp;
@@ -104,22 +110,8 @@ public class Damage {
 
 
     public Timestamp getTimeStamp() {
-            return timestamp;
-        }
-
-    @Override
-    public String toString() {
-        return "Damage{" +
-                "dateTool=" + dateTool +
-                ", damageID=" + damageID +
-                ", carID=" + carID +
-                ", damageDescription='" + damageDescription + '\'' +
-                ", price=" + price +
-                ", claimant='" + claimant + '\'' +
-                ", damageRegistationsDate=" + damageRegistationsDate +
-                ", damageFixedDate=" + damageFixedDate +
-                ", timestamp=" + timestamp +
-                '}';
+        return timestamp;
     }
+
 }
 

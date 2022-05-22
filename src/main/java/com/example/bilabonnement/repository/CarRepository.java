@@ -12,41 +12,41 @@ import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getCon
 public class CarRepository implements IRepository<Car> {
     DateTool dateTool = new DateTool();
 
-    CarStatusRepository csr = new CarStatusRepository();
-    CarModelRepository cmr = new CarModelRepository();
-    FuelTypeRepository ftr = new FuelTypeRepository();
-    GearTypeRepository gtr = new GearTypeRepository();
+    CarStatusRepository carStatusRepository = new CarStatusRepository();
+    CarModelRepository carModelRepository = new CarModelRepository();
+    FuelTypeRepository fuelTypeRepository = new FuelTypeRepository();
+    GearTypeRepository gearTypeRepository = new GearTypeRepository();
     ColourRepository colourRepository = new ColourRepository();
 
     @Override
-    public boolean create(Car entity) {
+    public boolean create(Car car) {
         Connection conn = getConnection();
         try {
             // Get id_status
-            int statusId = getStatusID(entity);
-            int carModelID = entity.getCarModel().getModelID();
-            int fuelTypeID = entity.getFuelType().getFuelTypeID();
-            int gearTypeID = entity.getGearType().getGearTypeID();
-            int colourID = entity.getColour().getColourID();
+            int statusId = getStatusID(car);
+            int carModelID = car.getCarModel().getModelID();
+            int fuelTypeID = car.getFuelType().getFuelTypeID();
+            int gearTypeID = car.getGearType().getGearTypeID();
+            int colourID = car.getColour().getColourID();
 
             // Add to "biler"
-            PreparedStatement pstmt = conn.prepareStatement(
-                    """
-                                INSERT INTO cars 
-                                (car_status, vin_number, numberplate, car_model, fuel_type, colour, gear_type, current_leasing, car_added)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                            """
-            );
+            PreparedStatement pstmt = conn.prepareStatement("""
+                   INSERT INTO cars
+                   (car_status_id, vin_number, licence_plate, car_model_id, fuel_type_id, colour_id, gear_type_id, current_leasing_id, car_added)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                   """);
+
             pstmt.setInt(1, statusId);
-            pstmt.setString(2, entity.getVinNumber());
-            pstmt.setObject(3, entity.getNumberPlate());
+            pstmt.setString(2, car.getVinNumber());
+            pstmt.setObject(3, car.getLicencePlate());
             pstmt.setInt(4, carModelID);
             pstmt.setInt(5, fuelTypeID);
             pstmt.setInt(6, colourID);
             pstmt.setInt(7, gearTypeID);
-            pstmt.setObject(8, entity.getCurrentLeasing());
-            pstmt.setDate(9, dateTool.getUtilDateAsSQL(entity.getRegistrationDate()));
+            pstmt.setObject(8, car.getCurrentLeasing());
+            pstmt.setDate(9, dateTool.getUtilDateAsSQL(car.getRegistrationDate()));
             pstmt.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,17 +58,17 @@ public class CarRepository implements IRepository<Car> {
         Connection conn = getConnection();
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT car_id, vin_number, numberplate, car_model, fuel_type, colour, gear_type, car_status, current_leasing, car_added FROM cars WHERE car_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT car_id, vin_number, licence_plate, car_model_id, fuel_type_id, colour_id, gear_type_id, car_status_id, current_leasing_id, car_added,registration_fee FROM cars WHERE car_id = ?");
             pstmt.setInt(1, id);
             pstmt.execute();
             ResultSet resultSet = pstmt.getResultSet();
             resultSet.next();
 
-            CarStatus carStatus = csr.getByID(resultSet.getInt("car_status"));
-            CarModel carModel = cmr.getByID(resultSet.getInt("car_model"));
-            FuelType fuelType = ftr.getByID(resultSet.getInt("fuel_type"));
-            GearType gearType = gtr.getByID(resultSet.getInt("gear_type"));
-            Colour colour = colourRepository.getByID(resultSet.getInt("colour"));
+            CarStatus carStatus = carStatusRepository.getByID(resultSet.getInt("car_status_id"));
+            CarModel carModel = carModelRepository.getByID(resultSet.getInt("car_model_id"));
+            FuelType fuelType = fuelTypeRepository.getByID(resultSet.getInt("fuel_type_id"));
+            GearType gearType = gearTypeRepository.getByID(resultSet.getInt("gear_type_id"));
+            Colour colour = colourRepository.getByID(resultSet.getInt("colour_id"));
 
             Car car = new Car(
                     resultSet.getInt("car_id"),
@@ -78,9 +78,10 @@ public class CarRepository implements IRepository<Car> {
                     gearType,
                     colour,
                     resultSet.getString("vin_number"),
-                    resultSet.getString("numberplate"),
-                    resultSet.getInt("current_leasing"),
-                    resultSet.getTimestamp("car_added")
+                    resultSet.getString("licence_plate"),
+                    resultSet.getInt("current_leasing_id"),
+                    resultSet.getTimestamp("car_added"),
+                    resultSet.getDouble("registration_fee")
             );
             return car;
         } catch (SQLException e) {
@@ -90,59 +91,89 @@ public class CarRepository implements IRepository<Car> {
     }
 
     @Override
-    public List<Car> getAllEntities() {
-        //vi fra sortere status 5, da det er status for biler der ikke er hos bilabonnement.dk
+    public ArrayList<Car> getAllEntities() {
+        //Vi fra sortere status 5, da det er status for biler der ikke er hos bilabonnement.dk
         ArrayList<Car> allCars;
         String sql = """
-                   
                 SELECT
-                cars.car_id,
-                        cars.car_status,
-                        cars.numberplate,
-                        cars.vin_number,
-                        cars.current_leasing,
-                        cars.car_added,
-                        cars.car_model,
-                        cars.fuel_type,
-                        cars.gear_type,
-                        cars.colour
+                    cars.car_id,
+                    cars.car_status_id,
+                    cars.licence_plate,
+                    cars.vin_number,
+                    cars.current_leasing_id,
+                    cars.car_added,
+                    cars.car_model_id,
+                    cars.fuel_type_id,
+                    cars.gear_type_id,
+                    cars.colour_id,
+                    cars.registration_fee
                 FROM
-                        cars
+                    cars
                 WHERE
-                cars.car_status<>5
-                   """;
+                    cars.car_status_id<>5
+                """;
 
-        allCars = (ArrayList<Car>) findCars(sql);
+        allCars=findCars(sql);
         return allCars;
     }
 
 
-    public List<Car> getAllFreeCars() {
+    public ArrayList<Car> getAllFreeCars() {
+
         ArrayList<Car> allFreeCars;
+        //Vi søger efter car_status=4, da det er id for "hjemme"
         String sql = """
-                SELECT 
+                SELECT
                     cars.car_id,
-                    cars.car_status,
-                    cars.numberplate,
+                    cars.car_status_id,
+                    cars.licence_plate,
                     cars.vin_number,
-                    cars.current_leasing,
+                    cars.current_leasing_id,
                     cars.car_added,
-                    cars.car_model,
-                    cars.fuel_type,
-                    cars.gear_type,
-                    cars.colour
+                    cars.car_model_id,
+                    cars.fuel_type_id,
+                    cars.gear_type_id,
+                    cars.colour_id,
+                    cars.registration_fee
                 FROM
                     cars
-                WHERE                     
-                    cars.car_status = 4
+                WHERE
+                    cars.car_status_id = 4
                 """;
 
 
-        allFreeCars = (ArrayList<Car>) findCars(sql);
+        allFreeCars = findCars(sql);
         return allFreeCars;
     }
 
-    private List<Car> findCars(String sql) {
+
+    public ArrayList<Car> getCarsMissigLicence() {
+        ArrayList<Car> missingLicense;
+
+        String sql= """
+                SELECT
+                    cars.car_id,
+                    cars.car_status_id,
+                    cars.licence_plate,
+                    cars.vin_number,
+                    cars.current_leasing_id,
+                    cars.car_added,
+                    cars.car_model_id,
+                    cars.fuel_type_id,
+                    cars.gear_type_id,
+                    cars.colour_id,
+                    cars.registration_fee
+                FROM
+                    cars
+                WHERE
+                    cars.licence_plate IS null OR cars.licence_plate=''
+                """;
+        missingLicense=findCars(sql);
+        return missingLicense;
+    }
+
+
+    private ArrayList<Car> findCars(String sql) {
         Connection conn = getConnection();
         ArrayList<Car> cars = new ArrayList<>();
 
@@ -151,11 +182,11 @@ public class CarRepository implements IRepository<Car> {
             pstmt.execute();
             ResultSet resultSet = pstmt.getResultSet();
             while (resultSet.next()) {
-                CarStatus carStatus = csr.getByID(resultSet.getInt("car_status"));
-                CarModel carModel = cmr.getByID(resultSet.getInt("car_model"));
-                FuelType fuelType = ftr.getByID(resultSet.getInt("fuel_type"));
-                GearType gearType = gtr.getByID(resultSet.getInt("gear_type"));
-                Colour colour = colourRepository.getByID(resultSet.getInt("colour"));
+                CarStatus carStatus = carStatusRepository.getByID(resultSet.getInt("car_status_id"));
+                CarModel carModel = carModelRepository.getByID(resultSet.getInt("car_model_id"));
+                FuelType fuelType = fuelTypeRepository.getByID(resultSet.getInt("fuel_type_id"));
+                GearType gearType = gearTypeRepository.getByID(resultSet.getInt("gear_type_id"));
+                Colour colour = colourRepository.getByID(resultSet.getInt("colour_id"));
 
                 Car car = new Car(
                         resultSet.getInt("car_id"),
@@ -165,9 +196,11 @@ public class CarRepository implements IRepository<Car> {
                         gearType,
                         colour,
                         resultSet.getString("vin_number"),
-                        resultSet.getString("numberplate"),
-                        resultSet.getInt("current_leasing"),
-                        resultSet.getTimestamp("car_added")
+                        resultSet.getString("licence_plate"),
+                        resultSet.getInt("current_leasing_id"),
+                        resultSet.getTimestamp("car_added"),
+                        resultSet.getDouble("registration_fee")
+
                 );
 
 
@@ -182,24 +215,29 @@ public class CarRepository implements IRepository<Car> {
 
 
     @Override
-    public boolean update(Car entity) {
+    public boolean update(Car car) {
         Connection conn = getConnection();
         try {
             // Get id_status
-            int statusId = getStatusID(entity);
+            int statusId = getStatusID(car);
 
             // Update "biler"
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE cars SET car_status = ?, vin_number = ? ,numberplate= ?, car_model= ?, fuel_type= ?, colour= ?, gear_type= ?, current_leasing= ?, car_added= ? WHERE car_id = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE cars SET car_status_id = ?, vin_number = ? ,licence_plate= ?, car_model_id= ?, fuel_type_id= ?, colour_id= ?, gear_type_id= ?, current_leasing_id= ?, car_added= ?, registration_fee=? WHERE car_id = ?");
             pstmt.setInt(1, statusId);
-            pstmt.setString(2, entity.getVinNumber());
-            pstmt.setString(3, entity.getNumberPlate());
-            pstmt.setInt(4, entity.getCarModel().getModelID());
-            pstmt.setInt(5, entity.getFuelType().getFuelTypeID());
-            pstmt.setInt(6, entity.getColour().getColourID());
-            pstmt.setInt(7, entity.getGearType().getGearTypeID());
-            pstmt.setObject(8, entity.getCurrentLeasing() == 0 ? null : entity.getCurrentLeasing());
-            pstmt.setDate(9, dateTool.getUtilDateAsSQL(entity.getRegistrationDate()));
-            pstmt.setInt(10, entity.getCarID());
+            pstmt.setString(2, car.getVinNumber());
+            pstmt.setString(3, car.getLicencePlate());
+            //pstmt.setInt(4, entity.getCarModel().getModelID());
+            pstmt.setInt(4, car.getModelID());
+            //pstmt.setInt(5, entity.getFuelType().getFuelTypeID());
+            pstmt.setInt(5, car.getFuelTypeID());
+            //pstmt.setInt(6, entity.getColour().getColourID());
+            pstmt.setInt(6, car.getColourID());
+            //pstmt.setInt(7, entity.getGearType().getGearTypeID());
+            pstmt.setInt(7, car.getGearTypeID());
+            pstmt.setObject(8, car.getCurrentLeasing());
+            pstmt.setDate(9, dateTool.getUtilDateAsSQL(car.getRegistrationDate()));
+            pstmt.setObject(10, car.getRegistrationFee());
+            pstmt.setInt(11, car.getCarID());
             pstmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();

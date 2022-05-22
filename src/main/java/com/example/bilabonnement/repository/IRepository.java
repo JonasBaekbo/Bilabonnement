@@ -1,5 +1,6 @@
 package com.example.bilabonnement.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IRepository<T> {
@@ -10,7 +11,7 @@ public interface IRepository<T> {
     //Read
     public T getSingleById(int id);
 
-    public List<T> getAllEntities();
+    public ArrayList<T> getAllEntities();
 
     //Update
     public boolean update(T entity);

@@ -3,9 +3,8 @@ package com.example.bilabonnement.models;
 import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 public class Leasing {
     private final DateTool dateTool =new DateTool();
@@ -19,6 +18,7 @@ public class Leasing {
     private String leasingType;
     private Timestamp timeAdded;
 
+    //Opret leasing i database
     public Leasing(int customerID, LocalDateTime startDate, LocalDateTime endDate, int includedKM, int carID, String leasingType) {
         this.customerID = customerID;
         this.startDate = startDate;
@@ -28,7 +28,7 @@ public class Leasing {
         this.leasingType = leasingType;
         this.timeAdded=dateTool.getTimeStamp();
     }
-
+    //Læs leasing ind fra database
     public Leasing(int leasingId, int customerID, LocalDateTime startDate, LocalDateTime endDate, int includedKM, int carID, Timestamp timeAdded) {
         this.leasingId=leasingId;
         this.customerID = customerID;

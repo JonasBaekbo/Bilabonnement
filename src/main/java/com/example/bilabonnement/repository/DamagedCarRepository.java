@@ -18,8 +18,7 @@ import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getCon
 public class DamagedCarRepository {
 
     private final CarRepository carRepository = new CarRepository();
-    private final CarStatusRepository csr = new CarStatusRepository();
-    private final DamageRepository dr=new DamageRepository();
+    private final DamageRepository damageRepository =new DamageRepository();
 
 
     public List<DamagedCar> getAllDamgesCars() {
@@ -31,7 +30,7 @@ public class DamagedCarRepository {
                    cars.car_id,
                    damages.damages_id,
                    cars.vin_number,
-                   cars.numberplate,
+                   cars.licence_plate,
                    manufacturer.manufacturer,
                    car_models.model,
                    damages.damage_description,
@@ -41,14 +40,17 @@ public class DamagedCarRepository {
                  FROM
                    cars
                  JOIN
-                   car_models ON cars.car_model = car_models.car_model_id
+                   car_models ON cars.car_model_id = car_models.car_model_id
                  JOIN
-                   manufacturer ON car_models.manufacturer = manufacturer.manufacturer_id
+                   manufacturer ON car_models.manufacturer_id = manufacturer.manufacturer_id
                  JOIN
-                   car_status ON cars.car_status = car_status.car_status_id
+                   car_status ON cars.car_status_id = car_status.car_status_id
                  JOIN
                    damages ON cars.car_id = damages.car_id
-                 WHERE damage_closed is null
+                 WHERE 
+                   damage_closed is null
+                 ORDER BY 
+                   damages.damages_id, cars.car_id
                 """;
 
         try {
@@ -56,10 +58,8 @@ public class DamagedCarRepository {
             pstmt.execute();
             ResultSet resultSet = pstmt.getResultSet();
             while (resultSet.next()) {
-
-
-                Car car = carRepository.getSingleById(resultSet.getInt(1));
-                Damage damage = dr.getSingleById(resultSet.getInt(2));
+                Car car = carRepository.getSingleById(resultSet.getInt("car_id"));
+                Damage damage = damageRepository.getSingleById(resultSet.getInt("damages_id"));
                 DamagedCar damagedCar = new DamagedCar(car, damage);
 
                 allDamagedCars.add(damagedCar);

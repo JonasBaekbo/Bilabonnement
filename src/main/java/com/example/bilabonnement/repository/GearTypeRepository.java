@@ -1,20 +1,17 @@
 package com.example.bilabonnement.repository;
 
-import com.example.bilabonnement.models.CarModel;
-import com.example.bilabonnement.models.Colour;
-import com.example.bilabonnement.models.FuelType;
 import com.example.bilabonnement.models.GearType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
+
 
 public class GearTypeRepository extends ReadOnlyTable<GearType> {
+
     public List<GearType> getAll() {
         ArrayList<GearType> gearTypes = new ArrayList<>();
 

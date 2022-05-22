@@ -27,7 +27,7 @@ DamagedCarRepository dcr=new DamagedCarRepository();
     @GetMapping ("/admin/opretskade")
     public String showListOfCars(Model model) {
         model.addAttribute("title", "Opret");
-        ArrayList<Car> carList = (ArrayList<Car>) cr.getAllEntities();
+        ArrayList<Car> carList = cr.getAllEntities();
         model.addAttribute("carList", carList);
         return "admin/damage/createDamage";
     }
@@ -45,7 +45,7 @@ DamagedCarRepository dcr=new DamagedCarRepository();
     @GetMapping("/admin/lukskade")
     public String showListOfDamagedCars(Model model) {
         model.addAttribute("title", "Luk skade");
-        ArrayList<DamagedCar> damageList = (ArrayList<DamagedCar>) dcr.getAllDamgesCars();
+        List<DamagedCar> damageList = dcr.getAllDamgesCars();
         model.addAttribute("damageList", damageList);
         return "admin/damage/closeDamage";
     }

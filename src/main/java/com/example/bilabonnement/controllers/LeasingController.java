@@ -1,6 +1,5 @@
 package com.example.bilabonnement.controllers;
 import com.example.bilabonnement.models.Car;
-import com.example.bilabonnement.models.DamagedCar;
 import com.example.bilabonnement.repository.CarRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -11,19 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Controller
 public class LeasingController {
 
-    LeasingRepository lr = new LeasingRepository();
-    CarRepository cr= new CarRepository();
+    LeasingRepository leasingRepository = new LeasingRepository();
+    CarRepository carRepository = new CarRepository();
 
         @GetMapping("/admin/opretlease")
     public String leasingaftaleFront(Model model) {
-            ArrayList<Car> listOfFreeCars = (ArrayList<Car>) cr.getAllFreeCars();
+            ArrayList<Car> listOfFreeCars = carRepository.getAllFreeCars();
             model.addAttribute("listOfFreeCars", listOfFreeCars);
         model.addAttribute("title", "Opret lease");
         return "admin/leasing/opretlease";
@@ -39,7 +38,7 @@ public class LeasingController {
             @RequestParam("leasingType") String leasingType
     ) {
         Leasing lease = new Leasing(customerID, startDate, endDate, includedKM, carID, leasingType);
-        lr.create(lease);
+        leasingRepository.create(lease);
         return "redirect:/admin";
     }
 }

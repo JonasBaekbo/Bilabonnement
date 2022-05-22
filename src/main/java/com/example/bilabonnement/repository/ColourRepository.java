@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColourRepository extends ReadOnlyTable<Colour> {
+
     public List<Colour> getAll() {
         ArrayList<Colour> colours = new ArrayList<>();
 

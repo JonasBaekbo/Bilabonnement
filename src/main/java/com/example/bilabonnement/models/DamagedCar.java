@@ -1,11 +1,9 @@
 package com.example.bilabonnement.models;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 
 public class DamagedCar {
-
 
     private Car car;
     private Damage damage;
@@ -27,7 +25,7 @@ public class DamagedCar {
 
     public int getCarID() { return this.car.getCarID(); }
 
-    public String getNumberPlate() { return this.car.getNumberPlate(); }
+    public String getLicencePlate() { return this.car.getLicencePlate(); }
 
     public String getVinNumber() { return this.car.getVinNumber(); }
 
