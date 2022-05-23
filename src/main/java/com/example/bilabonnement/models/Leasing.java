@@ -4,21 +4,22 @@ import com.example.bilabonnement.servises.DateTool;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 public class Leasing {
     private final DateTool dateTool =new DateTool();
 
     private int customerID;
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private int includedKM;
     private int carID;
     private int leasingId;
     private String leasingType;
     private Timestamp timeAdded;
 
-    public Leasing(int customerID, Date startDate, Date endDate, int includedKM, int carID, String leasingType) {
+    //Opret leasing i database
+    public Leasing(int customerID, LocalDateTime startDate, LocalDateTime endDate, int includedKM, int carID, String leasingType) {
         this.customerID = customerID;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -27,9 +28,8 @@ public class Leasing {
         this.leasingType = leasingType;
         this.timeAdded=dateTool.getTimeStamp();
     }
-
-
-    public Leasing(int leasingId, int customerID,  Date startDate, Date endDate, int includedKM, int carID, Timestamp timeAdded) {
+    //Læs leasing ind fra database
+    public Leasing(int leasingId, int customerID, LocalDateTime startDate, LocalDateTime endDate, int includedKM, int carID, Timestamp timeAdded) {
         this.leasingId=leasingId;
         this.customerID = customerID;
         this.startDate = startDate;
@@ -43,33 +43,18 @@ public class Leasing {
         return customerID;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public int getIncludedKM() {
         return includedKM;
     }
 
-    public void setIncludedKM(int includedKM) {
-        this.includedKM = includedKM;
-    }
 
     public int getCarID() {
         return carID;
@@ -83,25 +68,14 @@ public class Leasing {
         return leasingId;
     }
 
-    public void setLeasingId(int leasingId) {
-        this.leasingId = leasingId;
-    }
-
     public Timestamp getTimeAdded() {
         return timeAdded;
-    }
-
-    public void setTimeAdded(Timestamp timeAdded) {
-        this.timeAdded = timeAdded;
     }
 
     public String getLeasingType() {
         return leasingType;
     }
 
-    public void setLeasingType(String leasingType) {
-        this.leasingType = leasingType;
-    }
 }
 
 

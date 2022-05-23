@@ -21,4 +21,5 @@ public class DateTool {
         java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
         return utilDate;
     }
+
 }

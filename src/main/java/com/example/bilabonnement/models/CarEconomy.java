@@ -1,76 +1,48 @@
 package com.example.bilabonnement.models;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CarEconomy {
+
     private Car car;
-    private int registrationFee;
-    private int pricePrMonth;
+    private double pricePrMonth;
+    private LocalDateTime leasingStartDate;
+    private LocalDateTime leasingEndDate;
 
-
-    public CarEconomy(Car car, int pricePrMonth) {
+    public CarEconomy(Car car, int pricePrMonth, LocalDateTime leasingStartDate, LocalDateTime leasingEndDate) {
         this.car = car;
         this.pricePrMonth = pricePrMonth;
-
+        this.leasingStartDate = leasingStartDate;
+        this.leasingEndDate = leasingEndDate;
     }
 
-    public int getRegistrationFee() {
-        return registrationFee;
+    public LocalDateTime getLeasingStartDate() {
+        return leasingStartDate;
     }
 
-    public int getPricePrMonth() {
+    public LocalDateTime getLeasingEndDate() {
+        return leasingEndDate;
+    }
+
+    public double getPricePrMonth() {
         return pricePrMonth;
     }
 
-    public void setPricePrMonth(int pricePrMonth) {
-        this.pricePrMonth = pricePrMonth;
-    }
-
-
-    public String getModelName() {
-        return car.getModelName();
-    }
-
-
-    public String getFuelType() {
-        return car.getFuelType();
-    }
-
-
-    public String getVinNumber() {
-        return car.getVinNumber();
-    }
-
-    public String getNumberPlate() {
-        return car.getNumberPlate();
-    }
-
-
-    public String getColour() {
-        return car.getColour();
-    }
-
-
-    public String getGearType() {
-        return car.getGearType();
-    }
-
-
     public int getCarID() {
-        return car.getCarID();
+        return this.car.getCarID();
     }
 
-    public String getCarStatus() {
-        return car.getCarStatus();
+    public String getLicencePlate() {
+        return this.car.getLicencePlate();
     }
 
     public int getCurrentLeasing() {
-        return car.getCurrentLeasing();
+        return this.car.getCurrentLeasing();
     }
 
-    public Timestamp getRegistrationDate() {
-        return car.getRegistrationDate();
+    public String getCarStatus() {
+        CarStatus carStatus = this.car.getCarStatus();
+        String status = carStatus.getCarStatusName();
+        return status;
     }
-
-
 }

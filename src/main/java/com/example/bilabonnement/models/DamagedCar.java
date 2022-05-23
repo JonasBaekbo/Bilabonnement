@@ -1,14 +1,8 @@
 package com.example.bilabonnement.models;
 
-import com.example.bilabonnement.servises.EcomomyTool;
-
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
-
 
 public class DamagedCar {
-
 
     private Car car;
     private Damage damage;
@@ -26,102 +20,21 @@ public class DamagedCar {
         this.car = car;
     }
 
-    public Damage getDamage() {
-        return damage;
-    }
+    public int getDamageID() { return this.damage.getDamageID(); }
 
-    public void setDamage(Damage damage) {
-        this.damage = damage;
-    }
+    public int getCarID() { return this.car.getCarID(); }
 
-    public String getDamageDescription() {
-        return damage.getDamageDescription();
-    }
+    public String getLicencePlate() { return this.car.getLicencePlate(); }
 
+    public String getVinNumber() { return this.car.getVinNumber(); }
 
-    public double getPrice() {
-        return damage.getPrice();
-    }
+    public String getDamageDescription () { return this.damage.getDamageDescription(); }
 
+    public Double getPrice() { return this.damage.getPrice(); }
 
-    public Date getDamageRegistationsDate() {
-        return damage.getDamageRegistationsDate();
-    }
+    public String getClaimant() { return this.damage.getClaimant(); }
 
-
-    public Date getDamageFixedDate() {
-        return damage.getDamageFixedDate();
-    }
-
-
-    public int getDamageID() {
-        return damage.getDamageID();
-    }
-
-
-    public int getCarID() {
-        return damage.getCarID();
-    }
-
-
-    public String getClaimant() {
-        return damage.getClaimant();
-    }
-
-
-    public Timestamp getTimeStamp() {
-        return damage.getTimeStamp();
-    }
-
-
-    public String getModelName() {
-        return car.getModelName();
-    }
-
-
-    public String getFuelType() {
-        return car.getFuelType();
-    }
-
-
-    public String getNumberPlate() {
-        return car.getNumberPlate();
-    }
-
-
-    public String getColour() {
-        return car.getColour();
-    }
-
-
-    public String getGearType() {
-        return car.getGearType();
-    }
-
-
-    public String getCarStatus() {
-        return car.getCarStatus();
-    }
-
-
-    public Integer getCurrentLeasing() {
-        return car.getCurrentLeasing();
-    }
-
-
-    public Timestamp getRegistrationDate() {
-        return car.getRegistrationDate();
-    }
-
-
-    public String getVinNumber() {
-        return car.getVinNumber();
-    }
-
-
-    public String getManufacturer() {
-        return car.getManufacturer();
-    }
+    public Date getDamageRegistationsDate() { return this.damage.getDamageRegistationsDate(); }
 
 
 }

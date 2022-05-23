@@ -1,66 +1,86 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http:/www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
 </head>
 
-
 <div class="content" xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
     <div class="col py-3" sec:authorize="hasAnyRole('BUISNESS', 'ADMIN')" th:fragment="allLeasedCars">
-<p>Alle udlejede biler</p>
-        <table>
-        <thead>
-        <tr>
-            <th > Bil id</th>
-            <th > Nummerplade</th>
-            <th > leasing</th>
-            <th > type</th>
-            <th > pris</th>
-        </tr>
-        </thead>
+        <h3>Biler fordelt på status</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 15%"> Status</th>
+                <th> Antal</th>
+            </tr>
+            </thead>
             <tbody>
-            <tr th:each="car : ${carEconomies}">
-                <td th:text="${car.getCarID()}"></td>
-                <td th:text="${car.getNumberPlate()}"></td>
-                <td th:text="${car.getCurrentLeasing()}"></td>
-                <td th:text="${car.getCarStatus()}"></td>
-                <td th:text="${car.getPricePrMonth()}"></td>
+            <tr th:each="item : ${carsPerStatus}">
+                <td th:text="${item.getStatus()}"></td>
+                <td th:text="${item.getNumberOfCars()}"></td>
             </tr>
             </tbody>
         </table>
-
-        <p> Sammenlagte pris på alle udlejede biler =
-        <td th:text="${totalMontlyIncome}"></td>
+        <br>
+        <h3>Alle udlejede biler</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 5%"> Bil id</th>
+                <th style="width: 6%"> Nummerplade</th>
+                <th style="width: 6%"> Leasing</th>
+                <th style="width: 8%"> Type</th>
+                <th style="width: 8%"> Pris pr. måned</th>
+                <th style="width: 10%"> Leasing startdato</th>
+                <th style="width: 10%"> Leasing slutdato</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="carEconomy : ${carEconomies}">
+                <td th:text="${carEconomy.getCarID()}"></td>
+                <td th:text="${carEconomy.getLicencePlate()}"></td>
+                <td th:text="${carEconomy.getCurrentLeasing()}"></td>
+                <td th:text="${carEconomy.getCarStatus()}"></td>
+                <td th:text="${#numbers.formatDecimal(carEconomy.getPricePrMonth(),1,2,'COMMA')}"></td>
+                <td th:text="${#temporals.format(carEconomy.getLeasingStartDate(), 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${#temporals.format(carEconomy.getLeasingEndDate(), 'dd-MM-yyyy HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <p>
+            Samlet måneds indkomst for alle udlejede biler =
+            <span th:text="${#numbers.formatDecimal(totalMontlyIncome,1,2,'COMMA')}"></span> kr
         </p>
     </div>
 
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="opretlease">
 
         <h3>Biler der er registeret som ledige</h3>
-        <table>
+        <table class="table">
             <thead>
             <tr>
                 <th style="width: 5%"> Bil id</th>
                 <th style="width: 6%"> Nummerplade</th>
                 <th style="width: 15%"> Stelnummer</th>
-                <th style="width: 8%"> mærke</th>
-                <th style="width: 20%"> model</th>
-                <th style="width: 5%"> farve</th>
-                <th style="width: 8%"> brændstof</th>
-                <th style="width: 10%"> geartype</th>
+                <th style="width: 8%"> Mærke</th>
+                <th style="width: 20%"> Model</th>
+                <th style="width: 5%"> Farve</th>
+                <th style="width: 8%"> Brændstof</th>
+                <th style="width: 10%"> Geartype</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="car:${listOfFreeCars}">
                 <td th:text="${car.getCarID()}"></td>
-                <td th:text="${car.getNumberPlate()}"></td>
+                <td th:text="${car.getLicencePlate()}"></td>
                 <td th:text="${car.getVinNumber()}"></td>
                 <td th:text="${car.getManufacturer()}"></td>
                 <td th:text="${car.getModelName()}"></td>
-                <td th:text="${car.getColour()}"></td>
-                <td th:text="${car.getFuelType()}"></td>
-                <td th:text="${car.getGearType()}"></td>
+                <td th:text="${car.getColourName()}"></td>
+                <td th:text="${car.getFuelTypeName()}"></td>
+                <td th:text="${car.getGearTypeName()}"></td>
                 </td>
             </tr>
             </tbody>
@@ -76,12 +96,12 @@
             <p>
                 Startdato for leasing:<br>
                 <label for="startDate"></label>
-                <input type="date" id="startDate" placeholder="Start dato for lease" name="startDate"/>
+                <input type="datetime-local" id="startDate" placeholder="Start dato for lease" name="startDate"/>
             </p>
             <p>
                 Slutdato for leasing:<br>
                 <label for="endDate"></label>
-                <input type="date" id="endDate" placeholder="Slut dato for lease" name="endDate" required/>
+                <input type="datetime-local" id="endDate" placeholder="Slut dato for lease" name="endDate" required/>
             </p>
             <p>
                 Inkluderede km:<br>
@@ -97,16 +117,14 @@
                 <label for="udlejet-unlimited">Unlimited</label>
             </p>
             <p>
-                Vælg bil id:<br>
+                Vælg bil:<br>
                 <select name="carID">
-                    <option value="Sample" th:each="car:${listOfFreeCars}"
+                    <option th:each="car:${listOfFreeCars}"
                             th:value="${car.getCarID()}"
-                        th:text="${car.getCarID()}+' - '+${car.getNumberPlate()}">
-
+                            th:text="${car.getCarID()}+' - '+${car.getLicencePlate()}">
                     </option>
                 </select>
             </p>
-
             <p>
                 <button type="submit"> Opret lease</button>
             </p>
@@ -116,8 +134,8 @@
     <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')" th:fragment="closeDamage">
         <form th:action="@{/closeDamage}" method="post">
 
-            <p> vælg den/de skader der er blevet udbedret</p>
-            <table>
+            <h5> vælg den/de skader der er blevet udbedret</h5>
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Vælg</th>
@@ -136,16 +154,17 @@
                     <td>
                         <input type="checkbox" name="damage"
                                th:id="${damage.getDamageID()}"
-                               th:value="${damage.getDamageID()}" />
+                               th:value="${damage.getDamageID()}"/>
                     </td>
                     <td th:text="${damage.getDamageID()}"></td>
                     <td th:text="${damage.getCarID()}"></td>
-                    <td th:text="${damage.getNumberPlate()}"></td>
+                    <td th:text="${damage.getLicencePlate()}"></td>
                     <td th:text="${damage.getVinNumber()}"></td>
                     <td th:text="${damage.getDamageDescription()}"></td>
-                    <td th:text="${damage.getPrice()}"></td>
+                    <td th:text="${#numbers.formatDecimal(damage.getPrice(),1,2,'COMMA')}"></td>
                     <td th:text="${damage.getClaimant()}"></td>
-                    <td th:text="${damage.getDamageRegistationsDate()}"></td>
+                    <td th:text="${#dates.format(damage.getDamageRegistationsDate(),'dd-MM-yyyy')}"></td>
+
                 </tr>
                 </tbody>
             </table>
@@ -154,7 +173,7 @@
             <p>
                 Skade udbedret:<br>
                 <label for="fixedDate"></label>
-                <input type="date" id="fixedDate" placeholder="Skade udbedret" name="fixedDate"/>
+                <input type="date" id="fixedDate" placeholder="Skade udbedret" name="fixedDate" required/>
             </p>
             <input type="submit" value="Luk skade">
         </form>
@@ -162,19 +181,20 @@
     </div>
     <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')" th:fragment="createDamage">
         <form th:action="@{/createDamage}" method="post">
-            <p>vælg bil</p>
-            <p>bil-Id - Nummerplade - Stelnummer</p>
+            <h5>Opret skade eller mangel på bil</h5>
+            <p>Bil-Id - Nummerplade - Stelnummer</p>
             <select name="carID">
-                <option value="Sample" th:each="car:${carList}"
+                <option th:each="car:${carList}"
                         th:value="${car.getCarID()}"
-                        th:text="${car.getCarID()}+' - '+${car.getNumberPlate()} +' - '+${car.getVinNumber()} ">
+                        th:text="${car.getCarID()}+' - '+${car.getLicencePlate()} +' - '+${car.getVinNumber()} ">
                 </option>
             </select>
 
             <p>
                 Skadebeskrivelse :<br>
                 <label for="damageDescription"></label>
-                <input type="text" id="damageDescription" placeholder="skade beskrivelse" name="damageDescription" required/>
+                <textarea id="damageDescription" name="damageDescription" maxlength="200" rows="4" cols="50"
+                          required></textarea>
             </p>
             <p>
                 Pris for skade:<br>
@@ -184,7 +204,7 @@
             <p>
                 Skade anmelder :<br>
                 <label for="claimant"></label>
-                <input type="text" id="claimant" placeholder="Anmelder" name="claimant" required/>
+                <input type="text" id="claimant" name="claimant" required/>
             </p>
             <p>
                 Dato for skade:<br>
@@ -198,14 +218,13 @@
     </div>
 
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="extraEquipment">
-        <table>
-            <tr
-                    th:each="ekstraEquipemnt : ${ekstraEquipemnts}">
+        <h5>Liste over biler og deres ekstraudstyr</h5>
+        <table class="table">
+            <tr th:each="ekstraEquipemnt : ${extraEquipment}">
                 <td th:text="${ekstraEquipemnt.getCarID()}"></td>
-                <td th:text="${ekstraEquipemnt.getNumberPlate()}"></td>
-                <td th:text="${ekstraEquipemnt.getEkstraEquipemntdescription()}"></td>
+                <td th:text="${ekstraEquipemnt.getLicencePlate()}"></td>
+                <td th:text="${ekstraEquipemnt.getEkstraEquipemntDescription()}"></td>
             </tr>
         </table>
-
     </div>
 </div>

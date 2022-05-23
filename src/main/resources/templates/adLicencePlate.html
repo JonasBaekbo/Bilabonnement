@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Biler der mangler nummerplade</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th style="width: 5%"> Bil id</th>
+        <th style="width: 15%"> Stelnummer</th>
+        <th style="width: 8%"> Mærke</th>
+        <th style="width: 20%"> Model</th>
+        <th style="width: 5%"> Farve</th>
+        <th style="width: 8%"> Brændstof</th>
+        <th style="width: 10%"> Geartype</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car:${carsMissing}">
+        <td th:text="${car.getCarID()}"></td>
+        <td th:text="${car.getVinNumber()}"></td>
+        <td th:text="${car.getManufacturer()}"></td>
+        <td th:text="${car.getModelName()}"></td>
+        <td th:text="${car.getColourName()}"></td>
+        <td th:text="${car.getFuelTypeName()}"></td>
+        <td th:text="${car.getGearTypeName()}"></td>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form th:action="@{/adLicencePlate}" method="post">
+    <p>Vælg bil der skal have nummerplade:<br>
+    <p>Bil-Id - Stelnummer</p>
+    <select name="carID">
+        <option th:each="car:${carsMissing}"
+                th:value="${car.getCarID()}"
+                th:text="${car.getCarID()}+' - '+${car.getVinNumber()}">
+
+        </option>
+    </select>
+    <p>
+        Nummerplade:<br>
+        <label for="licencePlate"></label>
+        <input type="text" id="licencePlate" placeholder="Nummerplade" name="licencePlate" maxlength="7"/>
+    </p>
+    <p>
+        Registreringafgift:<br>
+        <label for="regFee"></label>
+        <input type="number" id="regFee" placeholder="Registreringsafgift" name="regFee" min="0" value="0" step="any"/>
+    </p>
+    <input type="submit" value="Tilføj nummerplade">
+</form>
+</body>
+</html>

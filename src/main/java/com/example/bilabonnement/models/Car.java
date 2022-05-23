@@ -5,108 +5,50 @@ import com.example.bilabonnement.servises.DateTool;
 import java.sql.Timestamp;
 
 public class Car {
-    private final DateTool dateTool =new DateTool();
+
+
+    private final DateTool dateTool = new DateTool();
 
     private int carID;
+    private CarStatus carStatus;
+    private CarModel carModel;
+    private FuelType fuelType;
+    private GearType gearType;
+    private Colour colour;
     private String vinNumber;
-    private String numberPlate;
-    private String manufacturer;
-    private String modelName;
-    private String fuelType;
-    private String colour;
-    private String gearType;
-    private String carStatus;
+    private String licencePlate;
     private Integer currentLeasing;
+    private Double registrationFee;
     private Timestamp registrationDate;
 
 
-    public Car(int carID, String vinNumber, String numberPlate, String modelName, String fuelType, String colour, String gearType, String status, Integer currentLeasing, Timestamp registrationDate) {
-        this.carID = carID;
-        this.vinNumber = vinNumber;
-        this.numberPlate = numberPlate;
-        this.modelName = modelName;
+    //Opret bil i database
+    public Car(
+            CarStatus carStatus, CarModel carModel, FuelType fuelType, GearType gearType, Colour colour, String licencePlate, String vinNumber, Double registrationFee) {
+        this.carStatus = carStatus;
+        this.carModel = carModel;
         this.fuelType = fuelType;
-        this.colour = colour;
         this.gearType = gearType;
-        this.carStatus = status;
-        this.currentLeasing = currentLeasing;
-        this.registrationDate = registrationDate;
-
-    }
-
-    public Car(String vinNumber, String numberPlate, String modelName, String fuelType, String colour, String gearType, String status, Integer currentLeasing) {
+        this.colour = colour;
+        this.licencePlate = licencePlate;
         this.vinNumber = vinNumber;
-        this.numberPlate = numberPlate;
-        this.modelName = modelName;
-        this.fuelType = fuelType;
-        this.colour = colour;
-        this.gearType = gearType;
-        this.carStatus = status;
-        this.currentLeasing = currentLeasing;
+        this.registrationFee = registrationFee;
         this.registrationDate = dateTool.getTimeStamp();
     }
 
-
-
-    public Car(int carID, String numberPlate, Integer currentLeasing, String carStatus) {
+    //Læs bil ind fra database
+    public Car(int carID, CarStatus carStatus, CarModel carModel, FuelType fuelType, GearType gearType, Colour colour, String vinNumber, String licencePlate, Integer currentLeasing, Timestamp registrationDate, Double registrationFee) {
         this.carID = carID;
-        this.numberPlate = numberPlate;
-        this.currentLeasing = currentLeasing;
         this.carStatus = carStatus;
-
-    }
-
-    public Car(int carID,String vinNumber,String numberPlate ,String manufacturer, String modelName, String colour,String fuelType, String gearType){
-        this.carID=carID;
-        this.vinNumber=vinNumber;
-        this.numberPlate=numberPlate;
-        this.manufacturer=manufacturer;
-        this.modelName=modelName;
-        this.fuelType=fuelType;
-        this.colour=colour;
-        this.gearType=gearType;
-
-    }
-
-
-
-
-
-    public String getModelName() {
-        return modelName;
-    }
-
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
-    }
-
-    public String getFuelType() {
-        return fuelType;
-    }
-
-
-    public String getNumberPlate() {
-        return numberPlate;
-    }
-
-    public void setNumberPlate(String numberPlate) {
-        this.numberPlate = numberPlate;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public String getGearType() {
-        return gearType;
-    }
-
-    public void setGearType(String gearType) {
+        this.carModel = carModel;
+        this.fuelType = fuelType;
         this.gearType = gearType;
+        this.colour = colour;
+        this.vinNumber = vinNumber;
+        this.licencePlate = licencePlate;
+        this.currentLeasing = currentLeasing;
+        this.registrationDate = registrationDate;
+        this.registrationFee = registrationFee;
     }
 
     public int getCarID() {
@@ -117,16 +59,60 @@ public class Car {
         this.carID = carID;
     }
 
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    public String getCarStatus() {
+    public CarStatus getCarStatus() {
         return carStatus;
     }
 
-    public void setCarStatus(String carStatus) {
+    public void setCarStatus(CarStatus carStatus) {
         this.carStatus = carStatus;
+    }
+
+    public CarModel getCarModel() {
+        return carModel;
+    }
+
+    public void setCarModel(CarModel carModel) {
+        this.carModel = carModel;
+    }
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public GearType getGearType() {
+        return gearType;
+    }
+
+    public void setGearType(GearType gearType) {
+        this.gearType = gearType;
+    }
+
+    public Colour getColour() {
+        return colour;
+    }
+
+    public void setColour(Colour colour) {
+        this.colour = colour;
+    }
+
+    public String getVinNumber() {
+        return vinNumber;
+    }
+
+    public void setVinNumber(String vinNumber) {
+        this.vinNumber = vinNumber;
+    }
+
+    public String getLicencePlate() {
+        return licencePlate;
+    }
+
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
     }
 
     public Integer getCurrentLeasing() {
@@ -145,19 +131,48 @@ public class Car {
         this.registrationDate = registrationDate;
     }
 
-    public String getVinNumber() {
-        return vinNumber;
-    }
-
-    public void setVinNumber(String vinNumber) {
-        this.vinNumber = vinNumber;
-    }
-
     public String getManufacturer() {
-        return manufacturer;
+        return this.carModel.getManufacturer();
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public String getModelName() {
+        return this.carModel.getModelName();
+    }
+
+    public String getColourName() {
+        return this.colour.getColourName();
+    }
+
+    public String getFuelTypeName() {
+        return this.fuelType.getFuelTypeName();
+    }
+
+    public String getGearTypeName() {
+        return this.gearType.getGearTypeName();
+    }
+
+    public int getModelID() {
+        return this.carModel.getModelID();
+    }
+
+    public int getFuelTypeID() {
+        return this.fuelType.getFuelTypeID();
+    }
+
+    public int getColourID() {
+        return this.colour.getColourID();
+    }
+
+    public int getGearTypeID() {
+        return this.gearType.getGearTypeID();
+    }
+
+    public Double getRegistrationFee() {
+
+        return registrationFee;
+    }
+
+    public void setRegistrationFee(Double registrationFee) {
+        this.registrationFee = registrationFee;
     }
 }
