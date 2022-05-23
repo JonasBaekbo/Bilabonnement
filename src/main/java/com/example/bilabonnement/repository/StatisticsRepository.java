@@ -35,19 +35,7 @@ public class StatisticsRepository {
 
         Connection conn = getConnection();
 
-        String sql = """
-                 SELECT
-                     car_status.car_status,
-                     COUNT(*) AS number_of_cars
-                 FROM
-                     cars
-                JOIN
-                     car_status ON cars.car_status_id = car_status.car_status_id
-                 GROUP BY 
-                     cars.car_status_id
-                 ORDER BY 
-                     cars.car_status_id                                
-                 """;
+        String sql = "SELECT car_status.car_status, COUNT(*) AS number_of_cars FROM cars JOIN car_status ON cars.car_status_id = car_status.car_status_id GROUP BY  cars.car_status_id ORDER BY  cars.car_status_id ";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);

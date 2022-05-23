@@ -15,19 +15,7 @@ public class ExtraEquipmentRepository implements IRepository<ExtraEquipment> {
     public ArrayList<ExtraEquipment> getExtraEquipmentCarList() {
         Connection conn = getConnection();
         //Vi fra sortere status 5, da det er status for biler der ikke er hos bilabonnement.dk
-        String sql = """
-                SELECT
-                cars.car_id,
-                GROUP_CONCAT(extra_equipemnt_description.extra_equipemnt_description) AS extra_equipment
-                FROM
-                cars
-                LEFT JOIN
-                extra_equipemnt_m2m ON extra_equipemnt_m2m.car_id = cars.car_id
-                LEFT JOIN
-                extra_equipemnt_description ON extra_equipemnt_description.extra_equipemnt_id = extra_equipemnt_m2m.extra_equipemnt_id
-                WHERE cars.car_status_id<>5
-                GROUP BY cars.car_id
-                """;
+        String sql = " SELECT cars.car_id, GROUP_CONCAT(extra_equipemnt_description.extra_equipemnt_description) AS extra_equipment FROM cars LEFT JOIN extra_equipemnt_m2m ON extra_equipemnt_m2m.car_id = cars.car_id LEFT JOIN extra_equipemnt_description ON extra_equipemnt_description.extra_equipemnt_id = extra_equipemnt_m2m.extra_equipemnt_id WHERE cars.car_status_id<>5 GROUP BY cars.car_id";
 
         ArrayList<ExtraEquipment> result = new ArrayList<>();
 
@@ -51,13 +39,7 @@ public class ExtraEquipmentRepository implements IRepository<ExtraEquipment> {
     @Override
     public boolean create(ExtraEquipment entity) {
         Connection conn = getConnection();
-        String sql = """
-                INSERT INTO  
-                extra_equipemnt_m2m (extra_equipemnt_id, car_id) 
-                VALUES (?, ?) 
-                ON DUPLICATE KEY UPDATE
-                extra_equipemnt_id = ?, car_id = ?
-                """;
+        String sql = "INSERT INTO extra_equipemnt_m2m (extra_equipemnt_id, car_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE extra_equipemnt_id = ?, car_id = ? ";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, entity.getEkstraEquipemntID());

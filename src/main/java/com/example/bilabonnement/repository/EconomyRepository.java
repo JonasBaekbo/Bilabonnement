@@ -24,25 +24,7 @@ public class EconomyRepository implements IRepository<CarEconomy> {
         ArrayList<CarEconomy> carEconomies = new ArrayList<>();
         //Vi søger på status 1 og 2 da det er status-id for de to lejetyper, og det kun er dem vi ønsker at se her
         try {
-            PreparedStatement pstmt = conn.prepareStatement("""
-                    SELECT
-                    cars.car_id,
-                    cars.licence_plate,
-                    cars.current_leasing_id,
-                    car_status.car_status,
-                    car_models.price_per_month,
-                    leasing.start_date,
-                    leasing.end_date
-                    FROM
-                    cars
-                    JOIN
-                    car_models ON cars.car_model_id = car_models.car_model_id
-                    JOIN
-                    car_status ON cars.car_status_id=car_status.car_status_id
-                    JOIN
-                    leasing ON cars.current_leasing_id = leasing.leasing_id
-                    WHERE cars.car_status_id IN (1,2)
-                    """);
+            PreparedStatement pstmt = conn.prepareStatement(" SELECT cars.car_id, cars.licence_plate, cars.current_leasing_id, car_status.car_status, car_models.price_per_month, leasing.start_date, leasing.end_date FROM cars JOIN car_models ON cars.car_model_id = car_models.car_model_id JOIN car_status ON cars.car_status_id=car_status.car_status_id JOIN leasing ON cars.current_leasing_id = leasing.leasing_id WHERE cars.car_status_id IN (1,2) ");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Car car = carRepository.getSingleById(rs.getInt("car_id"));
