@@ -11,7 +11,6 @@ public class ColourRepository extends ReadOnlyTable<Colour> {
 
     public List<Colour> getAll() {
         ArrayList<Colour> colours = new ArrayList<>();
-
         try {
             ResultSet resultSet = getResultSet("SELECT colour_id, colour FROM car_colour");
             while (resultSet.next()) {

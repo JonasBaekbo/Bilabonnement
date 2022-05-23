@@ -13,7 +13,6 @@ public class GearTypeRepository extends ReadOnlyTable<GearType> {
 
     public List<GearType> getAll() {
         ArrayList<GearType> gearTypes = new ArrayList<>();
-
         try {
             ResultSet resultSet = getResultSet("SELECT gear_type_id,gear_type FROM gear_type");
             while (resultSet.next()) {

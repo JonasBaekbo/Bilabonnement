@@ -17,14 +17,37 @@ import static com.example.bilabonnement.utility.DatabaseConnectionManager.getCon
 public class DamagedCarRepository {
 
     private final CarRepository carRepository = new CarRepository();
-    private final DamageRepository damageRepository =new DamageRepository();
+    private final DamageRepository damageRepository = new DamageRepository();
 
 
     public List<DamagedCar> getAllDamagesCars() {
         Connection conn = getConnection();
         ArrayList<DamagedCar> allDamagedCars = new ArrayList<>();
-
-        String sql = "SELECT cars.car_id, damages.damages_id, cars.vin_number, cars.licence_plate, manufacturer.manufacturer, car_models.model, damages.damage_description, damages.damages_cost_kr, damages.claimant, damages.damage_date FROM cars JOIN car_models ON cars.car_model_id = car_models.car_model_id JOIN manufacturer ON car_models.manufacturer_id = manufacturer.manufacturer_id JOIN car_status ON cars.car_status_id = car_status.car_status_id JOIN damages ON cars.car_id = damages.car_id WHERE  damage_closed is null ORDER BY damages.damages_id, cars.car_id ";
+        String sql = """
+                SELECT
+                cars.car_id,
+                damages.damages_id,
+                cars.vin_number,
+                cars.licence_plate,
+                manufacturer.manufacturer,
+                car_models.model,
+                damages.damage_description,
+                damages.damages_cost_kr,
+                damages.claimant,
+                damages.damage_date
+                FROM
+                cars
+                JOIN
+                car_models ON cars.car_model_id = car_models.car_model_id
+                JOIN
+                manufacturer ON car_models.manufacturer_id = manufacturer.manufacturer_id
+                JOIN
+                car_status ON cars.car_status_id = car_status.car_status_id
+                JOIN
+                damages ON cars.car_id = damages.car_id
+                WHERE  damage_closed is null
+                ORDER BY damages.damages_id, cars.car_id
+                """;
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.execute();

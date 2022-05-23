@@ -11,7 +11,6 @@ public class CarStatusRepository extends ReadOnlyTable<CarStatus> {
 
     public List<CarStatus> getAll() {
         ArrayList<CarStatus> carStatuses = new ArrayList<>();
-
         try {
             ResultSet resultSet = getResultSet("SELECT car_status_id,car_status FROM car_status");
             while (resultSet.next()) {

@@ -55,7 +55,6 @@ public class Leasing {
         return includedKM;
     }
 
-
     public int getCarID() {
         return carID;
     }

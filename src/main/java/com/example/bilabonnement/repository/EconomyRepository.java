@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EconomyRepository implements IRepository<CarEconomy> {
 
-   private final CarRepository carRepository = new CarRepository();
+    private final CarRepository carRepository = new CarRepository();
     private final CarStatusRepository carStatusRepository = new CarStatusRepository();
 
 
@@ -52,8 +52,7 @@ public class EconomyRepository implements IRepository<CarEconomy> {
                         car,
                         rs.getInt("price_per_month"),
                         (rs.getTimestamp("start_date").toLocalDateTime()),
-                        (rs.getTimestamp("end_date").toLocalDateTime())
-                );
+                        (rs.getTimestamp("end_date").toLocalDateTime()));
                 carEconomies.add(carEconomy);
             }
         } catch (SQLException e) {
@@ -62,7 +61,7 @@ public class EconomyRepository implements IRepository<CarEconomy> {
         return carEconomies;
     }
 
-    public double totalMonthlyIncomeThisMonthFromRentedCars(){
+    public double totalMonthlyIncomeThisMonthFromRentedCars() {
         List<CarEconomy> carEconomies = this.getAllEntities();
         double totalMoeny = 0;
         for (CarEconomy carEconomy : carEconomies) {

@@ -12,12 +12,20 @@ public class LeasingRepository implements IRepository<Leasing> {
     private final CarStatusRepository carStatusRepository = new CarStatusRepository();
 
 
-
     @Override
     public boolean create(Leasing leasing) {
         Connection conn = getConnection();
         try {
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO leasing(customer_id, car_id, start_date, end_date, included_km,leasing_added) VALUES (?,?,?,?,?,?)");
+            PreparedStatement pstmt = conn.prepareStatement("""
+                    INSERT INTO
+                    leasing(
+                    customer_id,
+                    car_id,
+                    start_date,
+                    end_date,
+                    included_km,
+                    leasing_added)
+                    VALUES (?,?,?,?,?,?)""");
             pstmt.setInt(1, leasing.getCustomerID());
             pstmt.setInt(2, leasing.getCarID());
             pstmt.setObject(3, leasing.getStartDate());
@@ -34,7 +42,7 @@ public class LeasingRepository implements IRepository<Leasing> {
 
             Car car = carRepository.getSingleById(leasing.getCarID());
             car.setCurrentLeasing(leasingId);
-            String leasingtype=leasing.getLeasingType();
+            String leasingtype = leasing.getLeasingType();
             CarStatus carStatus = carStatusRepository.getByName(leasingtype);
             carRepository.updateCarStatus(carStatus, car);
 

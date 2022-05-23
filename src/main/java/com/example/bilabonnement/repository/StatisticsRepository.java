@@ -9,7 +9,7 @@ import static com.example.bilabonnement.utility.DatabaseConnectionManager.getCon
 
 public class StatisticsRepository {
 
-    public int getNumberOfCarsLeased() {
+  /*  public int getNumberOfCarsLeased() {
         Connection conn = getConnection();
         try {
 
@@ -24,18 +24,26 @@ public class StatisticsRepository {
             return numCarsLeased;
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("error in getNumberOfCarsLeased-method");
         }
         return -1;
     }
-
+*/
 
     public ArrayList<StatisticsItem> getCarsPerStatus() {
         ArrayList<StatisticsItem> result = new ArrayList<>();
 
         Connection conn = getConnection();
 
-        String sql = "SELECT car_status.car_status, COUNT(*) AS number_of_cars FROM cars JOIN car_status ON cars.car_status_id = car_status.car_status_id GROUP BY  cars.car_status_id ORDER BY  cars.car_status_id ";
+        String sql = """
+                SELECT
+                car_status.car_status,
+                COUNT(*) AS number_of_cars
+                FROM
+                cars
+                JOIN
+                car_status ON cars.car_status_id = car_status.car_status_id
+                GROUP BY  cars.car_status_id
+                ORDER BY  cars.car_status_id""";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);

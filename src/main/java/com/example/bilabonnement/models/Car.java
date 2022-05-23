@@ -71,40 +71,20 @@ public class Car {
         return carModel;
     }
 
-    public void setCarModel(CarModel carModel) {
-        this.carModel = carModel;
-    }
-
     public FuelType getFuelType() {
         return fuelType;
-    }
-
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
     }
 
     public GearType getGearType() {
         return gearType;
     }
 
-    public void setGearType(GearType gearType) {
-        this.gearType = gearType;
-    }
-
     public Colour getColour() {
         return colour;
     }
 
-    public void setColour(Colour colour) {
-        this.colour = colour;
-    }
-
     public String getVinNumber() {
         return vinNumber;
-    }
-
-    public void setVinNumber(String vinNumber) {
-        this.vinNumber = vinNumber;
     }
 
     public String getLicencePlate() {
@@ -125,10 +105,6 @@ public class Car {
 
     public Timestamp getRegistrationDate() {
         return registrationDate;
-    }
-
-    public void setRegistrationDate(Timestamp registrationDate) {
-        this.registrationDate = registrationDate;
     }
 
     public String getManufacturer() {
@@ -168,7 +144,6 @@ public class Car {
     }
 
     public Double getRegistrationFee() {
-
         return registrationFee;
     }
 
