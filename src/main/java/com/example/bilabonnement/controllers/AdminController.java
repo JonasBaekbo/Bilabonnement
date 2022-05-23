@@ -10,7 +10,7 @@ import java.util.TreeMap;
 
 
 @Controller
-public class MainController {
+public class AdminController {
 
 
     @GetMapping("/")

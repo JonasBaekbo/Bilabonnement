@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class EkstraEquipemntController {
+public class ExtraEquipmentController {
 
     private final ExtraEquipmentRepository extraEquipmentRepository = new ExtraEquipmentRepository();
     private final CarRepository carRepository =new CarRepository();

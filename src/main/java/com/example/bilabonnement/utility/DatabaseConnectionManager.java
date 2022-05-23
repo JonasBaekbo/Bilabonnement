@@ -1,4 +1,4 @@
-package com.example.bilabonnement.ulility;
+package com.example.bilabonnement.utility;
 
 import java.io.*;
 import java.sql.Connection;

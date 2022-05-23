@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
+import static com.example.bilabonnement.utility.DatabaseConnectionManager.getConnection;
 
 
 public class DamagedCarRepository {
@@ -20,7 +20,7 @@ public class DamagedCarRepository {
     private final DamageRepository damageRepository =new DamageRepository();
 
 
-    public List<DamagedCar> getAllDamgesCars() {
+    public List<DamagedCar> getAllDamagesCars() {
         Connection conn = getConnection();
         ArrayList<DamagedCar> allDamagedCars = new ArrayList<>();
 

@@ -42,7 +42,7 @@ public class DamageController {
     @GetMapping("/admin/lukskade")
     public String showListOfDamagedCars(Model model) {
         model.addAttribute("title", "Luk skade");
-        List<DamagedCar> damageList = damagedCarRepository.getAllDamgesCars();
+        List<DamagedCar> damageList = damagedCarRepository.getAllDamagesCars();
         model.addAttribute("damageList", damageList);
         return "admin/damage/closeDamage";
     }

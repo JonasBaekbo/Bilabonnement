@@ -5,7 +5,7 @@ import com.example.bilabonnement.models.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
+import static com.example.bilabonnement.utility.DatabaseConnectionManager.getConnection;
 
 public class LeasingRepository implements IRepository<Leasing> {
     private final CarRepository carRepository = new CarRepository();

@@ -6,7 +6,7 @@ import com.example.bilabonnement.models.ExtraEquipment;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
+import static com.example.bilabonnement.utility.DatabaseConnectionManager.getConnection;
 
 public class ExtraEquipmentRepository implements IRepository<ExtraEquipment> {
    private final CarRepository carRepository = new CarRepository();
@@ -42,9 +42,9 @@ public class ExtraEquipmentRepository implements IRepository<ExtraEquipment> {
         String sql = "INSERT INTO extra_equipemnt_m2m (extra_equipemnt_id, car_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE extra_equipemnt_id = ?, car_id = ? ";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, entity.getEkstraEquipemntID());
+            pstmt.setInt(1, entity.getExtraEquipmentID());
             pstmt.setInt(2, entity.getCarID());
-            pstmt.setInt(3, entity.getEkstraEquipemntID());
+            pstmt.setInt(3, entity.getExtraEquipmentID());
             pstmt.setInt(4, entity.getCarID());
             pstmt.execute();
             return true;

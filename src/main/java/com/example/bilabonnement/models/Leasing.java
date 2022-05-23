@@ -1,6 +1,6 @@
 package com.example.bilabonnement.models;
 
-import com.example.bilabonnement.servises.DateTool;
+import com.example.bilabonnement.services.DateTool;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

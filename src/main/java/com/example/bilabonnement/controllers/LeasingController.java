@@ -21,7 +21,7 @@ public class LeasingController {
     private final CarRepository carRepository = new CarRepository();
 
     @GetMapping("/admin/opretlease")
-    public String leasingaftaleFront(Model model) {
+    public String leasingDealFront(Model model) {
         ArrayList<Car> listOfFreeCars = carRepository.getAllFreeCars();
         model.addAttribute("listOfFreeCars", listOfFreeCars);
         model.addAttribute("title", "Opret lease");

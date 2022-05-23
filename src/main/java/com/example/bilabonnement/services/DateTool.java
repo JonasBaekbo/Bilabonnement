@@ -1,4 +1,4 @@
-package com.example.bilabonnement.servises;
+package com.example.bilabonnement.services;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

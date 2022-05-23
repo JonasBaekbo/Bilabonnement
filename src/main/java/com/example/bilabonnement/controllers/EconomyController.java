@@ -19,10 +19,10 @@ public class EconomyController {
     @GetMapping("/admin/lejedebiler")
     public String leasedCars(Model model) {
         ArrayList<CarEconomy> carEconomies = economyRepository.getAllEntities();
-        double totalMontlyIncome = economyRepository.totalMonthlyIncomeThisMonthFromRentedCars();
+        double totalMonthlyIncome = economyRepository.totalMonthlyIncomeThisMonthFromRentedCars();
         ArrayList<StatisticsItem> carsPerStatus = statisticsRepository.getCarsPerStatus();
         model.addAttribute("title", "Alle lejede biler");
-        model.addAttribute("totalMontlyIncome",totalMontlyIncome);
+        model.addAttribute("totalMonthlyIncome",totalMonthlyIncome);
         model.addAttribute("carEconomies", carEconomies);
         model.addAttribute("carsPerStatus", carsPerStatus);
         return "admin/economy/showAllLeasedCars";

@@ -34,7 +34,7 @@ public class DamagedCar {
 
     public String getClaimant() { return this.damage.getClaimant(); }
 
-    public Date getDamageRegistationsDate() { return this.damage.getDamageRegistationsDate(); }
+    public Date getDamageRegistrationsDate() { return this.damage.getDamageRegistrationsDate(); }
 
 
 }

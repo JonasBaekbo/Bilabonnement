@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
+import static com.example.bilabonnement.utility.DatabaseConnectionManager.getConnection;
 
 public class ReadOnlyTable<T> {
     protected ResultSet getResultSet(String sql) {

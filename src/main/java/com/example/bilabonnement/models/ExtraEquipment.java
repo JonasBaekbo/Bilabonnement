@@ -3,22 +3,22 @@ package com.example.bilabonnement.models;
 public class ExtraEquipment {
 
     private Car car;
-    private int ekstraEquipemntID;
-    private String ekstraEquipemntDescription;
+    private int extraEquipmentID;
+    private String extraEquipmentDescription;
 
-    public ExtraEquipment(Car car, String ekstraEquipemntDescription) {
+    public ExtraEquipment(Car car, String extraEquipmentDescription) {
         this.car = car;
-        this.ekstraEquipemntDescription = ekstraEquipemntDescription;
+        this.extraEquipmentDescription = extraEquipmentDescription;
     }
 
-    public ExtraEquipment(Car car, int ekstraEquipemntID) {
+    public ExtraEquipment(Car car, int extraEquipmentID) {
         this.car = car;
-        this.ekstraEquipemntID = ekstraEquipemntID;
+        this.extraEquipmentID = extraEquipmentID;
     }
 
-    public ExtraEquipment(int ekstraEquipemntID, String ekstraEquipemntDescription) {
-        this.ekstraEquipemntID = ekstraEquipemntID;
-        this.ekstraEquipemntDescription = ekstraEquipemntDescription;
+    public ExtraEquipment(int extraEquipmentID, String extraEquipmentDescription) {
+        this.extraEquipmentID = extraEquipmentID;
+        this.extraEquipmentDescription = extraEquipmentDescription;
     }
 
     public Car getCar() {
@@ -29,8 +29,8 @@ public class ExtraEquipment {
         return car.getCarID();
     }
 
-    public int getEkstraEquipemntID() {
-        return ekstraEquipemntID;
+    public int getExtraEquipmentID() {
+        return extraEquipmentID;
     }
 
     public void setCar(Car car) {
@@ -41,8 +41,8 @@ public class ExtraEquipment {
         return car.getLicencePlate();
     }
 
-    public String getEkstraEquipemntDescription() {
-        return ekstraEquipemntDescription;
+    public String getExtraEquipmentDescription() {
+        return extraEquipmentDescription;
     }
 
     public String getVinNumber(){

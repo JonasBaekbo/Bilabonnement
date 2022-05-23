@@ -1,6 +1,6 @@
 package com.example.bilabonnement.models;
 
-import com.example.bilabonnement.servises.DateTool;
+import com.example.bilabonnement.services.DateTool;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -14,7 +14,7 @@ public class Damage {
     private String damageDescription;
     private double price;
     private String claimant;
-    private Date damageRegistationsDate;
+    private Date damageRegistrationsDate;
     private Date damageFixedDate;
     private Timestamp timestamp;
 
@@ -24,7 +24,7 @@ public class Damage {
         this.damageDescription = damageDescription;
         this.price = price;
         this.claimant = claimant;
-        this.damageRegistationsDate = damageRegistationsDate;
+        this.damageRegistrationsDate = damageRegistationsDate;
         this.damageFixedDate = null;
         this.timestamp = dateTool.getTimeStamp();
     }
@@ -36,7 +36,7 @@ public class Damage {
         this.damageDescription = damageDescription;
         this.price = price;
         this.claimant = claimant;
-        this.damageRegistationsDate = damageRegistationsDate;
+        this.damageRegistrationsDate = damageRegistationsDate;
         this.damageFixedDate = damageFixedDate;
         this.timestamp = timestamp;
     }
@@ -49,8 +49,8 @@ public class Damage {
         return price;
     }
 
-    public Date getDamageRegistationsDate() {
-        return damageRegistationsDate;
+    public Date getDamageRegistrationsDate() {
+        return damageRegistrationsDate;
     }
 
     public Date getDamageFixedDate() {

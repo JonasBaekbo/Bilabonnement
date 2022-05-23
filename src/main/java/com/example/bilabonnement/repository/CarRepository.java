@@ -1,12 +1,12 @@
 package com.example.bilabonnement.repository;
 
 import com.example.bilabonnement.models.*;
-import com.example.bilabonnement.servises.DateTool;
+import com.example.bilabonnement.services.DateTool;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
+import static com.example.bilabonnement.utility.DatabaseConnectionManager.getConnection;
 
 public class CarRepository implements IRepository<Car> {
     private final DateTool dateTool = new DateTool();
@@ -141,7 +141,7 @@ public class CarRepository implements IRepository<Car> {
         return allFreeCars;
     }
 
-    public ArrayList<Car> getCarsMissigLicence() {
+    public ArrayList<Car> getCarsMissingLicence() {
         ArrayList<Car> missingLicense;
 
         String sql= """
