@@ -45,4 +45,8 @@ public class ExtraEquipment {
         return ekstraEquipemntDescription;
     }
 
+    public String getVinNumber(){
+        return this.car.getVinNumber();
+    }
+
 }

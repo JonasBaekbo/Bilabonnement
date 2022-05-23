@@ -220,11 +220,22 @@
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="extraEquipment">
         <h5>Liste over biler og deres ekstraudstyr</h5>
         <table class="table">
+            <thead>
+            <tr>
+                <th>Bil-id</th>
+                <th>Nummerplade</th>
+                <th>Stelnummer</th>
+                <th>Registreret Ekstraudstyr</th>
+            </tr>
+            </thead>
+            <tbody>
             <tr th:each="ekstraEquipemnt : ${extraEquipment}">
                 <td th:text="${ekstraEquipemnt.getCarID()}"></td>
                 <td th:text="${ekstraEquipemnt.getLicencePlate()}"></td>
+                <td th:text="${ekstraEquipemnt.getVinNumber()}"></td>
                 <td th:text="${ekstraEquipemnt.getEkstraEquipemntDescription()}"></td>
             </tr>
+            </tbody>
         </table>
     </div>
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="addExtraEquipment">
