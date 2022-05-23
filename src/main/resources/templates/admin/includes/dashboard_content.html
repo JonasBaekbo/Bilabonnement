@@ -163,7 +163,7 @@
                     <td th:text="${damage.getDamageDescription()}"></td>
                     <td th:text="${#numbers.formatDecimal(damage.getPrice(),1,2,'COMMA')}"></td>
                     <td th:text="${damage.getClaimant()}"></td>
-                    <td th:text="${#dates.format(damage.getDamageRegistationsDate(),'dd-MM-yyyy')}"></td>
+                    <td th:text="${#dates.format(damage.getDamageRegistrationsDate(),'dd-MM-yyyy')}"></td>
 
                 </tr>
                 </tbody>
@@ -229,11 +229,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="ekstraEquipemnt : ${extraEquipment}">
-                <td th:text="${ekstraEquipemnt.getCarID()}"></td>
-                <td th:text="${ekstraEquipemnt.getLicencePlate()}"></td>
-                <td th:text="${ekstraEquipemnt.getVinNumber()}"></td>
-                <td th:text="${ekstraEquipemnt.getEkstraEquipemntDescription()}"></td>
+            <tr th:each="extraEquipment : ${extraEquipment}">
+                <td th:text="${extraEquipment.getCarID()}"></td>
+                <td th:text="${extraEquipment.getLicencePlate()}"></td>
+                <td th:text="${extraEquipment.getVinNumber()}"></td>
+                <td th:text="${extraEquipment.getExtraEquipmentDescription()}"></td>
             </tr>
             </tbody>
         </table>
@@ -254,9 +254,9 @@
                 Ekstraudstyr<br>
             <div th:each="ex:${extraEquipmentList}">
                 <input type="checkbox" name="exID"
-                       th:id="${ex.getEkstraEquipemntID()}"
-                       th:value="${ex.getEkstraEquipemntID()}"/>
-                <label th:for="${ex.getEkstraEquipemntID()}" th:text="${ex.getEkstraEquipemntDescription()}"></label>
+                       th:id="${ex.getExtraEquipmentID()}"
+                       th:value="${ex.getExtraEquipmentID()}"/>
+                <label th:for="${ex.getExtraEquipmentID()}" th:text="${ex.getExtraEquipmentDescription()}"></label>
             </div>
             </p>
             <input type="submit" value="Tilføj ekstraudstyr">

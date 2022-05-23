@@ -47,7 +47,7 @@ public class CarController {
 
     @GetMapping("/admin/tilfoejnummerplade")
     public String showMissingLicencePlate(Model model) {
-        ArrayList<Car> carsMissing = carRepository.getCarsMissigLicence();
+        ArrayList<Car> carsMissing = carRepository.getCarsMissingLicence();
         model.addAttribute("carsMissing", carsMissing);
         return "admin/leasing/addLicencePlate";
     }
