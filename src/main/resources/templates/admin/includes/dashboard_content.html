@@ -227,4 +227,147 @@
             </tr>
         </table>
     </div>
+    <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="addExtraEquipment">
+        <form th:action="@{/adExtraEquipment}" method="post">
+            <h5>Vælg bil der skal have ekstraudstyr:</h5>
+            <p>
+                Bil-Id - Nummerplade - Stelnummer<br>
+                <select name="carID">
+                    <option th:each="car:${allCars}"
+                            th:value="${car.getCarID()}"
+                            th:text="${car.getCarID()} +' - ' + ${car.getLicencePlate()} + ' - ' + ${car.getVinNumber()}">
+                    </option>
+                </select>
+            </p>
+            <p>
+                Ekstraudstyr<br>
+            <div th:each="ex:${extraEquipmentList}">
+                <input type="checkbox" name="exID"
+                       th:id="${ex.getEkstraEquipemntID()}"
+                       th:value="${ex.getEkstraEquipemntID()}"/>
+                <label th:for="${ex.getEkstraEquipemntID()}" th:text="${ex.getEkstraEquipemntDescription()}"></label>
+            </div>
+            </p>
+            <input type="submit" value="Tilføj ekstraudstyr">
+        </form>
+    </div>
+    <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="addLicencePlate">
+        h3>Biler der mangler nummerplade</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 5%"> Bil id</th>
+                <th style="width: 15%"> Stelnummer</th>
+                <th style="width: 8%"> Mærke</th>
+                <th style="width: 20%"> Model</th>
+                <th style="width: 5%"> Farve</th>
+                <th style="width: 8%"> Brændstof</th>
+                <th style="width: 10%"> Geartype</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car:${carsMissing}">
+                <td th:text="${car.getCarID()}"></td>
+                <td th:text="${car.getVinNumber()}"></td>
+                <td th:text="${car.getManufacturer()}"></td>
+                <td th:text="${car.getModelName()}"></td>
+                <td th:text="${car.getColourName()}"></td>
+                <td th:text="${car.getFuelTypeName()}"></td>
+                <td th:text="${car.getGearTypeName()}"></td>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <form th:action="@{/adLicencePlate}" method="post">
+            <p>Vælg bil der skal have nummerplade:<br>
+            <p>Bil-Id - Stelnummer</p>
+            <select name="carID">
+                <option th:each="car:${carsMissing}"
+                        th:value="${car.getCarID()}"
+                        th:text="${car.getCarID()}+' - '+${car.getVinNumber()}">
+
+                </option>
+            </select>
+            <p>
+                Nummerplade:<br>
+                <label for="licencePlate"></label>
+                <input type="text" id="licencePlateLP" placeholder="Nummerplade" name="licencePlate" maxlength="7"/>
+            </p>
+            <p>
+                Registreringafgift:<br>
+                <label for="regFee"></label>
+                <input type="number" id="regFeeLP" placeholder="Registreringsafgift" name="regFee" min="0" value="0" step="any"/>
+            </p>
+            <input type="submit" value="Tilføj nummerplade">
+        </form>
+
+    </div>
+    <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="createCar">
+        <form th:action="@{/createCar}" method="post">
+            <p>
+                Vælg model:<br>
+                <select name="carModel">
+                    <option th:each="model:${carModels}"
+                            th:value="${model.getModelID()}"
+                            th:text="${model.getManufacturer()}+' - '+${model.getModelName()}">
+                    </option>
+                    <option value="-1">Anden ...</option>
+                </select>
+            </p>
+            <p>
+                Stelnummer:<br>
+                <label for="vinNumber"></label>
+                <input type="text" id="vinNumber" placeholder="Stelnummer" name="vinNumber"/>
+            </p>
+            <p>
+                Nummerplade:<br>
+                <label for="licencePlate"></label>
+                <input type="text" id="licencePlate" placeholder="Nummerplade" name="licencePlate"/>
+            </p>
+
+            <p>
+                Brændstof:<br>
+                <select name="fuelType">
+                    <option th:each="fuelType:${fuelTypes}"
+                            th:value="${fuelType.getFuelTypeID()}"
+                            th:text="${fuelType.getFuelTypeName()}">
+                    </option>
+                </select>
+            </p>
+
+            <p>
+                Geartype:<br>
+                <select name="gearType">
+                    <option th:each="gearType:${gearTypes}"
+                            th:value="${gearType.getGearTypeID()}"
+                            th:text="${gearType.getGearTypeName()}">
+                    </option>
+                </select>
+            </p>
+
+            <p>
+                Farve:<br>
+                <select name="colour">
+                    <option th:each="colour:${colours}"
+                            th:value="${colour.getColourID()}"
+                            th:text="${colour.getColourName()}">
+                    </option>
+                </select>
+            </p>
+
+            <p>
+                Registreringafgift:<br>
+                <label for="regFee"></label>
+                <input type="number" id="regFee" placeholder="Registreringsafgift" name="regFee" min="0" value="0" step="any"/>
+            </p>
+
+            <p>
+                <button type="submit">Opret bil</button>
+            </p>
+
+        </form>
+
+    </div>
+
+
 </div>

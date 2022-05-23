@@ -25,13 +25,13 @@ public class EkstraEquipemntController {
         return "admin/leasing/extraEquipment";
     }
 
-    @GetMapping("/adExtraEquipment")
+    @GetMapping("/admin/tilfoejekstraudstyr")
     public String showaddExtraEquipment(Model model){
         List<ExtraEquipment> extraEquipmentList = extraEquipmentRepository.getAllEntities();
         List<Car>allCars=carRepository.getAllEntities();
         model.addAttribute("extraEquipmentList", extraEquipmentList);
         model.addAttribute("allCars", allCars);
-        return "/adExtraEquipment";
+        return "admin/leasing/addExtraEquipment";
     }
 
     @PostMapping("/adExtraEquipment")
@@ -41,6 +41,6 @@ public class EkstraEquipemntController {
             ExtraEquipment extraEquipment = new ExtraEquipment(car, exID);
             extraEquipmentRepository.create(extraEquipment);
         }
-        return "redirect:/adExtraEquipment";
+        return "redirect:/admin/tilfoejekstraudstyr";
     }
 }

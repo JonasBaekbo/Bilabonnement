@@ -21,7 +21,22 @@
                                 <a href="/admin/opretlease" class="nav-link px-0">Opret Lease</a>
                             </li>
                             <li class="w-100">
+                                <a href="/admin/opretbil" class="nav-link px-0">Opret bil</a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/admin/tilfoejnummerplade" class="nav-link px-0">Tilføj nummerplade til bil</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="hasAnyRole('DATA', 'ADMIN')">
+                        <a href="#submenu4" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline"><i class="fa-solid fa-car-side"></i> Ekstraudstyr</span> </a>
+                        <ul class="collapse show nav flex-column ms-1" id="submenu4" data-bs-parent="#menu">
+                            <li class="w-100">
                                 <a href="/admin/visekstraudstyr" class="nav-link px-0">Vis biler med ekstraudstyr</a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/admin/tilfoejekstraudstyr" class="nav-link px-0">Tilføj ekstraudstyr</a>
                             </li>
                         </ul>
                     </li>

@@ -19,7 +19,7 @@ public class CarController {
     private final GearTypeRepository gearTypeRepository = new GearTypeRepository();
     private final ColourRepository colourRepository = new ColourRepository();
 
-    @GetMapping("/createCar")
+    @GetMapping("/admin/opretbil")
     public String showCreateCar(Model model) {
         ArrayList<CarModel> carModels = (ArrayList<CarModel>) carModelRepository.getAll();
         ArrayList<FuelType> fuelTypes = (ArrayList<FuelType>) fuelTypeRepository.getAll();
@@ -29,7 +29,7 @@ public class CarController {
         model.addAttribute("fuelTypes", fuelTypes);
         model.addAttribute("gearTypes", gearTypes);
         model.addAttribute("colours", colours);
-        return "createCar";
+        return "admin/leasing/createCar";
     }
 
     @PostMapping("/createCar")
@@ -42,22 +42,22 @@ public class CarController {
         Colour colour = colourRepository.getByID(colourID);
         Car car = new Car(carStatus, carModel, fuelType, gearType, colour, licencePlate, vinNumber, regFee);
         carRepository.create(car);
-        return "redirect:/createCar";
+        return "redirect:/admin/opretbil";
     }
 
-    @GetMapping("/adLicencePlate")
+    @GetMapping("/admin/tilfoejnummerplade")
     public String showMissingLicencePlate(Model model) {
         ArrayList<Car> carsMissing = carRepository.getCarsMissigLicence();
         model.addAttribute("carsMissing", carsMissing);
-        return "adLicencePlate";
+        return "admin/leasing/addLicencePlate";
     }
 
     @PostMapping("/adLicencePlate")
-    public String adLicencePlateToCar(@RequestParam("carID") int carID, @RequestParam("licencePlate") String licencePlate, @RequestParam("regFee") Double regFee) {
+    public String adLicencePlateToCar(@RequestParam("carID") int carID, @RequestParam("licencePlateLP") String licencePlate, @RequestParam("regFeeLP") Double regFee) {
         Car car = carRepository.getSingleById(carID);
         car.setLicencePlate(licencePlate);
         car.setRegistrationFee(regFee);
         carRepository.update(car);
-        return "redirect:/adLicencePlate";
+        return "redirect:/admin/tilfoejnummerplade";
     }
 }
