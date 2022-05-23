@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import static com.example.bilabonnement.ulility.DatabaseConnectionManager.getConnection;
 
 public class CarRepository implements IRepository<Car> {
-    DateTool dateTool = new DateTool();
+    private final DateTool dateTool = new DateTool();
 
-    CarStatusRepository carStatusRepository = new CarStatusRepository();
-    CarModelRepository carModelRepository = new CarModelRepository();
-    FuelTypeRepository fuelTypeRepository = new FuelTypeRepository();
-    GearTypeRepository gearTypeRepository = new GearTypeRepository();
-    ColourRepository colourRepository = new ColourRepository();
+    private final CarStatusRepository carStatusRepository = new CarStatusRepository();
+    private final CarModelRepository carModelRepository = new CarModelRepository();
+    private final FuelTypeRepository fuelTypeRepository = new FuelTypeRepository();
+    private final GearTypeRepository gearTypeRepository = new GearTypeRepository();
+    private final ColourRepository colourRepository = new ColourRepository();
 
     @Override
     public boolean create(Car car) {
