@@ -79,7 +79,7 @@ public class DamageRepository implements IRepository<Damage> {
 
     }
 
-    private boolean checkIsLast(int damageID, int carID) {
+    public boolean checkIsLast(int damageID, int carID) {
         Connection conn = getConnection();
         try {
             String countDamgesLeft = """
