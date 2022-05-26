@@ -212,7 +212,8 @@ CREATE TABLE `extra_equipment_m2m` (
   UNIQUE KEY `unique_together` (`extra_equipment_id`,`car_id`),
   KEY `ekstra_equipment_id_idx` (`extra_equipment_id`),
   KEY `car_id_idx` (`car_id`),
-  CONSTRAINT `car_id` FOREIGN KEY (`car_id`) REFERENCES `cars` (`car_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `car_id` FOREIGN KEY (`car_id`) REFERENCES `cars` (`car_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `extra_equipmentid` FOREIGN KEY (`extra_equipment_id`) REFERENCES `extra_equipment_description` (`extra_equipment_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -364,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-26 10:19:41
+-- Dump completed on 2022-05-26 10:41:32
