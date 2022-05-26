@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `Bilabonnement` /*!40100 DEFAULT CHARACTER SET utf8mb4*/ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `Bilabonnement`;
--- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `bilabonnement` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `bilabonnement`;
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: Bilabonnement
+-- Host: bilabonnementwhatever.mysql.database.azure.com    Database: bilabonnement
 -- ------------------------------------------------------
--- Server version	8.0.23
+-- Server version	5.6.47.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,223 +18,314 @@ USE `Bilabonnement`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `biler`
+-- Table structure for table `car_colour`
 --
 
-DROP TABLE IF EXISTS `biler`;
+DROP TABLE IF EXISTS `car_colour`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `biler` (
-  `bil_id` int NOT NULL AUTO_INCREMENT,
-  `stelnummer` int NOT NULL,
-  `registeringsnummer` varchar(45) DEFAULT NULL,
-  `model` int DEFAULT NULL,
-  `brændstroftype` int DEFAULT NULL,
-  `farve` int DEFAULT NULL,
-  `geartype` int DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `registerings-afgift` varchar(45) DEFAULT NULL,
-  `udlejet-fra` datetime DEFAULT NULL,
-  `udlejet til` datetime DEFAULT NULL,
-  `skader` int DEFAULT NULL,
-  PRIMARY KEY (`bil_id`),
-  UNIQUE KEY `stelnummer_UNIQUE` (`stelnummer`),
-  KEY `bilmodel_idx` (`model`),
-  KEY `brændstoftype_idx` (`brændstroftype`),
-  KEY `farve_idx` (`farve`),
-  KEY `geartype_idx` (`geartype`),
-  KEY `udlejet_idx` (`status`),
-  CONSTRAINT `bilmodel` FOREIGN KEY (`model`) REFERENCES `bilmodeller` (`id_bilmodeller`),
-  CONSTRAINT `brændstoftype` FOREIGN KEY (`brændstroftype`) REFERENCES `brændstoftype` (`id_brændstoftype`),
-  CONSTRAINT `farve` FOREIGN KEY (`farve`) REFERENCES `farve` (`id_farve`),
-  CONSTRAINT `geartype` FOREIGN KEY (`geartype`) REFERENCES `geartype` (`id_geartype`),
-  CONSTRAINT `udlejet` FOREIGN KEY (`status`) REFERENCES `status` (`id_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `car_colour` (
+  `colour_id` int(11) NOT NULL AUTO_INCREMENT,
+  `colour` varchar(45) NOT NULL,
+  PRIMARY KEY (`colour_id`),
+  UNIQUE KEY `farve_id_UNIQUE` (`colour_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `biler`
+-- Dumping data for table `car_colour`
 --
 
-LOCK TABLES `biler` WRITE;
-/*!40000 ALTER TABLE `biler` DISABLE KEYS */;
-/*!40000 ALTER TABLE `biler` ENABLE KEYS */;
+LOCK TABLES `car_colour` WRITE;
+/*!40000 ALTER TABLE `car_colour` DISABLE KEYS */;
+INSERT INTO `car_colour` VALUES (1,'Blå'),(2,'Brun'),(3,'Grå'),(4,'Grøn'),(5,'Gul'),(6,'Hvid'),(7,'Lilla'),(8,'Orange'),(9,'Rød'),(10,'Sort'),(11,'Sølv');
+/*!40000 ALTER TABLE `car_colour` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `bilmodeller`
+-- Table structure for table `car_models`
 --
 
-DROP TABLE IF EXISTS `bilmodeller`;
+DROP TABLE IF EXISTS `car_models`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bilmodeller` (
-  `id_bilmodeller` int NOT NULL AUTO_INCREMENT,
-  `producent` int NOT NULL,
-  `bilmodel` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_bilmodeller`),
-  KEY `producent_idx` (`producent`),
-  CONSTRAINT `producent` FOREIGN KEY (`producent`) REFERENCES `producent` (`id_producent`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `car_models` (
+  `car_model_id` int(11) NOT NULL AUTO_INCREMENT,
+  `manufacturer_id` int(11) NOT NULL,
+  `model` varchar(45) NOT NULL,
+  `price_per_month` int(45) NOT NULL,
+  PRIMARY KEY (`car_model_id`),
+  KEY `producent_idx` (`manufacturer_id`),
+  CONSTRAINT `producent` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`manufacturer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `bilmodeller`
+-- Dumping data for table `car_models`
 --
 
-LOCK TABLES `bilmodeller` WRITE;
-/*!40000 ALTER TABLE `bilmodeller` DISABLE KEYS */;
-INSERT INTO `bilmodeller` VALUES (1,4,'7 Performance Line Pack 130HK'),(2,1,'3008 GT 130HK AUT.'),(3,1,' 3008 Allure Pack 130 HK AUT'),(4,3,'Crossland Sport 130 HK AUT.'),(5,1,'2008 Allure PACK 130 HK LTD.'),(6,3,'Crossland Sport 110 HK'),(7,3,'Crossland Sport 83 HK'),(8,3,'C3 Triumph Benzin 83 HK'),(9,1,'208 Active Pack 75 HK'),(10,2,'C3 Le Mans PureTech 83 HK'),(11,2,'Grand C4 Spacetourer COOL 130 HK'),(12,1,'2008 Allure Pack AUT. 130 HK');
-/*!40000 ALTER TABLE `bilmodeller` ENABLE KEYS */;
+LOCK TABLES `car_models` WRITE;
+/*!40000 ALTER TABLE `car_models` DISABLE KEYS */;
+INSERT INTO `car_models` VALUES (1,4,'7 Performance Line Pack 130HK',5999),(2,1,'3008 GT 130HK AUT.',4999),(3,1,'3008 Allure Pack 130 HK AUT',4999),(4,3,'Crossland Sport 130 HK AUT.',4299),(5,1,'2008 Allure PACK 130 HK LTD.',3999),(6,3,'Crossland Sport 110 HK',5999),(7,3,'Crossland Sport 83 HK',4299),(8,3,'C3 Triumph Benzin 83 HK',6999),(9,1,'208 Active Pack 75 HK',3099),(10,2,'C3 Le Mans PureTech 83 HK',3199),(11,2,'Grand C4 Spacetourer COOL 130 HK',4999),(12,1,'2008 Allure Pack AUT. 130 HK',4999),(13,3,'Corsa Sport Ltd. 75 HK',3299);
+/*!40000 ALTER TABLE `car_models` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `brændstoftype`
+-- Table structure for table `car_status`
 --
 
-DROP TABLE IF EXISTS `brændstoftype`;
+DROP TABLE IF EXISTS `car_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `brændstoftype` (
-  `id_brændstoftype` int NOT NULL AUTO_INCREMENT,
-  `brændstoftype` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_brændstoftype`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `car_status` (
+  `car_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `car_status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`car_status_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `brændstoftype`
+-- Dumping data for table `car_status`
 --
 
-LOCK TABLES `brændstoftype` WRITE;
-/*!40000 ALTER TABLE `brændstoftype` DISABLE KEYS */;
-INSERT INTO `brændstoftype` VALUES (1,'Benzin'),(2,'Disel'),(3,'plug_in_hybrid'),(4,'hybrid');
-/*!40000 ALTER TABLE `brændstoftype` ENABLE KEYS */;
+LOCK TABLES `car_status` WRITE;
+/*!40000 ALTER TABLE `car_status` DISABLE KEYS */;
+INSERT INTO `car_status` VALUES (1,'Udlejet-Limited'),(2,'Udlejet-Unlimited'),(3,'Skadet'),(4,'Hjemme'),(5,'Udgået af flåden');
+/*!40000 ALTER TABLE `car_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `farve`
+-- Table structure for table `cars`
 --
 
-DROP TABLE IF EXISTS `farve`;
+DROP TABLE IF EXISTS `cars`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `farve` (
-  `id_farve` int NOT NULL AUTO_INCREMENT,
-  `farve` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_farve`),
-  UNIQUE KEY `farve_id_UNIQUE` (`id_farve`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `cars` (
+  `car_id` int(11) NOT NULL AUTO_INCREMENT,
+  `vin_number` varchar(20) NOT NULL,
+  `licence_plate` varchar(20) DEFAULT NULL,
+  `car_model_id` int(11) DEFAULT NULL,
+  `fuel_type_id` int(11) DEFAULT NULL,
+  `colour_id` int(11) DEFAULT NULL,
+  `gear_type_id` int(11) DEFAULT NULL,
+  `car_status_id` int(11) DEFAULT NULL,
+  `current_leasing_id` int(11) DEFAULT NULL,
+  `car_added` datetime NOT NULL,
+  `steel_price` decimal(10,2) DEFAULT NULL,
+  `co2_emission_g_per_km` decimal(3,2) DEFAULT NULL,
+  `registration_fee` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`car_id`),
+  UNIQUE KEY `stelnummer_UNIQUE` (`vin_number`),
+  KEY `bilmodel_idx` (`car_model_id`),
+  KEY `brændstoftype_idx` (`fuel_type_id`),
+  KEY `farve_idx` (`colour_id`),
+  KEY `geartype_idx` (`gear_type_id`),
+  KEY `udlejet_idx` (`car_status_id`),
+  KEY `leasing-aftale_idx` (`current_leasing_id`),
+  CONSTRAINT `car_model` FOREIGN KEY (`car_model_id`) REFERENCES `car_models` (`car_model_id`),
+  CONSTRAINT `car_status` FOREIGN KEY (`car_status_id`) REFERENCES `car_status` (`car_status_id`),
+  CONSTRAINT `farve` FOREIGN KEY (`colour_id`) REFERENCES `car_colour` (`colour_id`),
+  CONSTRAINT `fuel_type` FOREIGN KEY (`fuel_type_id`) REFERENCES `fuel_types` (`fuel_type_id`),
+  CONSTRAINT `gear_type` FOREIGN KEY (`gear_type_id`) REFERENCES `gear_type` (`gear_type_id`),
+  CONSTRAINT `leasing` FOREIGN KEY (`current_leasing_id`) REFERENCES `leasing` (`leasing_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `farve`
+-- Dumping data for table `cars`
 --
 
-LOCK TABLES `farve` WRITE;
-/*!40000 ALTER TABLE `farve` DISABLE KEYS */;
-INSERT INTO `farve` VALUES (1,'sort'),(2,'rød'),(3,'hvid'),(4,'sølv'),(5,'gul'),(6,'orange'),(7,'blå'),(8,'grøn'),(9,'brun'),(10,'grå');
-/*!40000 ALTER TABLE `farve` ENABLE KEYS */;
+LOCK TABLES `cars` WRITE;
+/*!40000 ALTER TABLE `cars` DISABLE KEYS */;
+INSERT INTO `cars` VALUES (1,'ABC12345678910116','DD26451',2,4,4,1,4,NULL,'2022-01-01 00:00:00',NULL,NULL,800.00),(2,'BCD23456789101167','AC15679',7,1,1,1,1,2,'2022-01-01 00:00:00',NULL,NULL,800.00),(3,'CDE34567891011677','AC15680',9,3,2,1,4,NULL,'2022-02-06 00:00:00',NULL,NULL,750.00),(4,'DEF45678910116779','AC15678',8,2,5,2,3,20,'2022-06-01 00:00:00',NULL,NULL,900.00),(5,'EFG67891011677900','AC26048',1,1,3,2,1,28,'2022-06-03 00:00:00',NULL,NULL,1200.00),(6,'FGH78910116779008','AB12345',5,1,1,2,3,25,'2022-03-03 00:00:00',NULL,NULL,600.00),(7,'GHK89101167790089','AB12346',6,2,5,2,4,NULL,'2022-02-15 00:00:00',NULL,NULL,600.00),(8,'HKH10116779008900','DD26452',8,3,3,1,1,17,'2022-03-23 00:00:00',NULL,NULL,750.00),(9,'FFH11677900890098','AC15680',9,1,8,1,4,3,'2022-04-18 00:00:00',NULL,NULL,800.00),(10,'WVK12694564798946','AC15681',10,1,9,1,4,NULL,'2022-05-21 00:00:00',NULL,NULL,800.00),(11,'WVZ15688000167902','AZ12345',11,2,10,2,4,NULL,'2022-01-30 00:00:00',NULL,NULL,700.00),(12,'AAB26003489259724','AC26049',12,1,10,2,3,19,'2022-04-18 00:00:00',NULL,NULL,1100.00),(13,'AAB26003489259733','BC98711',2,4,1,1,1,24,'1022-03-15 00:00:00',NULL,NULL,1100.00),(14,'HJG16357962345975','LP12345',3,3,4,2,4,NULL,'2022-05-21 00:00:00',NULL,NULL,800.00),(15,'AAK16853269753463','',11,5,6,2,4,NULL,'2022-05-21 00:00:00',NULL,NULL,NULL),(16,'PTB26008923668991','',10,1,1,1,4,NULL,'2022-05-21 00:00:00',NULL,NULL,NULL),(17,'HHP00065237951657','LP77777',7,4,5,2,2,27,'2022-05-21 00:00:00',NULL,NULL,950.00),(18,'SKL26846511233699','LP12346',4,1,6,2,4,NULL,'2022-05-21 00:00:00',NULL,NULL,600.00),(19,'CDD33352679513257','',13,1,1,1,4,NULL,'2022-05-22 00:00:00',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `geartype`
+-- Table structure for table `damages`
 --
 
-DROP TABLE IF EXISTS `geartype`;
+DROP TABLE IF EXISTS `damages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `geartype` (
-  `id_geartype` int NOT NULL AUTO_INCREMENT,
-  `geartype` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_geartype`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `damages` (
+  `damages_id` int(11) NOT NULL AUTO_INCREMENT,
+  `car_id` int(11) NOT NULL,
+  `damage_description` varchar(200) NOT NULL,
+  `damages_cost_kr` decimal(11,2) DEFAULT NULL,
+  `claimant` varchar(45) DEFAULT NULL,
+  `damage_date` datetime NOT NULL,
+  `damage_closed` datetime DEFAULT NULL,
+  `damage_added` datetime NOT NULL,
+  PRIMARY KEY (`damages_id`),
+  KEY `bil_idx` (`car_id`),
+  CONSTRAINT `car` FOREIGN KEY (`car_id`) REFERENCES `cars` (`car_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `geartype`
+-- Dumping data for table `damages`
 --
 
-LOCK TABLES `geartype` WRITE;
-/*!40000 ALTER TABLE `geartype` DISABLE KEYS */;
-INSERT INTO `geartype` VALUES (1,'automatisk'),(2,'manuelt');
-/*!40000 ALTER TABLE `geartype` ENABLE KEYS */;
+LOCK TABLES `damages` WRITE;
+/*!40000 ALTER TABLE `damages` DISABLE KEYS */;
+INSERT INTO `damages` VALUES (1,2,'bule i højre side dør',1200.00,NULL,'2021-01-06 00:00:00','2022-05-20 00:00:00','2022-05-12 11:03:13'),(2,2,'bule i højre side dør',1200.00,'FDM','2021-02-06 00:00:00','2022-05-17 00:00:00','2022-05-12 11:06:31'),(3,9,'bule i højre side dør',600.00,'FDM','2021-10-06 00:00:00','2022-05-17 00:00:00','2022-05-12 12:28:31'),(4,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-20 00:00:00','2022-05-17 13:17:01'),(5,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-20 00:00:00','2022-05-17 13:22:39'),(6,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-21 00:00:00','2022-05-17 13:26:54'),(7,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-21 00:00:00','2022-05-17 13:30:38'),(8,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-20 00:00:00','2022-05-17 13:34:40'),(9,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-20 00:00:00','2022-05-17 13:37:05'),(10,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-21 00:00:00','2022-05-17 13:40:32'),(11,10,'bule i dør -føreside',2000.00,'FDM','2021-06-17 00:00:00','2022-05-22 00:00:00','2022-05-17 13:43:03'),(12,5,'venstre side er ridset',1500.00,'eget værksted','2021-06-17 00:00:00','2022-05-20 00:00:00','2022-05-17 15:42:53'),(13,1,'stenslag',550.00,'fdm','2022-05-20 00:00:00','2022-05-20 00:00:00','2022-05-20 12:36:06'),(14,6,'stenslag',551.00,'eget værksted','2022-05-20 00:00:00',NULL,'2022-05-20 12:46:20'),(15,4,'stenslag',50.00,'fdm','2022-05-12 00:00:00',NULL,'2022-05-20 12:50:12'),(16,1,'ridse i dør',500.00,'fdm','2022-05-18 00:00:00','2022-05-23 00:00:00','2022-05-20 12:52:15'),(17,2,'magler en vinduesvisker',60.50,'fdm','2022-05-18 00:00:00','2022-05-19 00:00:00','2022-05-20 12:55:18'),(18,1,'Mangler højre sidespejl',1500.00,'fdm','2022-05-21 00:00:00','2022-05-23 00:00:00','2022-05-20 14:00:06'),(19,12,'døren vil ikke lukke',42.00,'theo','2022-05-20 00:00:00',NULL,'2022-05-21 17:04:09'),(20,1,'den lugter af cigaretter',200.00,'mig','2022-05-22 00:00:00',NULL,'2022-05-22 18:25:40'),(21,3,'lugter',123.00,'mig','2022-05-21 00:00:00','2022-05-22 00:00:00','2022-05-22 19:29:01'),(22,3,'ttt',3.00,'3','2022-05-21 00:00:00','2022-05-22 00:00:00','2022-05-22 19:31:52');
+/*!40000 ALTER TABLE `damages` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `producent`
+-- Table structure for table `extra_equipment_description`
 --
 
-DROP TABLE IF EXISTS `producent`;
+DROP TABLE IF EXISTS `extra_equipment_description`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `producent` (
-  `id_producent` int NOT NULL AUTO_INCREMENT,
-  `prducent` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_producent`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `extra_equipment_description` (
+  `extra_equipment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `extra_equipment_description` varchar(45) NOT NULL,
+  PRIMARY KEY (`extra_equipment_id`),
+  UNIQUE KEY `ekstra_equipemnt_id_UNIQUE` (`extra_equipment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `producent`
+-- Dumping data for table `extra_equipment_description`
 --
 
-LOCK TABLES `producent` WRITE;
-/*!40000 ALTER TABLE `producent` DISABLE KEYS */;
-INSERT INTO `producent` VALUES (1,'Peugeot'),(2,'Citroën'),(3,'Opel'),(4,'DS');
-/*!40000 ALTER TABLE `producent` ENABLE KEYS */;
+LOCK TABLES `extra_equipment_description` WRITE;
+/*!40000 ALTER TABLE `extra_equipment_description` DISABLE KEYS */;
+INSERT INTO `extra_equipment_description` VALUES (1,'Apple CarPlay'),(2,'Aut. klimaanlæg'),(3,'Aut. klimaanlæg m. 2 zoner\''),(4,'Alcantara indtræk'),(5,'Adaptive fartpilot'),(6,'Bakkamera'),(7,'180° Bakkamera'),(8,'Driver Assistance Pack'),(9,'3D navigation med 10\" skærm\''),(10,'7\" touchskærm'),(11,'12\" Touch skærm'),(12,'P-sensor'),(13,'Panoramaglastag'),(14,'Panoramaforrude');
+/*!40000 ALTER TABLE `extra_equipment_description` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `skader`
+-- Table structure for table `extra_equipment_m2m`
 --
 
-DROP TABLE IF EXISTS `skader`;
+DROP TABLE IF EXISTS `extra_equipment_m2m`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `skader` (
-  `id_skade` int NOT NULL,
-  `id_bil` int NOT NULL,
-  `beskrivelse` varchar(45) NOT NULL,
-  `omkostning_kr` int DEFAULT NULL,
-  `anmelder` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_skade`),
-  KEY `bil_idx` (`id_bil`),
-  CONSTRAINT `bil` FOREIGN KEY (`id_bil`) REFERENCES `biler` (`bil_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `extra_equipment_m2m` (
+  `extra_equipment_id` int(11) NOT NULL,
+  `car_id` int(11) NOT NULL,
+  UNIQUE KEY `unique_together` (`extra_equipment_id`,`car_id`),
+  KEY `ekstra_equipment_id_idx` (`extra_equipment_id`),
+  KEY `car_id_idx` (`car_id`),
+  CONSTRAINT `car_id` FOREIGN KEY (`car_id`) REFERENCES `cars` (`car_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `skader`
+-- Dumping data for table `extra_equipment_m2m`
 --
 
-LOCK TABLES `skader` WRITE;
-/*!40000 ALTER TABLE `skader` DISABLE KEYS */;
-/*!40000 ALTER TABLE `skader` ENABLE KEYS */;
+LOCK TABLES `extra_equipment_m2m` WRITE;
+/*!40000 ALTER TABLE `extra_equipment_m2m` DISABLE KEYS */;
+INSERT INTO `extra_equipment_m2m` VALUES (1,1),(1,4),(1,5),(1,7),(1,8),(1,9),(1,10),(1,11),(1,13),(2,1),(2,4),(2,12),(2,19),(3,1),(3,4),(3,6),(4,2),(5,2),(5,4),(5,19);
+/*!40000 ALTER TABLE `extra_equipment_m2m` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `status`
+-- Table structure for table `fuel_types`
 --
 
-DROP TABLE IF EXISTS `status`;
+DROP TABLE IF EXISTS `fuel_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `status` (
-  `id_status` int NOT NULL AUTO_INCREMENT,
-  `status` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `fuel_types` (
+  `fuel_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fuel_type` varchar(45) NOT NULL,
+  PRIMARY KEY (`fuel_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `status`
+-- Dumping data for table `fuel_types`
 --
 
-LOCK TABLES `status` WRITE;
-/*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'udlejet'),(2,'hjemme'),(3,'skadet');
-/*!40000 ALTER TABLE `status` ENABLE KEYS */;
+LOCK TABLES `fuel_types` WRITE;
+/*!40000 ALTER TABLE `fuel_types` DISABLE KEYS */;
+INSERT INTO `fuel_types` VALUES (1,'Benzin'),(2,'Disel'),(3,'Plug_in_hybrid'),(4,'Hybrid'),(5,'El');
+/*!40000 ALTER TABLE `fuel_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gear_type`
+--
+
+DROP TABLE IF EXISTS `gear_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gear_type` (
+  `gear_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `gear_type` varchar(45) NOT NULL,
+  PRIMARY KEY (`gear_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gear_type`
+--
+
+LOCK TABLES `gear_type` WRITE;
+/*!40000 ALTER TABLE `gear_type` DISABLE KEYS */;
+INSERT INTO `gear_type` VALUES (1,'Automatisk'),(2,'Manuelt');
+/*!40000 ALTER TABLE `gear_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `leasing`
+--
+
+DROP TABLE IF EXISTS `leasing`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `leasing` (
+  `leasing_id` int(11) NOT NULL AUTO_INCREMENT,
+  `car_id` int(11) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `included_km` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `leasing_added` datetime NOT NULL,
+  PRIMARY KEY (`leasing_id`),
+  KEY `bil_id_idx` (`car_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `leasing`
+--
+
+LOCK TABLES `leasing` WRITE;
+/*!40000 ALTER TABLE `leasing` DISABLE KEYS */;
+INSERT INTO `leasing` VALUES (1,4,'2020-08-15 00:00:00','2022-09-15 00:00:00',12345,420420,'0000-00-00 00:00:00'),(2,5,'2015-05-03 00:00:00','2022-08-06 00:00:00',35000,54321,'0000-00-00 00:00:00'),(3,1,'2022-05-11 00:00:00','2022-05-11 00:00:00',1000,2,'0000-00-00 00:00:00'),(4,1,'2022-05-11 00:00:00','2022-05-11 00:00:00',1000,2,'0000-00-00 00:00:00'),(5,1,'2022-05-11 00:00:00','2022-05-11 00:00:00',1000,2,'0000-00-00 00:00:00'),(6,1,'2022-05-11 00:00:00','2022-05-11 00:00:00',1000,2,'0000-00-00 00:00:00'),(7,6,'2022-05-11 00:00:00','2022-05-15 00:00:00',1234,123,'0000-00-00 00:00:00'),(8,1,'2022-05-11 00:00:00','2022-05-11 00:00:00',1000,2,'0000-00-00 00:00:00'),(9,2,'2022-05-13 00:00:00','2022-05-31 00:00:00',45667,2525,'0000-00-00 00:00:00'),(10,2,'2022-05-13 00:00:00','2022-05-31 00:00:00',45667,2525,'0000-00-00 00:00:00'),(11,1,'2022-05-11 00:00:00','2022-05-11 00:00:00',1000,2,'0000-00-00 00:00:00'),(12,3,'2022-05-11 00:00:00','2022-05-31 00:00:00',15000,4,'0000-00-00 00:00:00'),(13,3,'2022-05-11 00:00:00','2022-05-11 00:00:00',500,5,'0000-00-00 00:00:00'),(14,3,'2022-05-11 00:00:00','2022-05-11 00:00:00',500,5,'2022-05-11 12:40:34'),(15,3,'2022-05-11 00:00:00','2022-05-11 00:00:00',500,5,'2022-05-11 12:53:12'),(16,3,'2022-05-11 00:00:00','2022-05-11 00:00:00',500,5,'2022-05-11 20:50:25'),(17,8,'2011-11-11 00:00:00','2012-12-12 00:00:00',8000,510510,'2022-05-12 11:40:45'),(18,1,'2022-05-16 00:00:00','2022-08-25 00:00:00',200,123,'2022-05-16 10:28:50'),(19,12,'2022-05-22 00:00:00','2022-07-30 00:00:00',2000,5,'2022-05-19 15:02:28'),(20,4,'2022-05-20 00:00:00','2022-09-30 00:00:00',3000,6,'2022-05-19 15:09:27'),(21,5,'2022-05-19 00:00:00','2022-05-22 00:00:00',120,1000,'2022-05-19 21:13:58'),(22,13,'2022-05-20 00:00:00','2022-05-29 00:00:00',128,1200,'2022-05-19 21:16:41'),(23,5,'2022-05-02 00:00:00','2022-05-04 00:00:00',19,9,'2022-05-19 21:18:19'),(24,13,'2022-05-17 00:00:00','2022-05-22 00:00:00',9,9,'2022-05-19 21:21:16'),(25,6,'2022-05-09 00:00:00','2022-05-10 00:00:00',9,8,'2022-05-19 21:25:44'),(26,16,'2022-05-20 17:16:00','2022-05-22 18:17:00',77,45,'2022-05-21 14:23:22'),(27,17,'2022-05-27 20:25:00','2022-05-29 20:49:00',123,234,'2022-05-21 15:44:27'),(28,5,'2022-05-22 22:00:00','2022-06-25 21:00:00',700,56,'2022-05-21 17:06:15');
+/*!40000 ALTER TABLE `leasing` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `manufacturer`
+--
+
+DROP TABLE IF EXISTS `manufacturer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `manufacturer` (
+  `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `manufacturer` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`manufacturer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `manufacturer`
+--
+
+LOCK TABLES `manufacturer` WRITE;
+/*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
+INSERT INTO `manufacturer` VALUES (1,'Peugeot'),(2,'Citroën'),(3,'Opel'),(4,'DS');
+/*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -245,13 +336,13 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
   `password` varchar(64) NOT NULL,
   `role` varchar(45) NOT NULL,
-  `enabled` tinyint DEFAULT NULL,
+  `enabled` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,7 +351,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'namhm','$2a$10$XptfskLsT1l/bRTLRiiCgejHqOpgXFreUnNUa35gJdCr2v2QbVFzu','ROLE_USER',1),(2,'admin','$2a$10$zxvEq8XzYEYtNjbkRsJEbukHeRx3XS6MDXHMu8cNuNsRfZJWwswDy','ROLE_ADMIN',1);
+INSERT INTO `users` VALUES (1,'namhm','$2a$10$XptfskLsT1l/bRTLRiiCgejHqOpgXFreUnNUa35gJdCr2v2QbVFzu','ROLE_USER',1),(2,'admin','$2a$10$zxvEq8XzYEYtNjbkRsJEbukHeRx3XS6MDXHMu8cNuNsRfZJWwswDy','ROLE_ADMIN',1),(3,'MoMoney','$2a$12$9D6HEsLoZTKRLdCRhtD/Z.8pG7lC5taGk/YhiLpFxOYx3oF5XZqJa','ROLE_BUISNESS',1),(4,'IControlDamages','$2a$12$cOP/o3LrwqGJNxYzkEunYOjFb8qi6lFG1cUX8QCYELuLTd6QWqVNC','ROLE_DAMAGE',1),(5,'DataIsTheBest','$2a$12$.b4XbxQD05uPlr.37HG3Y.gy/E6rYTP4B9lxnfyyoCCeJ.FQY./SW','ROLE_DATA',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -273,4 +364,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 10:26:37
+-- Dump completed on 2022-05-26 10:19:41
