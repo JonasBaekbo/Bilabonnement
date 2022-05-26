@@ -134,7 +134,7 @@
     <div class="col py-3" sec:authorize="hasAnyRole('DAMAGE', 'ADMIN')" th:fragment="closeDamage">
         <form th:action="@{/closeDamage}" method="post">
 
-            <h5> vælg den/de skader der er blevet udbedret</h5>
+            <h5> Vælg den/de skader der er blevet udbedret</h5>
             <table class="table">
                 <thead>
                 <tr>
@@ -240,6 +240,8 @@
     </div>
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="addExtraEquipment">
         <form th:action="@{/adExtraEquipment}" method="post">
+            >
+            <h3>Tilføj ekstraudstyr til bil</h3>
             <h5>Vælg bil der skal have ekstraudstyr:</h5>
             <p>
                 Bil-Id - Nummerplade - Stelnummer<br>
@@ -263,7 +265,7 @@
         </form>
     </div>
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="addLicencePlate">
-        h3>Biler der mangler nummerplade</h3>
+        <h3>Biler der mangler nummerplade</h3>
         <table class="table">
             <thead>
             <tr>
@@ -315,6 +317,7 @@
     </div>
     <div class="col py-3" sec:authorize="hasAnyRole('DATA', 'ADMIN')" th:fragment="createCar">
         <form th:action="@{/createCar}" method="post">
+            <h3>Opret bil:</h3>
             <p>
                 Vælg model:<br>
                 <select name="carModel">

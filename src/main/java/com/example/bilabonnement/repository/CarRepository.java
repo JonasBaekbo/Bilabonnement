@@ -91,7 +91,7 @@ public class CarRepository implements IRepository<Car> {
 
     @Override
     public ArrayList<Car> getAllEntities() {
-        //Vi fra sortere status 5, da det er status for biler der ikke er hos bilabonnement.dk
+        //Vi frasortere status 5, da det er status for biler der ikke er hos bilabonnement.dk
         ArrayList<Car> allCars;
         String sql = """
                 SELECT

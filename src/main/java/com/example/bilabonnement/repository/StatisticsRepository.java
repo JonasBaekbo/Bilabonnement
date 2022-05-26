@@ -9,25 +9,26 @@ import static com.example.bilabonnement.utility.DatabaseConnectionManager.getCon
 
 public class StatisticsRepository {
 
-  /*  public int getNumberOfCarsLeased() {
+    private StatisticsItem getNumberOfCars() {
         Connection conn = getConnection();
         try {
-
-            String searchForCarsLeased = "SELECT COUNT(*) FROM cars WHERE cars.car_status_id IN (1,2)";
+            //Vi sortere status 5 fra, da det er status for biler der ikke er hos bilabonnement.dk
+            String searchForCarsLeased = "SELECT COUNT(*) FROM cars WHERE cars.car_status_id <>5";
             PreparedStatement pstmt = conn.prepareStatement(searchForCarsLeased);
             pstmt.execute();
             ResultSet rs = pstmt.getResultSet();
 
             rs.next();
-            int numCarsLeased = rs.getInt(1);
+            int numCars = rs.getInt(1);
+            StatisticsItem carsInTotal = new StatisticsItem("Samlet Antal Biler", numCars);
 
-            return numCarsLeased;
+            return carsInTotal;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1;
+        return null;
     }
-*/
+
 
     public ArrayList<StatisticsItem> getCarsPerStatus() {
         ArrayList<StatisticsItem> result = new ArrayList<>();
@@ -53,6 +54,8 @@ public class StatisticsRepository {
                 StatisticsItem item = new StatisticsItem(resultSet.getString("car_status"), resultSet.getInt("number_of_cars"));
                 result.add(item);
             }
+            StatisticsItem carsInTotal = getNumberOfCars();
+            result.add(carsInTotal);
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
