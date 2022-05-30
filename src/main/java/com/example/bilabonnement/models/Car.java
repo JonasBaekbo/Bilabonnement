@@ -1,4 +1,4 @@
-//Mikkel
+//Mikkel, Adam
 
 package com.example.bilabonnement.models;
 
