@@ -1,4 +1,4 @@
-//Mikkel
+//Mikkel, Johanne
 
 package com.example.bilabonnement.repository;
 

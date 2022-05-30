@@ -1,5 +1,5 @@
 package com.example.bilabonnement.models;
-//Adam
+//Adam, Johanne
 
 import com.example.bilabonnement.services.DateTool;
 

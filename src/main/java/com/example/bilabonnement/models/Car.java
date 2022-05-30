@@ -1,4 +1,4 @@
-//Mikkel, Adam
+//Mikkel, Adam, Johanne
 
 package com.example.bilabonnement.models;
 

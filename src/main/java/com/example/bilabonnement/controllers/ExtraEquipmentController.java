@@ -1,4 +1,4 @@
-//Mikkel
+//Mikkel, Johanne
 
 package com.example.bilabonnement.controllers;
 
@@ -28,7 +28,7 @@ public class ExtraEquipmentController {
     }
 
     @GetMapping("/admin/tilfoejekstraudstyr")
-    public String showaddExtraEquipment(Model model){
+    public String showAddExtraEquipment(Model model){
         List<ExtraEquipment> extraEquipmentList = extraEquipmentRepository.getAllEntities();
         List<Car>allCars=carRepository.getAllEntities();
         model.addAttribute("extraEquipmentList", extraEquipmentList);
