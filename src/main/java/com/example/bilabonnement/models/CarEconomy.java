@@ -1,3 +1,5 @@
+//Mikkel
+
 package com.example.bilabonnement.models;
 
 import java.time.LocalDateTime;
