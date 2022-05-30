@@ -7,7 +7,7 @@ public class EconomyRepositoryTest extends TestCase {
     public void testTotalMonthlyIncomeThisMonthFromRentedCars() {
         //Arrange
         EconomyRepository economyRepo = new EconomyRepository();
-        int expectedResult = 30;
+        double expectedResult = 30;
         //Act
         double actualResult = economyRepo.totalMonthlyIncomeThisMonthFromRentedCars();
 
