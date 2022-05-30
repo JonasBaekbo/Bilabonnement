@@ -1,3 +1,5 @@
+//Mikkel
+
 package com.example.bilabonnement.models;
 
 import com.example.bilabonnement.services.DateTool;
