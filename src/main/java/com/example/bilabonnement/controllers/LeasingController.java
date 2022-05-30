@@ -1,4 +1,4 @@
-//Adam, Johanne
+//Adam, Johanne, Jonas
 package com.example.bilabonnement.controllers;
 
 

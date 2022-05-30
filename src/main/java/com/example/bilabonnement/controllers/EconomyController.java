@@ -1,4 +1,4 @@
-//Mikkel, Johanne
+//Mikkel, Johanne, Jonas
 
 package com.example.bilabonnement.controllers;
 

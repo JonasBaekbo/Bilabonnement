@@ -1,4 +1,4 @@
-//Johanne
+//Johanne, Jonas
 package com.example.bilabonnement.controllers;
 
 import com.example.bilabonnement.models.Car;

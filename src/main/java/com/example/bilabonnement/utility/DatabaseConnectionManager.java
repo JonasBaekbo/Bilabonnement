@@ -1,4 +1,4 @@
-//Johanne
+//Johanne, Jonas
 package com.example.bilabonnement.utility;
 
 import java.io.*;
