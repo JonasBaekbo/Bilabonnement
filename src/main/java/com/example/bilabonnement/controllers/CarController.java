@@ -14,8 +14,8 @@ import java.util.ArrayList;
 @Controller
 public class CarController {
     private final CarRepository carRepository = new CarRepository();
-    private final  CarStatusRepository carStatusRepository = new CarStatusRepository();
-    private final  CarModelRepository carModelRepository = new CarModelRepository();
+    private final CarStatusRepository carStatusRepository = new CarStatusRepository();
+    private final CarModelRepository carModelRepository = new CarModelRepository();
     private final FuelTypeRepository fuelTypeRepository = new FuelTypeRepository();
     private final GearTypeRepository gearTypeRepository = new GearTypeRepository();
     private final ColourRepository colourRepository = new ColourRepository();

@@ -9,12 +9,12 @@ public class EconomyRepositoryTest extends TestCase {
     public void testTotalMonthlyIncomeThisMonthFromRentedCars() {
         //Arrange
         EconomyRepository economyRepo = new EconomyRepository();
-        //Vi er klar over at der ikke kommer tallet 30 ud, da de vil ændre sig alt efter hvor mange og hvilke lejeaftaler der er oprettet
-        double expectedResult = 30;
+
+        double expectedMinimumResult = 0;
         //Act
         double actualResult = economyRepo.totalMonthlyIncomeThisMonthFromRentedCars();
 
         //Assert
-        assertEquals(expectedResult, actualResult);
+        assertTrue(actualResult > expectedMinimumResult);
     }
 }

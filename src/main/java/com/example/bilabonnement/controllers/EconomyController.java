@@ -24,7 +24,7 @@ public class EconomyController {
         double totalMonthlyIncome = economyRepository.totalMonthlyIncomeThisMonthFromRentedCars();
         ArrayList<StatisticsItem> carsPerStatus = statisticsRepository.getCarsPerStatus();
         model.addAttribute("title", "Alle lejede biler");
-        model.addAttribute("totalMonthlyIncome",totalMonthlyIncome);
+        model.addAttribute("totalMonthlyIncome", totalMonthlyIncome);
         model.addAttribute("carEconomies", carEconomies);
         model.addAttribute("carsPerStatus", carsPerStatus);
         return "admin/economy/showAllLeasedCars";

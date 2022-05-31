@@ -27,7 +27,7 @@ public class ExtraEquipment {
         return car;
     }
 
-    public int getCarID(){
+    public int getCarID() {
         return car.getCarID();
     }
 
@@ -39,7 +39,7 @@ public class ExtraEquipment {
         this.car = car;
     }
 
-    public String getLicencePlate(){
+    public String getLicencePlate() {
         return car.getLicencePlate();
     }
 
@@ -47,7 +47,7 @@ public class ExtraEquipment {
         return extraEquipmentDescription;
     }
 
-    public String getVinNumber(){
+    public String getVinNumber() {
         return this.car.getVinNumber();
     }
 

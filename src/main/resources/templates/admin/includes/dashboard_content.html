@@ -304,13 +304,13 @@
             </select>
             <p>
                 Nummerplade:<br>
-                <label for="licencePlate"></label>
-                <input type="text" id="licencePlateLP" placeholder="Nummerplade" name="licencePlate" maxlength="7"/>
+                <label for="licencePlateLP"></label>
+                <input type="text" id="licencePlateLP" placeholder="Nummerplade" name="licencePlateLP" maxlength="7"/>
             </p>
             <p>
                 Registreringafgift:<br>
-                <label for="regFee"></label>
-                <input type="number" id="regFeeLP" placeholder="Registreringsafgift" name="regFee" min="0" value="0" step="any"/>
+                <label for="regFeeLP"></label>
+                <input type="number" id="regFeeLP" placeholder="Registreringsafgift" name="regFeeLP" min="0" value="0" step="any"/>
             </p>
             <input type="submit" value="Tilføj nummerplade">
         </form>
@@ -326,7 +326,6 @@
                             th:value="${model.getModelID()}"
                             th:text="${model.getManufacturer()}+' - '+${model.getModelName()}">
                     </option>
-                    <option value="-1">Anden ...</option>
                 </select>
             </p>
             <p>

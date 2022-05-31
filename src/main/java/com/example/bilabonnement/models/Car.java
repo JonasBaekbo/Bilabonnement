@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 
 public class Car {
 
-
     private final DateTool dateTool = new DateTool();
 
     private int carID;
@@ -22,7 +21,6 @@ public class Car {
     private Integer currentLeasing;
     private Double registrationFee;
     private Timestamp registrationDate;
-
 
     //Opret bil i database
     public Car(

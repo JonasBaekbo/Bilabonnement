@@ -18,7 +18,7 @@ import java.util.List;
 public class ExtraEquipmentController {
 
     private final ExtraEquipmentRepository extraEquipmentRepository = new ExtraEquipmentRepository();
-    private final CarRepository carRepository =new CarRepository();
+    private final CarRepository carRepository = new CarRepository();
 
     @GetMapping("/admin/visekstraudstyr")
     public String extraEq(Model model) {
@@ -28,9 +28,9 @@ public class ExtraEquipmentController {
     }
 
     @GetMapping("/admin/tilfoejekstraudstyr")
-    public String showAddExtraEquipment(Model model){
+    public String showAddExtraEquipment(Model model) {
         List<ExtraEquipment> extraEquipmentList = extraEquipmentRepository.getAllEntities();
-        List<Car>allCars=carRepository.getAllEntities();
+        List<Car> allCars = carRepository.getAllEntities();
         model.addAttribute("extraEquipmentList", extraEquipmentList);
         model.addAttribute("allCars", allCars);
         return "admin/leasing/addExtraEquipment";
@@ -38,7 +38,7 @@ public class ExtraEquipmentController {
 
     @PostMapping("/adExtraEquipment")
     public String adExtraEquipment(@RequestParam("exID") List<Integer> exIDs, @RequestParam("carID") int carID) {
-        Car car= carRepository.getSingleById(carID);
+        Car car = carRepository.getSingleById(carID);
         for (Integer exID : exIDs) {
             ExtraEquipment extraEquipment = new ExtraEquipment(car, exID);
             extraEquipmentRepository.create(extraEquipment);

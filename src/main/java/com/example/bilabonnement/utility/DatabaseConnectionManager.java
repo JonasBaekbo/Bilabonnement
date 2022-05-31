@@ -13,13 +13,14 @@ public class DatabaseConnectionManager {
     private static String password;
     private static Connection conn;
 
-    private DatabaseConnectionManager(){}
+    private DatabaseConnectionManager() {
+    }
 
-    public static Connection getConnection(){
-        if(conn != null){
+    public static Connection getConnection() {
+        if (conn != null) {
             return conn;
         }
-        try{
+        try {
             InputStream propertiesStream = new FileInputStream("src/main/resources/application.properties");
             Properties props = new Properties();
             props.load(propertiesStream);
@@ -28,9 +29,7 @@ public class DatabaseConnectionManager {
             username = props.getProperty("spring.datasource.username");
             password = props.getProperty("spring.datasource.password");
             conn = DriverManager.getConnection(url, username, password);
-        }
-
-        catch(SQLException | IOException e){
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
 

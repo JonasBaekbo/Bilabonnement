@@ -31,10 +31,10 @@ public class CarRepository implements IRepository<Car> {
 
             // Add to "biler"
             PreparedStatement pstmt = conn.prepareStatement("""
-                   INSERT INTO cars
-                   (car_status_id, vin_number, licence_plate, car_model_id, fuel_type_id, colour_id, gear_type_id, current_leasing_id, car_added)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                   """);
+                    INSERT INTO cars
+                    (car_status_id, vin_number, licence_plate, car_model_id, fuel_type_id, colour_id, gear_type_id, current_leasing_id, car_added, registration_fee)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+                    """);
 
             pstmt.setInt(1, statusId);
             pstmt.setString(2, car.getVinNumber());
@@ -45,6 +45,7 @@ public class CarRepository implements IRepository<Car> {
             pstmt.setInt(7, gearTypeID);
             pstmt.setObject(8, car.getCurrentLeasing());
             pstmt.setDate(9, dateTool.getUtilDateAsSQL(car.getRegistrationDate()));
+            pstmt.setDouble(10, car.getRegistrationFee());
             pstmt.execute();
 
         } catch (SQLException e) {
@@ -79,7 +80,7 @@ public class CarRepository implements IRepository<Car> {
                     colour,
                     resultSet.getString("vin_number"),
                     resultSet.getString("licence_plate"),
-                    resultSet.getInt("current_leasing_id"),
+                    (Integer) resultSet.getObject("current_leasing_id"),
                     resultSet.getTimestamp("car_added"),
                     resultSet.getDouble("registration_fee")
             );
@@ -112,7 +113,7 @@ public class CarRepository implements IRepository<Car> {
                 WHERE
                     cars.car_status_id<>5
                 """;
-        allCars=findCars(sql);
+        allCars = findCars(sql);
         return allCars;
     }
 
@@ -145,7 +146,7 @@ public class CarRepository implements IRepository<Car> {
     public ArrayList<Car> getCarsMissingLicence() {
         ArrayList<Car> missingLicense;
 
-        String sql= """
+        String sql = """
                 SELECT
                     cars.car_id,
                     cars.car_status_id,
@@ -163,7 +164,7 @@ public class CarRepository implements IRepository<Car> {
                 WHERE
                     cars.licence_plate IS null OR cars.licence_plate=''
                 """;
-        missingLicense=findCars(sql);
+        missingLicense = findCars(sql);
         return missingLicense;
     }
 

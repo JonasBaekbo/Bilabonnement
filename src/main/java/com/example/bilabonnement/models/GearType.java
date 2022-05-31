@@ -13,6 +13,7 @@ public class GearType {
     public int getGearTypeID() {
         return gearTypeID;
     }
+
     public String getGearTypeName() {
         return gearTypeName;
     }

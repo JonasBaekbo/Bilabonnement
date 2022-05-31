@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 
 public class Leasing {
-    private final DateTool dateTool =new DateTool();
+    private final DateTool dateTool = new DateTool();
 
     private int customerID;
     private LocalDateTime startDate;
@@ -27,17 +27,18 @@ public class Leasing {
         this.includedKM = includedKM;
         this.carID = carID;
         this.leasingType = leasingType;
-        this.timeAdded=dateTool.getTimeStamp();
+        this.timeAdded = dateTool.getTimeStamp();
     }
+
     //Læs leasing ind fra database
     public Leasing(int leasingId, int customerID, LocalDateTime startDate, LocalDateTime endDate, int includedKM, int carID, Timestamp timeAdded) {
-        this.leasingId=leasingId;
+        this.leasingId = leasingId;
         this.customerID = customerID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.includedKM = includedKM;
         this.carID = carID;
-        this.timeAdded=timeAdded;
+        this.timeAdded = timeAdded;
     }
 
     public int getCustomerID() {

@@ -21,21 +21,37 @@ public class DamagedCar {
         this.car = car;
     }
 
-    public int getDamageID() { return this.damage.getDamageID(); }
+    public int getDamageID() {
+        return this.damage.getDamageID();
+    }
 
-    public int getCarID() { return this.car.getCarID(); }
+    public int getCarID() {
+        return this.car.getCarID();
+    }
 
-    public String getLicencePlate() { return this.car.getLicencePlate(); }
+    public String getLicencePlate() {
+        return this.car.getLicencePlate();
+    }
 
-    public String getVinNumber() { return this.car.getVinNumber(); }
+    public String getVinNumber() {
+        return this.car.getVinNumber();
+    }
 
-    public String getDamageDescription () { return this.damage.getDamageDescription(); }
+    public String getDamageDescription() {
+        return this.damage.getDamageDescription();
+    }
 
-    public Double getPrice() { return this.damage.getPrice(); }
+    public Double getPrice() {
+        return this.damage.getPrice();
+    }
 
-    public String getClaimant() { return this.damage.getClaimant(); }
+    public String getClaimant() {
+        return this.damage.getClaimant();
+    }
 
-    public Date getDamageRegistrationsDate() { return this.damage.getDamageRegistrationsDate(); }
+    public Date getDamageRegistrationsDate() {
+        return this.damage.getDamageRegistrationsDate();
+    }
 
 
 }
